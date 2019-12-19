@@ -29,12 +29,14 @@ export const actions = {
         await this.$axios.$post('/logout')
         commit(SET_USER, null)
     },
-    async me({ commit, getters }) {
+    async bootstrap({ commit, getters }) {
         if (getters.isLoggedIn) {
             try {
                 const res = await this.$axios.$get('/api/me')
                 commit(SET_PROFILE, res.data)
+                // const res2 = await this.$axios.$get('/api/investors')
             } catch (err) {
+                // eslint-disable-next-line no-console
                 console.error(err)
             }
         }

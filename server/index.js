@@ -5,7 +5,7 @@ const consola = require('consola')
 const session = require('cookie-session')
 const { Nuxt, Builder } = require('nuxt')
 
-// Import and Set Nuxt.js options
+// Import and set Nuxt.js options
 const config = require('../nuxt.config.js')
 config.dev = process.env.NODE_ENV !== 'production'
 
@@ -21,7 +21,7 @@ app.use(
 
 // Routes
 app.use(require('./routes/twitter-login'))
-app.use(require('./routes/twitter-api'))
+app.use(require('./routes/api'))
 
 // Nuxt start
 async function start() {
