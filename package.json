@@ -1,0 +1,50 @@
+{
+    "name": "mute.vc",
+    "version": "1.0.0",
+    "description": "Mute/block VC \"thought leaders\"",
+    "author": "Tom Meagher",
+    "private": true,
+    "scripts": {
+        "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
+        "build": "nuxt build",
+        "start": "cross-env NODE_ENV=production node server/index.js",
+        "generate": "nuxt generate"
+    },
+    "lint-staged": {
+        "*.{js,vue}": [
+            "prettier --write",
+            "eslint --cache --fix --ext .js,.vue",
+            "git add"
+        ]
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "dependencies": {
+        "@nuxtjs/axios": "5.3.6",
+        "@nuxtjs/dotenv": "1.4.0",
+        "cookie-session": "^1.3.3",
+        "cross-env": "5.2.0",
+        "express": "4.16.4",
+        "login-with-twitter": "^1.2.2",
+        "nuxt": "2.0.0"
+    },
+    "devDependencies": {
+        "@babel/plugin-proposal-nullish-coalescing-operator": "^7.7.4",
+        "@babel/plugin-proposal-optional-chaining": "^7.7.5",
+        "@nuxtjs/eslint-config": "1.0.1",
+        "@nuxtjs/eslint-module": "1.0.0",
+        "@nuxtjs/tailwindcss": "1.0.0",
+        "babel-eslint": "10.0.1",
+        "eslint": "6.1.0",
+        "eslint-config-prettier": "4.1.0",
+        "eslint-plugin-nuxt": "0.4.2",
+        "eslint-plugin-prettier": "3.0.1",
+        "husky": "2.6.0",
+        "lint-staged": "8.2.1",
+        "nodemon": "1.18.9",
+        "prettier": "1.16.4"
+    }
+}
