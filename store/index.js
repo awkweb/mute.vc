@@ -24,4 +24,12 @@ export const actions = {
         await axios.post('/logout')
         commit('SET_USER', null)
     },
+    async me({ commit }) {
+        try {
+            const res = await axios.get('/api/me')
+            console.log(res)
+        } catch (err) {
+            console.error(err)
+        }
+    },
 }

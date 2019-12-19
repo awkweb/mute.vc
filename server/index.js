@@ -6,22 +6,11 @@ const session = require('cookie-session')
 const { Nuxt, Builder } = require('nuxt')
 
 // Import and Set Nuxt.js options
-const LoginWithTwitter = require('login-with-twitter')
 const config = require('../nuxt.config.js')
-const dev = process.env.NODE_ENV !== 'production'
-config.dev = dev
-const baseUrl = `http${!dev ? 's' : ''}://${process.env.NUXT_HOST}${
-    process.env.NUXT_PORT ? `:${process.env.NUXT_PORT}` : ''
-}`
+config.dev = process.env.NODE_ENV !== 'production'
 
-const tw = new LoginWithTwitter({
-    consumerKey: process.env.TWITTER_KEY,
-    consumerSecret: process.env.TWITTER_SECRET,
-    callbackUrl: `${baseUrl}/auth/twitter/callback`,
-})
-
-// Create a new Express application
 const app = express()
+app.use(express.json()) // Handle parsing json data from requests
 app.use(
     session({
         name: 'token',
@@ -30,49 +19,9 @@ app.use(
     }),
 )
 
-// Define routes
-app.get('/auth/twitter', (req, res, next) => {
-    tw.login((err, tokenSecret, url) => {
-        if (err) {
-            console.log(err)
-            return next(err)
-        }
-        req.session.oauthTokenSecret = tokenSecret
-        // Redirect to callback URL with query params
-        res.redirect(url)
-    })
-})
-
-// callback url, must add this to your app on twitters developer portal
-app.get('/auth/twitter/callback', (req, res) => {
-    tw.callback(
-        {
-            oauth_token: req.query.oauth_token,
-            oauth_verifier: req.query.oauth_verifier,
-        },
-        req.session.oauthTokenSecret,
-        (err, user) => {
-            if (err) {
-                console.log('failed twitter login', err)
-                res.redirect('/')
-            }
-            delete req.session.oauthTokenSecret
-            req.session.userId = user.userId
-            req.session.username = user.userName
-            req.session.token = user.userToken
-            req.session.secret = user.userTokenSecret
-            res.redirect('/')
-        },
-    )
-})
-
-app.post('/logout', (req, res) => {
-    delete req.session.userId
-    delete req.session.username
-    delete req.session.token
-    delete req.session.secret
-    res.redirect('/')
-})
+// Routes
+app.use(require('./routes/twitter-login'))
+app.use(require('./routes/twitter-api'))
 
 // Nuxt start
 async function start() {
