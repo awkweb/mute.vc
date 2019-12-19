@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 export const state = () => ({
     authUser: null,
 })
@@ -21,7 +19,17 @@ export const actions = {
         }
     },
     async logout({ commit }) {
-        await axios.post('/logout')
+        await this.$axios.$post('/logout')
         commit('SET_USER', null)
+    },
+    async me({ commit, getters: { isLoggedIn } }) {
+        if (isLoggedIn) {
+            try {
+                const res = await this.$axios.$get('/api/me')
+                console.log(res)
+            } catch (err) {
+                console.error(err)
+            }
+        }
     },
 }

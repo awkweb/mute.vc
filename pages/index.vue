@@ -25,9 +25,12 @@ export default {
         ...mapGetters(['isLoggedIn']),
         ...mapState(['authUser']),
     },
+    async fetch({ store, params }) {
+        await store.dispatch('me')
+    },
     methods: {
         handleLogOut() {
-            // Would prefer to use `mapActions`, but is broken for some reason
+            // Would prefer to use `mapActions`, but is broken for some reason :(
             this.$store.dispatch('logout')
         },
     },
