@@ -1,38 +1,29 @@
 <template>
     <div>
         <template v-if="isLoggedIn">
-            <div>@{{ authUser.username }}</div>
-            <button @click="handleLogOut">
-                Log out
-            </button>
+            <Dashboard />
         </template>
         <template v-else>
-            <div>
-                Mute/block VC *thought leaders*
-            </div>
-            <a href="/auth/twitter">
-                Continue with Twitter
-            </a>
+            <Login />
         </template>
     </div>
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters } from 'vuex'
+import Dashboard from '@/components/dashboard'
+import Login from '@/components/login'
 
 export default {
+    components: {
+        Dashboard,
+        Login,
+    },
     computed: {
         ...mapGetters(['isLoggedIn']),
-        ...mapState(['authUser']),
     },
     async fetch({ store, params }) {
         await store.dispatch('me')
-    },
-    methods: {
-        handleLogOut() {
-            // Would prefer to use `mapActions`, but is broken for some reason :(
-            this.$store.dispatch('logout')
-        },
     },
 }
 </script>
