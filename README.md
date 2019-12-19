@@ -16,9 +16,12 @@ Mute/block VC "thought leaders"
 Create a `.env` file in project root:
 
 ```
+FIREBASE_API_KEY=xxxxxx
+FIREBASE_AUTH_DOMAIN=mutevc.firebaseapp.com
+FIREBASE_PROJECT_ID=mutevc
 NUXT_HOST=localhost
 NUXT_PORT=3000
 SECRET=supersecret
 TWITTER_KEY=xxxxxx
-TWITTER_SECRET=yyyyyy
+TWITTER_SECRET=xxxxxx
 ```

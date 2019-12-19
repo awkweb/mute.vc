@@ -19,11 +19,11 @@ export default {
         Dashboard,
         Login,
     },
+    async fetch({ store, params }) {
+        await store.dispatch('bootstrap')
+    },
     computed: {
         ...mapGetters(['isLoggedIn']),
-    },
-    async fetch({ store, params }) {
-        await store.dispatch('me')
     },
 }
 </script>

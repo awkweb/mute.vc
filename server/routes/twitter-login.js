@@ -1,14 +1,12 @@
-require('dotenv').config()
-
 const express = require('express')
-const router = express.Router()
 const LoginWithTwitter = require('login-with-twitter')
+
+const router = express.Router()
 
 const dev = process.env.NODE_ENV !== 'production'
 const baseUrl = `http${!dev ? 's' : ''}://${process.env.NUXT_HOST}${
     process.env.NUXT_PORT ? `:${process.env.NUXT_PORT}` : ''
 }`
-
 const tw = new LoginWithTwitter({
     consumerKey: process.env.TWITTER_KEY,
     consumerSecret: process.env.TWITTER_SECRET,
@@ -28,7 +26,7 @@ router.get('/auth/twitter', (req, res, next) => {
     })
 })
 
-// callback url, must add this to your app on twitters developer portal
+// Callback url, must add this to your app on twitters developer portal
 router.get('/auth/twitter/callback', (req, res) => {
     tw.callback(
         {

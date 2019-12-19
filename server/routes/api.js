@@ -1,9 +1,9 @@
-// require('dotenv').config()
-
 const express = require('express')
+const Twit = require('twit')
+const db = require('../lib/db')
+
 const router = express.Router()
 
-const Twit = require('twit')
 function genTwit(token, secret) {
     return new Twit({
         consumer_key: process.env.TWITTER_KEY,
@@ -26,8 +26,12 @@ router.get('/api/me', async (req, res) => {
         const { data } = await twit.get('account/verify_credentials', {
             include_email: true,
         })
-        req.session.name = data.name
-        req.session.email = data.email
+
+        await db
+            .collection('users')
+            .doc(req.session.userId)
+            .set({ data }, { merge: true })
+
         res.send({
             status: data.statusCode,
             data,
@@ -37,13 +41,15 @@ router.get('/api/me', async (req, res) => {
     }
 })
 
-router.post('/api/mutes', async (req, res) => {
+router.get('/api/investors', async (req, res) => {
     try {
-        const res = await twit.post('mutes/users/create', {
-            screen_name: String(req.body.userId),
-        })
+        const response = await db.collection('investors').get()
+        let data = []
+        response.forEach((d) => data.push(d.data()))
+        data = data.filter((d) => d.username !== req.session.username)
         res.send({
             status: res.statusCode,
+            data,
         })
     } catch (err) {
         console.log(err)

@@ -25,7 +25,22 @@ module.exports = {
     build: {
         extend(config, ctx) {},
         babel: {
-            plugins: ['@babel/plugin-proposal-optional-chaining'],
+            plugins: [
+                '@babel/plugin-proposal-optional-chaining',
+                '@babel/plugin-proposal-nullish-coalescing-operator',
+            ],
+            presets({ isServer }) {
+                // https://nuxtjs.org/guide/release-notes/#v2.6.0
+                return [
+                    [
+                        require.resolve('@nuxt/babel-preset-app'),
+                        {
+                            buildTarget: isServer ? 'server' : 'client',
+                            corejs: { version: 3 },
+                        },
+                    ],
+                ]
+            },
         },
     },
 }
