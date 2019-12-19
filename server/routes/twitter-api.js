@@ -23,11 +23,14 @@ router.use('/api', (req, res, next) => {
 
 router.get('/api/me', async (req, res) => {
     try {
-        const { data } = await twit.get('users/show', {
-            screen_name: req.session.username,
+        const { data } = await twit.get('account/verify_credentials', {
+            include_email: true,
         })
+        req.session.name = data.name
+        req.session.email = data.email
         res.send({
             status: data.statusCode,
+            data,
         })
     } catch (err) {
         console.log(err)
