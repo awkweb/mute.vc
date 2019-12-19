@@ -21,22 +21,17 @@ router.use('/api', (req, res, next) => {
     next()
 })
 
-router.get('/api/me', (req, res) => {
-    console.log(req.session.username)
-    console.log(`merp`)
-    res.send({
-        status: 200,
-    })
-    // try {
-    //     const res = await twit.get('users/show', {
-    //         screen_name: String(req.session.username),
-    //     })
-    //     res.send({
-    //         status: res.statusCode,
-    //     })
-    // } catch (err) {
-    //     console.log(err)
-    // }
+router.get('/api/me', async (req, res) => {
+    try {
+        const { data } = await twit.get('users/show', {
+            screen_name: req.session.username,
+        })
+        res.send({
+            status: data.statusCode,
+        })
+    } catch (err) {
+        console.log(err)
+    }
 })
 
 router.post('/api/mutes', async (req, res) => {
