@@ -10,24 +10,32 @@ firebase.initializeApp({
 
 const db = firebase.firestore()
 
-// Mutations
-async function upsertUser(userId, data) {
-    await db
-        .collection('users')
-        .doc(userId)
-        .set({ data }, { merge: true })
+const users = {
+    async upsert(userId, data) {
+        await db
+            .collection('users')
+            .doc(userId)
+            .set(data, { merge: true })
+    },
 }
 
-// Queries
-async function getInvestors(username = '') {
-    const response = await db.collection('investors').get()
-    let data = []
-    response.forEach((d) => data.push(d.data()))
-    data = data.filter((d) => d.screenName !== username)
-    return data
+const investors = {
+    async upsert(userId, data) {
+        await db
+            .collection('investors')
+            .doc(`${userId}`)
+            .set(data, { merge: true })
+    },
+    async getAll(username = '') {
+        const response = await db.collection('investors').get()
+        let data = []
+        response.forEach((d) => data.push(d.data()))
+        data = data.filter((d) => d.screen_name !== username)
+        return data
+    },
 }
 
 module.exports = {
-    upsertUser,
-    getInvestors,
+    users,
+    investors,
 }
