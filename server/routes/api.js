@@ -1,6 +1,7 @@
 const express = require('express')
 const Twit = require('twit')
 const db = require('../lib/db')
+const cleanTwitterUser = require('../lib/clean-twitter-user')
 
 const router = express.Router()
 
@@ -26,10 +27,11 @@ router.get('/api/me', async (req, res) => {
         const { data } = await twit.get('account/verify_credentials', {
             include_email: true,
         })
-        await db.upsertUser(req.session.userId, data)
+        const cleaned = cleanTwitterUser(data)
+        await db.users.upsert(req.session.username, cleaned)
         res.send({
             status: data.statusCode,
-            data,
+            data: cleaned,
         })
     } catch (err) {
         console.log(err)
@@ -38,7 +40,29 @@ router.get('/api/me', async (req, res) => {
 
 router.get('/api/investors', async (req, res) => {
     try {
-        const data = await db.getInvestors(req.session.username)
+        const data = await db.investors.getAll(req.session.username)
+        res.send({
+            status: res.statusCode,
+            data,
+        })
+    } catch (err) {
+        console.log(err)
+    }
+})
+
+router.post('/api/investors', async (req, res) => {
+    try {
+        const { category, username } = req.body
+        const { data: investorData } = await twit.get('users/show', {
+            screen_name: username,
+            include_entities: false,
+        })
+        const cleaned = cleanTwitterUser(investorData)
+        const data = {
+            ...cleaned,
+            category,
+        }
+        await db.investors.upsert(data.screen_name, data)
         res.send({
             status: res.statusCode,
             data,

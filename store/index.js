@@ -1,8 +1,10 @@
 const SET_PROFILE = 'SET_PROFILE'
+const SET_INVESTORS = 'SET_INVESTORS'
 const SET_USER = 'SET_USER'
 
 export const state = () => ({
     authUser: null,
+    investors: [],
     profile: null,
 })
 
@@ -11,6 +13,9 @@ export const getters = {
 }
 
 export const mutations = {
+    [SET_INVESTORS](state, investors) {
+        state.investors = investors
+    },
     [SET_PROFILE](state, profile) {
         state.profile = profile
     },
@@ -34,7 +39,8 @@ export const actions = {
             try {
                 const res = await this.$axios.$get('/api/me')
                 commit(SET_PROFILE, res.data)
-                // const res2 = await this.$axios.$get('/api/investors')
+                const resx = await this.$axios.$get('/api/investors')
+                commit(SET_INVESTORS, resx.data)
             } catch (err) {
                 // eslint-disable-next-line no-console
                 console.error(err)
