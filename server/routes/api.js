@@ -26,12 +26,7 @@ router.get('/api/me', async (req, res) => {
         const { data } = await twit.get('account/verify_credentials', {
             include_email: true,
         })
-
-        await db
-            .collection('users')
-            .doc(req.session.userId)
-            .set({ data }, { merge: true })
-
+        await db.upsertUser(req.session.userId, data)
         res.send({
             status: data.statusCode,
             data,
@@ -43,10 +38,7 @@ router.get('/api/me', async (req, res) => {
 
 router.get('/api/investors', async (req, res) => {
     try {
-        const response = await db.collection('investors').get()
-        let data = []
-        response.forEach((d) => data.push(d.data()))
-        data = data.filter((d) => d.username !== req.session.username)
+        const data = await db.getInvestors(req.session.username)
         res.send({
             status: res.statusCode,
             data,
