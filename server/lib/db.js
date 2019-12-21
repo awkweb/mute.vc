@@ -11,20 +11,21 @@ firebase.initializeApp({
 const db = firebase.firestore()
 
 const users = {
-    async upsert(userId, data) {
+    async upsert(username, data) {
         await db
             .collection('users')
-            .doc(userId)
+            .doc(username)
             .set(data, { merge: true })
     },
 }
 
 const investors = {
-    async upsert(userId, data) {
-        await db
-            .collection('investors')
-            .doc(`${userId}`)
-            .set(data, { merge: true })
+    async incrementMutes(usernames) {
+        // const batch = db.batch()
+        // usernames.forEach((u) => {
+        //     const investorRef = db.collection('investors').doc(u)
+        //     batch.set(investorRef, { name: 'New York City' })
+        // })
     },
     async getAll(username = '') {
         const response = await db.collection('investors').get()
@@ -32,6 +33,12 @@ const investors = {
         response.forEach((d) => data.push(d.data()))
         data = data.filter((d) => d.screen_name !== username)
         return data
+    },
+    async upsert(username, data) {
+        await db
+            .collection('investors')
+            .doc(username)
+            .set(data, { merge: true })
     },
 }
 

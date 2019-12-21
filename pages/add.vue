@@ -26,7 +26,7 @@
                 <NuxtLink to="/">
                     Back
                 </NuxtLink>
-                <button :disabled="submitDisabled">
+                <button :disabled="submitDisabled" type="submit">
                     {{ loading ? 'Adding...' : 'Add' }}
                 </button>
             </div>
