@@ -1,3 +1,5 @@
+const RESET_FORM = 'RESET_FORM'
+const SELECT_INVESTOR = 'SELECT_INVESTOR'
 const SET_PROFILE = 'SET_PROFILE'
 const SET_INVESTORS = 'SET_INVESTORS'
 const SET_USER = 'SET_USER'
@@ -5,14 +7,35 @@ const SET_USER = 'SET_USER'
 export const state = () => ({
     authUser: null,
     investors: [],
+    selectedInvestorsMap: {},
     profile: null,
 })
 
 export const getters = {
     isLoggedIn: (state) => !!state.authUser,
+    selectedInvestorUsernames: (state) =>
+        Object.keys(state.selectedInvestorsMap),
+    selectedInvestorCount: (state, getters) =>
+        getters.selectedInvestorUsernames.length,
 }
 
 export const mutations = {
+    [SELECT_INVESTOR](state, username) {
+        if (
+            Object.prototype.hasOwnProperty.call(
+                state.selectedInvestorsMap,
+                username,
+            )
+        ) {
+            const { [username]: removed, ...rest } = state.selectedInvestorsMap
+            state.selectedInvestorsMap = rest
+        } else {
+            state.selectedInvestorsMap = {
+                ...state.selectedInvestorsMap,
+                [username]: 1,
+            }
+        }
+    },
     [SET_INVESTORS](state, investors) {
         state.investors = investors
     },
@@ -22,6 +45,9 @@ export const mutations = {
     [SET_USER](state, user) {
         state.authUser = user
     },
+    [RESET_FORM](state) {
+        state.selectedInvestorsMap = {}
+    },
 }
 
 export const actions = {
@@ -29,10 +55,6 @@ export const actions = {
         if (req.session?.username) {
             commit(SET_USER, req.session)
         }
-    },
-    async logout({ commit }) {
-        await this.$axios.$post('/logout')
-        commit(SET_USER, null)
     },
     async bootstrap({ commit, getters }) {
         if (getters.isLoggedIn) {
@@ -46,5 +68,15 @@ export const actions = {
                 console.error(err)
             }
         }
+    },
+    async mute({ commit, getters }) {
+        await this.$axios.$post('/api/mutes', {
+            usernames: getters.selectedInvestorUsernames,
+        })
+        commit(RESET_FORM)
+    },
+    async logout({ commit }) {
+        await this.$axios.$post('/logout')
+        commit(SET_USER, null)
     },
 }

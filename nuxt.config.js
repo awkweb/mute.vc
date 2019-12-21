@@ -18,7 +18,7 @@ module.exports = {
     },
     loading: { color: '#fff' },
     css: [],
-    plugins: [],
+    plugins: ['@plugins/filters.js'],
     buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/tailwindcss'],
     modules: ['@nuxtjs/axios', '@nuxtjs/dotenv'],
     axios: {},
