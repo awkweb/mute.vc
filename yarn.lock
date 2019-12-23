@@ -5230,6 +5230,11 @@ inquirer@^7.0.0:
     strip-ansi "^5.1.0"
     through "^2.3.6"
 
+inter-ui@^3.11.0:
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/inter-ui/-/inter-ui-3.11.0.tgz#41244961a2b477fb79e388fa17c703effc0be165"
+  integrity sha512-jZur5LH/am3MUtBs7473ary7Q5/sMP68/2UWkLIdNOEbKyBThzcxi+HWTwFlSet/spShI9GPCWcyIrk2qkLlaw==
+
 invariant@^2.2.2:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"

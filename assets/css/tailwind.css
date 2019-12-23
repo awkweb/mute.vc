@@ -1,3 +1,33 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+/* Fonts */
+@import 'inter-ui/inter';
+
+/* Colors */
+:root {
+    --color-background: hsl(104, 100%, 100%);
+    --color-text: hsl(0, 0%, 0%);
+    --color-primary: hsl(203, 89%, 53%);
+}
+
+/* purgecss start ignore */
+@tailwind base;
+@tailwind components;
+/* purgecss end ignore */
+
+/* Custom global styles */
+html {
+    @apply text-base;
+}
+
+body {
+    @apply antialiased;
+    @apply bg-background;
+    @apply text-body;
+    text-rendering: optimizeLegibility;
+}
+
+.container {
+    @apply font-sans;
+}
+
+/* Everything else */
+@tailwind utilities;

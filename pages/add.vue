@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>Add Investor</h1>
-        <form @submit="handleSubmit">
+        <form>
             <div>
                 <label>Username</label>
                 <input
@@ -26,7 +26,11 @@
                 <NuxtLink to="/">
                     Back
                 </NuxtLink>
-                <button :disabled="submitDisabled" type="submit">
+                <button
+                    :disabled="submitDisabled"
+                    @click.prevent="handleSubmit"
+                    @keyup.enter="handleSubmit"
+                >
                     {{ loading ? 'Adding...' : 'Add' }}
                 </button>
             </div>

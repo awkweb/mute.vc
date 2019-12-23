@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <template v-if="isLoggedIn">
             <Dashboard />
         </template>

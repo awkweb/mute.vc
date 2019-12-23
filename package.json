@@ -29,6 +29,7 @@
         "cross-env": "6.0.3",
         "express": "4.17.1",
         "firebase": "7.6.1",
+        "inter-ui": "^3.11.0",
         "login-with-twitter": "1.2.2",
         "nuxt": "2.11.0",
         "twit": "2.2.11"
