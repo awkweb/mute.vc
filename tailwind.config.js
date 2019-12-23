@@ -39,11 +39,12 @@ module.exports = {
             background: 'var(--color-background)',
             body: 'var(--color-text)',
             primary: 'var(--color-primary)',
+            secondary: 'var(--color-secondary)',
             transparent: 'transparent',
         },
         container: {
             center: true,
-            padding: '2rem',
+            padding: '1rem',
         },
         cursor: {
             auto: 'auto',

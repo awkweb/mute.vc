@@ -1,4 +1,5 @@
 const RESET_FORM = 'RESET_FORM'
+const SELECT_ALL = 'SELECT_ALL'
 const SELECT_INVESTOR = 'SELECT_INVESTOR'
 const SET_PROFILE = 'SET_PROFILE'
 const SET_INVESTORS = 'SET_INVESTORS'
@@ -12,6 +13,10 @@ export const state = () => ({
 })
 
 export const getters = {
+    allSelected: (state) =>
+        state.investors.length > 0 &&
+        Object.keys(state.selectedInvestorsMap).length ===
+            state.investors.length,
     isLoggedIn: (state) => !!state.authUser,
     selectedInvestorUsernames: (state) =>
         Object.keys(state.selectedInvestorsMap),
@@ -20,6 +25,22 @@ export const getters = {
 }
 
 export const mutations = {
+    [SELECT_ALL](state) {
+        if (
+            Object.keys(state.selectedInvestorsMap).length ===
+            state.investors.length
+        ) {
+            state.selectedInvestorsMap = {}
+        } else {
+            state.selectedInvestorsMap = state.investors.reduce(
+                (result, item) => {
+                    result[item.screen_name] = 1
+                    return result
+                },
+                {},
+            )
+        }
+    },
     [SELECT_INVESTOR](state, username) {
         if (
             Object.prototype.hasOwnProperty.call(

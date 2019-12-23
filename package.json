@@ -25,6 +25,7 @@
     "dependencies": {
         "@nuxtjs/axios": "5.9.0",
         "@nuxtjs/dotenv": "1.4.1",
+        "autolinker": "^3.11.1",
         "cookie-session": "1.3.3",
         "cross-env": "6.0.3",
         "express": "4.17.1",

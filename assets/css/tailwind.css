@@ -4,8 +4,9 @@
 /* Colors */
 :root {
     --color-background: hsl(104, 100%, 100%);
-    --color-text: hsl(0, 0%, 0%);
+    --color-text: hsl(0, 0%, 5%);
     --color-primary: hsl(203, 89%, 53%);
+    --color-secondary: hsl(0, 0%, 32%);
 }
 
 /* purgecss start ignore */
@@ -14,6 +15,10 @@
 /* purgecss end ignore */
 
 /* Custom global styles */
+::placeholder {
+    opacity: 1;
+}
+
 html {
     @apply text-base;
 }
@@ -23,6 +28,10 @@ body {
     @apply bg-background;
     @apply text-body;
     text-rendering: optimizeLegibility;
+}
+
+a {
+    @apply underline;
 }
 
 .container {
