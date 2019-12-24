@@ -40,6 +40,7 @@ router.get('/auth/twitter/callback', (req, res) => {
                 res.redirect('/')
             }
             delete req.session.oauthTokenSecret
+            req.session.admin = user.userId === '106590533'
             req.session.userId = user.userId
             req.session.username = user.userName
             req.session.token = user.userToken
@@ -50,6 +51,7 @@ router.get('/auth/twitter/callback', (req, res) => {
 })
 
 router.post('/logout', (req, res) => {
+    delete req.session.admin
     delete req.session.userId
     delete req.session.username
     delete req.session.token

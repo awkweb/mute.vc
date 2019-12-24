@@ -57,7 +57,7 @@
                             <td class="align-top pb-4 pr-8 pt-1">
                                 <div class="flex">
                                     <img
-                                        class="bg-light h-8 mr-5 rounded-full w-8"
+                                        class="bg-light h-8 mr-5 mt-1 rounded-full w-8"
                                         :src="investor.profile_image_url_https"
                                     />
                                     <div class="flex flex-col">
