@@ -18,6 +18,10 @@ let twit
 
 router.use('/api', (req, res, next) => {
     res.setHeader('Content-Type', 'application/json')
+    if (!req.session.username) {
+        res.sendStatus(403)
+        return
+    }
     twit = genTwit(req.session.token, req.session.secret)
     next()
 })
@@ -34,7 +38,7 @@ router.get('/api/me', async (req, res) => {
             data: cleaned,
         })
     } catch (err) {
-        console.log(err)
+        res.send(err)
     }
 })
 
@@ -46,7 +50,7 @@ router.get('/api/investors', async (req, res) => {
             data,
         })
     } catch (err) {
-        console.log(err)
+        res.send(err)
     }
 })
 
@@ -72,7 +76,7 @@ router.post('/api/investors', async (req, res) => {
             data,
         })
     } catch (err) {
-        console.log(err)
+        res.send(err)
     }
 })
 
@@ -90,7 +94,7 @@ router.post('/api/mutes', async (req, res) => {
             status: res.statusCode,
         })
     } catch (err) {
-        console.log(err)
+        res.send(err)
     }
 })
 
