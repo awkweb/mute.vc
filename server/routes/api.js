@@ -52,17 +52,21 @@ router.get('/api/investors', async (req, res) => {
 
 router.post('/api/investors', async (req, res) => {
     try {
-        const { category, username } = req.body
-        const { data: investorData } = await twit.get('users/show', {
-            screen_name: username,
-            include_entities: false,
+        const { usernames } = req.body
+        const promises = usernames.map((u) =>
+            twit.get('users/show', {
+                screen_name: u,
+                include_entities: false,
+            }),
+        )
+        const all = await Promise.all(promises)
+        const data = []
+        all.forEach(async (a) => {
+            const { data: investorData } = a
+            const cleaned = cleanTwitterUser(investorData)
+            data.push(cleaned)
+            await db.investors.upsert(cleaned.screen_name, cleaned)
         })
-        const cleaned = cleanTwitterUser(investorData)
-        const data = {
-            ...cleaned,
-            category,
-        }
-        await db.investors.upsert(data.screen_name, data)
         res.send({
             status: res.statusCode,
             data,

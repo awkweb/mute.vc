@@ -1,7 +1,10 @@
 <template>
     <div class="mt-10">
-        <div class="mb-5">
-            Mute VC *thought leaders*
+        <div class="mb-1">
+            Mute investors
+        </div>
+        <div class="mb-5 text-sm text-secondary">
+            We’ll never post or share anything without your permission.
         </div>
         <a
             class="

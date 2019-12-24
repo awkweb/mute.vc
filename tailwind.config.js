@@ -38,6 +38,7 @@ module.exports = {
         colors: {
             background: 'var(--color-background)',
             body: 'var(--color-text)',
+            light: 'var(--color-light)',
             primary: 'var(--color-primary)',
             secondary: 'var(--color-secondary)',
             transparent: 'transparent',

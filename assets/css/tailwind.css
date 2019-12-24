@@ -4,9 +4,10 @@
 /* Colors */
 :root {
     --color-background: hsl(104, 100%, 100%);
-    --color-text: hsl(0, 0%, 5%);
+    --color-light: hsl(0, 0%, 92%);
     --color-primary: hsl(203, 89%, 53%);
     --color-secondary: hsl(0, 0%, 32%);
+    --color-text: hsl(0, 0%, 5%);
 }
 
 /* purgecss start ignore */

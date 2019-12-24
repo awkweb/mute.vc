@@ -1,55 +1,20 @@
 <template>
-    <div class="mt-10">
-        <div class="flex mb-5 text-sm">
+    <div class="mt-3">
+        <div class="flex mb-5 text-secondary text-sm">
             <div>@{{ authUser.username }}</div>
-            <button class="ml-3 text-secondary underline" @click="handleLogOut">
-                log out
+            <button class="ml-2 underline" @click="handleLogOut">
+                Log out
             </button>
         </div>
-        <div v-if="investors.length > 0" class="mb-16">
+        <div
+            v-if="investors.length > 0"
+            :class="selectedInvestorCount > 0 ? 'mb-16' : ''"
+        >
             <form @submit="handleSubmit">
-                <div
-                    v-show="selectedInvestorCount > 0"
-                    class="
-                        bg-background
-                        bottom-0
-                        fixed
-                        inset-x-0
-                    "
-                    style="box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 24px 0px;"
-                >
-                    <div
-                        class="
-                            container
-                            flex
-                            items-center
-                            py-3
-                        "
-                    >
-                        <button
-                            class="
-                            bg-body
-                            font-semibold
-                            px-5
-                            py-2
-                            rounded
-                            text-background
-                            text-sm
-                        "
-                            :disabled="loading || selectedInvestorCount === 0"
-                            type="submit"
-                        >
-                            {{ loading ? 'Muting...' : 'Mute' }}
-                        </button>
-                        <div class="ml-3 text-secondary text-sm">
-                            {{ selectedInvestorCount }} selected
-                        </div>
-                    </div>
-                </div>
                 <table>
                     <thead>
                         <tr>
-                            <th class="align-top pb-4 pr-6">
+                            <th class="align-top pb-4 pl-2 pr-6">
                                 <input
                                     class="mt-1"
                                     :checked="allSelected"
@@ -65,9 +30,9 @@
                                 <span class="font-semibold text-sm">Mutes</span>
                             </th>
                             <th class="align-top pb-4 pr-10 text-left">
-                                <span class="font-semibold text-sm"
-                                    >Followers</span
-                                >
+                                <span class="font-semibold text-sm">
+                                    Followers
+                                </span>
                             </th>
                             <th class="align-top pb-4 pr-10 text-left">
                                 <span class="font-semibold text-sm">Bio</span>
@@ -75,8 +40,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="investor in investors" :key="investor.id">
-                            <td class="align-top pb-4 pr-6">
+                        <tr
+                            v-for="investor in investors"
+                            :key="investor.id"
+                            class="hover:bg-light"
+                        >
+                            <td class="align-top pb-4 pl-2 pr-6">
                                 <input
                                     class="mt-1"
                                     :checked="isChecked(investor.screen_name)"
@@ -88,7 +57,7 @@
                             <td class="align-top pb-4 pr-8">
                                 <div class="flex">
                                     <img
-                                        class="bg-secondary h-8 mr-5 rounded-full w-8"
+                                        class="bg-light h-8 mr-5 rounded-full w-8"
                                         :src="investor.profile_image_url_https"
                                     />
                                     <div class="flex flex-col">
@@ -118,7 +87,7 @@
                             <td class="align-top pb-4">
                                 <div
                                     class="max-w-xs overflow-hidden text-sm"
-                                    style="box-orient: vertical; display: -webkit-box; line-clamp: 2;"
+                                    style="box-orient: vertical; display: -webkit-box; line-clamp: 2; max-height: 42px;"
                                     v-html="link(investor.description)"
                                 />
                             </td>
@@ -129,6 +98,32 @@
         </div>
         <div v-else>
             Loading...
+        </div>
+        <div
+            v-show="selectedInvestorCount > 0"
+            class="bg-background bottom-0 fixed inset-x-0"
+            style="box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 24px 0px;"
+        >
+            <div class="container flex items-center py-3">
+                <button
+                    class="
+                            bg-body
+                            font-semibold
+                            px-5
+                            py-2
+                            rounded
+                            text-background
+                            text-sm
+                        "
+                    :disabled="loading || selectedInvestorCount === 0"
+                    type="submit"
+                >
+                    {{ loading ? 'Muting...' : 'Mute' }}
+                </button>
+                <div class="ml-3 text-secondary text-sm">
+                    {{ selectedInvestorCount }} selected
+                </div>
+            </div>
         </div>
     </div>
 </template>

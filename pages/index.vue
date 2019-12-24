@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import Dashboard from '@/components/dashboard'
 import Login from '@/components/login'
 
@@ -24,6 +24,7 @@ export default {
     },
     computed: {
         ...mapGetters(['isLoggedIn']),
+        ...mapState(['authUser']),
     },
 }
 </script>

@@ -1,54 +1,26 @@
 <template>
     <div class="container">
-        <div class="mb-5 mt-10">
-            <h1 class="font-medium">Add Investor</h1>
-            <NuxtLink class="text-secondary text-sm underline" to="/">
-                Back to home
-            </NuxtLink>
-        </div>
+        <h1 class="font-bold mb-5 mt-10">Add Investors</h1>
         <form class="max-w-sm">
             <div class="mb-4">
-                <label class="block mb-1 text-sm">Username</label>
-                <input
-                    v-model.trim="username"
+                <label class="block mb-1 text-sm">
+                    Comma-separated Twitter usernames
+                </label>
+                <textarea
+                    v-model.trim="usernames"
                     class="
                         block
                         border
                         border-solid
                         border-secondary
                         px-2
-                        h-8
+                        py-1
+                        h-48
                         rounded
                         w-full
                     "
                     :disabled="loading"
                 />
-            </div>
-            <div class="mb-4">
-                <label class="block mb-1 text-sm">Category</label>
-                <select
-                    v-model="selected"
-                    class="
-                        block
-                        border
-                        border-solid
-                        border-secondary
-                        placeholder-secondary
-                        px-2
-                        h-8
-                        rounded
-                        w-full
-                    "
-                    :disabled="loading"
-                >
-                    <option
-                        v-for="option in options"
-                        :key="option"
-                        :value="option"
-                    >
-                        {{ option }}
-                    </option>
-                </select>
             </div>
             <button
                 class="
@@ -60,14 +32,25 @@
                     text-background
                     text-sm
                 "
+                :class="submitDisabled ? 'opacity-50 cursor-not-allowed' : ''"
                 :disabled="submitDisabled"
                 @click.prevent="handleSubmit"
                 @keyup.enter="handleSubmit"
             >
-                {{ loading ? 'Adding...' : 'Add' }}
+                {{ loading ? 'Adding...' : buttonText }}
             </button>
-            <div v-if="error" class="mt-4">
+            <div v-if="error" class="mt-5">
                 {{ error }}
+            </div>
+            <div v-else-if="success" class="mt-5">
+                <div>Success! Added:</div>
+                <ul class="list-decimal pl-4">
+                    <li v-for="s in success" :key="s.id">
+                        <a :href="`https://twitter.com/${s.screen_name}`">
+                            {{ s.screen_name }}
+                        </a>
+                    </li>
+                </ul>
             </div>
         </form>
     </div>
@@ -78,13 +61,30 @@ export default {
     data: () => ({
         error: null,
         loading: false,
-        options: ['angel', 'ex', 'micro', 'professional'],
-        selected: null,
-        username: null,
+        success: null,
+        usernames: null,
     }),
     computed: {
         submitDisabled() {
-            return this.loading || !this.username || !this.selected
+            return this.loading || !this.usernames
+        },
+        usernamesList() {
+            return this.usernames
+                ?.split(',')
+                .filter((u) => u !== '')
+                .map((u) => u.trim())
+        },
+        usernamesListCount() {
+            return this.usernamesList?.length ?? 0
+        },
+        buttonText() {
+            if (this.usernamesListCount === 0) {
+                return 'Add'
+            } else if (this.usernamesListCount === 1) {
+                return 'Add 1 investor'
+            } else {
+                return `Add ${this.usernamesListCount} investors`
+            }
         },
     },
     middleware: 'auth',
@@ -93,13 +93,14 @@ export default {
             event.preventDefault()
             try {
                 this.error = null
+                this.success = null
                 this.loading = true
-                await this.$axios.$post('/api/investors', {
-                    category: this.selected,
-                    username: this.username,
+                const { data } = await this.$axios.$post('/api/investors', {
+                    usernames: this.usernamesList,
                 })
                 this.selected = null
-                this.username = null
+                this.usernames = null
+                this.success = data
             } catch (err) {
                 this.error = err
             } finally {
