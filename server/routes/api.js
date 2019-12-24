@@ -61,11 +61,11 @@ router.post('/api/investors', async (req, res) => {
         )
         const all = await Promise.all(promises)
         const data = []
-        all.forEach(async (a) => {
-            const { data: investorData } = a
+        all.forEach((value) => {
+            const { data: investorData } = value
             const cleaned = cleanTwitterUser(investorData)
             data.push(cleaned)
-            await db.investors.upsert(cleaned.screen_name, cleaned)
+            db.investors.upsert(cleaned.screen_name, cleaned)
         })
         res.send({
             status: res.statusCode,

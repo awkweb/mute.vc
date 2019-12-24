@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h1 class="font-bold mb-5 mt-10">Add Investors</h1>
+        <h1 class="font-semibold mb-5 mt-10">Add Investors</h1>
         <form class="max-w-sm">
             <div class="mb-4">
                 <label class="block mb-1 text-sm">

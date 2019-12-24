@@ -8,7 +8,7 @@
         </div>
         <div
             v-if="investors.length > 0"
-            :class="selectedInvestorCount > 0 ? 'mb-16' : ''"
+            :class="selectedInvestorCount > 0 ? 'mb-16' : 'mb-1'"
         >
             <form @submit="handleSubmit">
                 <table>
@@ -45,7 +45,7 @@
                             :key="investor.id"
                             class="hover:bg-light"
                         >
-                            <td class="align-top pb-4 pl-2 pr-6">
+                            <td class="align-top pb-4 pl-2 pr-6 pt-1">
                                 <input
                                     class="mt-1"
                                     :checked="isChecked(investor.screen_name)"
@@ -54,7 +54,7 @@
                                     @input="handleCheckbox"
                                 />
                             </td>
-                            <td class="align-top pb-4 pr-8">
+                            <td class="align-top pb-4 pr-8 pt-1">
                                 <div class="flex">
                                     <img
                                         class="bg-light h-8 mr-5 rounded-full w-8"
@@ -63,7 +63,7 @@
                                     <div class="flex flex-col">
                                         <div>{{ investor.name }}</div>
                                         <a
-                                            class="text-secondary text-sm"
+                                            class="leading-tight text-secondary text-sm"
                                             :href="
                                                 `https://twitter.com/${investor.screen_name}`
                                             "
@@ -74,17 +74,13 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="align-top pb-4 pr-10">
-                                <div>
-                                    100
-                                </div>
+                            <td class="align-top pb-4 pr-10 pt-1">
+                                {{ investor.mutes | nFormatter }}
                             </td>
-                            <td class="align-top pb-4 pr-10">
-                                <div>
-                                    {{ investor.followers_count | nFormatter }}
-                                </div>
+                            <td class="align-top pb-4 pr-10 pt-1">
+                                {{ investor.followers_count | nFormatter }}
                             </td>
-                            <td class="align-top pb-4">
+                            <td class="align-top pb-4 pt-1">
                                 <div
                                     class="max-w-xs overflow-hidden text-sm"
                                     style="box-orient: vertical; display: -webkit-box; line-clamp: 2; max-height: 42px;"
@@ -94,36 +90,28 @@
                         </tr>
                     </tbody>
                 </table>
+                <div
+                    v-show="selectedInvestorCount > 0"
+                    class="bg-background bottom-0 fixed inset-x-0"
+                    style="box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 24px 0px;"
+                >
+                    <div class="container flex items-center py-3">
+                        <button
+                            class="bg-body font-semibold px-5 py-2 rounded text-background text-sm"
+                            :disabled="loading || selectedInvestorCount === 0"
+                            type="submit"
+                        >
+                            {{ loading ? 'Muting...' : 'Mute' }}
+                        </button>
+                        <div class="ml-3 text-secondary text-sm">
+                            {{ selectedInvestorCount }} selected
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
         <div v-else>
             Loading...
-        </div>
-        <div
-            v-show="selectedInvestorCount > 0"
-            class="bg-background bottom-0 fixed inset-x-0"
-            style="box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 24px 0px;"
-        >
-            <div class="container flex items-center py-3">
-                <button
-                    class="
-                            bg-body
-                            font-semibold
-                            px-5
-                            py-2
-                            rounded
-                            text-background
-                            text-sm
-                        "
-                    :disabled="loading || selectedInvestorCount === 0"
-                    type="submit"
-                >
-                    {{ loading ? 'Muting...' : 'Mute' }}
-                </button>
-                <div class="ml-3 text-secondary text-sm">
-                    {{ selectedInvestorCount }} selected
-                </div>
-            </div>
         </div>
     </div>
 </template>

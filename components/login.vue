@@ -4,7 +4,7 @@
             Mute investors
         </div>
         <div class="mb-5 text-sm text-secondary">
-            We’ll never post or share anything without your permission.
+            Remove VC though leadership and platitudes from your feed.
         </div>
         <a
             class="
