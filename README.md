@@ -4,11 +4,11 @@ Remove VC though leadership and platitudes from your feed.
 
 ## Scripts
 
-| script       | description                             |
-| ------------ | ----------------------------------------|
-| `yarn build` | build for production                    |
-| `yarn dev`   | serve with hot reload at localhost:3000 |
-| `yarn start` | launch server                           |
+| script       | description                               |
+| ------------ | ------------------------------------------|
+| `yarn build` | build for production                      |
+| `yarn dev`   | serve with hot reload at `localhost:3000` |
+| `yarn start` | launch server                             |
 
 ## Set up
 

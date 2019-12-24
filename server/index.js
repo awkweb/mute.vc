@@ -23,6 +23,7 @@ app.use(
 // Routes
 app.use(require('./routes/twitter-login'))
 app.use(require('./routes/api'))
+app.get('/healthz', (req, res) => res.sendStatus(200))
 
 // Nuxt start
 async function start() {
