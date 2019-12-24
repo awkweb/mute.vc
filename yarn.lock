@@ -2011,6 +2011,13 @@ atob@^2.1.1:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
+autolinker@^3.11.1:
+  version "3.11.1"
+  resolved "https://registry.yarnpkg.com/autolinker/-/autolinker-3.11.1.tgz#aa4f910371df091b0d714d8d6e700d53f357ce95"
+  integrity sha512-6sAmetStorjXvwmV8MBxI5DGICHKD1B5EjdkIrq34X6YBDN6jj54EUHnoHgNqmNCclcf8c409zuVMNy449u80g==
+  dependencies:
+    tslib "^1.9.3"
+
 autoprefixer@^9.4.5, autoprefixer@^9.6.1:
   version "9.7.3"
   resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-9.7.3.tgz#fd42ed03f53de9beb4ca0d61fb4f7268a9bb50b4"
@@ -5229,6 +5236,11 @@ inquirer@^7.0.0:
     string-width "^4.1.0"
     strip-ansi "^5.1.0"
     through "^2.3.6"
+
+inter-ui@^3.11.0:
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/inter-ui/-/inter-ui-3.11.0.tgz#41244961a2b477fb79e388fa17c703effc0be165"
+  integrity sha512-jZur5LH/am3MUtBs7473ary7Q5/sMP68/2UWkLIdNOEbKyBThzcxi+HWTwFlSet/spShI9GPCWcyIrk2qkLlaw==
 
 invariant@^2.2.2:
   version "2.2.4"
@@ -9445,7 +9457,7 @@ tryer@^1.0.1:
   resolved "https://registry.yarnpkg.com/tryer/-/tryer-1.0.1.tgz#f2c85406800b9b0f74c9f7465b81eaad241252f8"
   integrity sha512-c3zayb8/kWWpycWYg87P71E1S1ZL6b6IJxfb5fvsUgsf0S2MVGaDhDXXjDMpdCpfWXqptc+4mXwmiy1ypXqRAA==
 
-tslib@1.10.0, tslib@^1.8.1, tslib@^1.9.0:
+tslib@1.10.0, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
   integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
