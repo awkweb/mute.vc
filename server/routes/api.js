@@ -40,7 +40,7 @@ router.get('/api/me', async (req, res) => {
 
 router.get('/api/investors', async (req, res) => {
     try {
-        const data = await db.investors.getAll(req.session.username)
+        const data = await db.investors.list(req.session.username)
         res.send({
             status: res.statusCode,
             data,
@@ -65,7 +65,7 @@ router.post('/api/investors', async (req, res) => {
             const { data: investorData } = value
             const cleaned = cleanTwitterUser(investorData)
             data.push(cleaned)
-            db.investors.upsert(cleaned.screen_name, cleaned)
+            db.investors.upsert(cleaned.username, cleaned)
         })
         res.send({
             status: res.statusCode,

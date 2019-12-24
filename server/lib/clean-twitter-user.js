@@ -1,12 +1,16 @@
+const { camelize } = require('@ridi/object-case-converter')
+
 function cleanTwitterUser(data) {
     const {
         entities,
         /* eslint-disable-next-line camelcase */
-        status: { place, retweeted_status, ...status },
+        status: { place, retweetedStatus, ...status },
+        screenName,
         ...cleaned
-    } = data
+    } = camelize(data, { recursive: true })
     return {
         ...cleaned,
+        username: screenName,
         status,
     }
 }

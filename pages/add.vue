@@ -46,8 +46,8 @@
                 <div>Success! Added:</div>
                 <ul class="list-decimal pl-4">
                     <li v-for="s in success" :key="s.id">
-                        <a :href="`https://twitter.com/${s.screen_name}`">
-                            {{ s.screen_name }}
+                        <a :href="`https://twitter.com/${s.username}`">
+                            {{ s.username }}
                         </a>
                     </li>
                 </ul>

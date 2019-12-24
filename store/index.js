@@ -34,8 +34,8 @@ export const mutations = {
             state.selectedInvestorsMap = {}
         } else {
             state.selectedInvestorsMap = state.investors.reduce(
-                (result, item) => {
-                    result[item.screen_name] = 1
+                (result, investor) => {
+                    result[investor.username] = 1
                     return result
                 },
                 {},
@@ -111,12 +111,12 @@ export const actions = {
             if (
                 Object.prototype.hasOwnProperty.call(
                     state.selectedInvestorsMap,
-                    investor.screen_name,
+                    investor.username,
                 )
             ) {
                 commit(SET_INVESTOR, {
                     ...investor,
-                    mutes: investor.mutes + 1,
+                    mutes: (investor.mutes ?? 0) + 1,
                 })
             }
         })

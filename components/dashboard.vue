@@ -48,8 +48,8 @@
                             <td class="align-top pb-4 pl-2 pr-6 pt-1">
                                 <input
                                     class="mt-1"
-                                    :checked="isChecked(investor.screen_name)"
-                                    :value="investor.screen_name"
+                                    :checked="isChecked(investor.username)"
+                                    :value="investor.username"
                                     type="checkbox"
                                     @input="handleCheckbox"
                                 />
@@ -58,27 +58,27 @@
                                 <div class="flex">
                                     <img
                                         class="bg-light h-8 mr-5 mt-1 rounded-full w-8"
-                                        :src="investor.profile_image_url_https"
+                                        :src="investor.profileImageUrlHttps"
                                     />
                                     <div class="flex flex-col">
                                         <div>{{ investor.name }}</div>
                                         <a
                                             class="leading-tight text-secondary text-sm"
                                             :href="
-                                                `https://twitter.com/${investor.screen_name}`
+                                                `https://twitter.com/${investor.username}`
                                             "
                                             target="_blank"
                                         >
-                                            @{{ investor.screen_name }}
+                                            @{{ investor.username }}
                                         </a>
                                     </div>
                                 </div>
                             </td>
                             <td class="align-top pb-4 pr-10 pt-1">
-                                {{ investor.mutes | nFormatter }}
+                                {{ (investor.mutes || 0) | nFormatter }}
                             </td>
                             <td class="align-top pb-4 pr-10 pt-1">
-                                {{ investor.followers_count | nFormatter }}
+                                {{ investor.followersCount | nFormatter }}
                             </td>
                             <td class="align-top pb-4 pt-1">
                                 <div
