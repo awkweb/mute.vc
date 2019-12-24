@@ -1,8 +1,9 @@
 const RESET_FORM = 'RESET_FORM'
 const SELECT_ALL = 'SELECT_ALL'
 const SELECT_INVESTOR = 'SELECT_INVESTOR'
-const SET_PROFILE = 'SET_PROFILE'
+const SET_INVESTOR = 'SET_INVESTOR'
 const SET_INVESTORS = 'SET_INVESTORS'
+const SET_PROFILE = 'SET_PROFILE'
 const SET_USER = 'SET_USER'
 
 export const state = () => ({
@@ -57,6 +58,18 @@ export const mutations = {
             }
         }
     },
+    [SET_INVESTOR](state, investor) {
+        const index = state.investors.findIndex((i) => i.id === investor.id)
+        const investorToUpdate = state.investors.find(
+            (i) => i.id === investor.id,
+        )
+        const updatedInvestor = { ...investorToUpdate, ...investor }
+        state.investors = [
+            ...state.investors.slice(0, index),
+            updatedInvestor,
+            ...state.investors.slice(index + 1, state.investors.length),
+        ]
+    },
     [SET_INVESTORS](state, investors) {
         state.investors = investors
     },
@@ -90,9 +103,22 @@ export const actions = {
             }
         }
     },
-    async mute({ commit, getters }) {
+    async mute({ commit, getters, state }) {
         await this.$axios.$post('/api/mutes', {
             usernames: getters.selectedInvestorUsernames,
+        })
+        state.investors.forEach((investor) => {
+            if (
+                Object.prototype.hasOwnProperty.call(
+                    state.selectedInvestorsMap,
+                    investor.screen_name,
+                )
+            ) {
+                commit(SET_INVESTOR, {
+                    ...investor,
+                    mutes: investor.mutes + 1,
+                })
+            }
         })
         commit(RESET_FORM)
     },
