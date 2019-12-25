@@ -26,9 +26,9 @@ envVarGroups:
   - key: FIREBASE_PROJECT_ID
     sync: false
   - key: NUXT_HOST
-    value: host
+    value: 0.0.0.0
   - key: NUXT_PORT
-    value: port
+    value: 3000
   - key: SECRET
     generateValue: true
   - key: TWITTER_KEY
