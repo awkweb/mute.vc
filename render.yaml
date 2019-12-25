@@ -9,7 +9,7 @@ services:
   startCommand: yarn start
   healthCheckPath: /healthz
   branch: master
-  pullRequestPreviewsEnabled: true
+  pullRequestPreviewsEnabled: false
   autoDeploy: true
   domains:
   - mute.vc

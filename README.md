@@ -10,7 +10,7 @@ Remove VC thought leadership and platitudes from your feed.
 | `yarn dev`   | serve with hot reload at `localhost:3000` |
 | `yarn start` | launch server                             |
 
-## Set up
+## Dev
 
 Create a `.env` file in project root:
 
