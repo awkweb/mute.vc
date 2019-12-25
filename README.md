@@ -1,6 +1,6 @@
 # mute.vc
 
-Remove VC though leadership and platitudes from your feed. 
+Remove VC thought leadership and platitudes from your feed. 
 
 ## Scripts
 

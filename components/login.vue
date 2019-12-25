@@ -4,7 +4,7 @@
             Mute investors
         </div>
         <div class="mb-5 text-sm text-secondary">
-            Remove VC though leadership and platitudes from your feed.
+            Remove VC thought leadership and platitudes from your feed.
         </div>
         <a
             class="
