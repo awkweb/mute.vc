@@ -1,0 +1,37 @@
+services:
+- type: web
+  name: mute.vc
+  env: node
+  plan: standard
+  repo: https://github.com/tmm/mute.vc
+  numInstances: 1
+  buildCommand: yarn && yarn build
+  startCommand: yarn start
+  healthCheckPath: /healthz
+  branch: master
+  pullRequestPreviewsEnabled: true
+  autoDeploy: true
+  domains:
+  - mute.vc
+  envVars:
+  - fromGroup: mute.vc
+
+envVarGroups:
+- name: mute.vc
+  envVars:
+  - key: FIREBASE_API_KEY
+    sync: false
+  - key: FIREBASE_AUTH_DOMAIN
+    sync: false
+  - key: FIREBASE_PROJECT_ID
+    sync: false
+  - key: NUXT_HOST
+    value: host
+  - key: NUXT_PORT
+    value: port
+  - key: SECRET
+    generateValue: true
+  - key: TWITTER_KEY
+    sync: false
+  - key: TWITTER_SECRET
+    sync: false

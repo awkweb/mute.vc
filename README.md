@@ -20,7 +20,6 @@ FIREBASE_AUTH_DOMAIN=mutevc.firebaseapp.com
 FIREBASE_PROJECT_ID=mutevc
 NUXT_HOST=localhost
 NUXT_PORT=3000
-NUXT_PROTOCOL=http
 SECRET=supersecret
 TWITTER_KEY=xxxxxx
 TWITTER_SECRET=xxxxxx
