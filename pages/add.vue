@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div>
         <h1 class="font-semibold mb-5 mt-10">
             Add Investors
         </h1>

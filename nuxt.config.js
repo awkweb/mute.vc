@@ -41,6 +41,12 @@ module.exports = {
                 { innerHTML: 'This website requires JavaScript. Sorry :(' },
             ],
         },
+        htmlAttrs: {
+            lang: 'en',
+        },
+        bodyAttrs: {
+            class: ['container'],
+        },
     },
     loading: { color: '#fff' },
     css: [],
@@ -64,7 +70,6 @@ module.exports = {
                 '@babel/plugin-proposal-nullish-coalescing-operator',
             ],
             presets({ isServer }) {
-                // https://nuxtjs.org/guide/release-notes/#v2.6.0
                 return [
                     [
                         require.resolve('@nuxt/babel-preset-app'),
