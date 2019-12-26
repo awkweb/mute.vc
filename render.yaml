@@ -19,19 +19,19 @@ services:
 envVarGroups:
 - name: mute.vc
   envVars:
-  - key: FIREBASE_API_KEY
-    sync: false
-  - key: FIREBASE_AUTH_DOMAIN
-    sync: false
-  - key: FIREBASE_PROJECT_ID
-    sync: false
+  # - key: FIREBASE_API_KEY
+  #   sync: false
+  # - key: FIREBASE_AUTH_DOMAIN
+  #   sync: false
+  # - key: FIREBASE_PROJECT_ID
+  #   sync: false
   - key: NUXT_HOST
     value: 0.0.0.0
   - key: NUXT_PORT
     value: 3000
   - key: SECRET
     generateValue: true
-  - key: TWITTER_KEY
-    sync: false
-  - key: TWITTER_SECRET
-    sync: false
+  # - key: TWITTER_KEY
+  #   sync: false
+  # - key: TWITTER_SECRET
+  #   sync: false

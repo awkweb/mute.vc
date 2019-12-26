@@ -1,0 +1,21 @@
+{
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "emmet.includeLanguages": {
+        "vue-html": "html"
+    },
+    "emmet.triggerExpansionOnTab": true,
+    "eslint.options": {
+        "extensions": [
+            ".js",
+            ".vue"
+        ]
+    },
+    "eslint.validate": [
+        "javascript",
+        "vue"
+    ],
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "javascript.validate.enable": false
+}

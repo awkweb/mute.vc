@@ -81,11 +81,13 @@
                                 {{ investor.followersCount | nFormatter }}
                             </td>
                             <td class="align-top pb-4 pt-1">
+                                <!-- eslint-disable vue/no-v-html -->
                                 <div
                                     class="max-w-xs overflow-hidden text-sm"
                                     style="box-orient: vertical; display: -webkit-box; line-clamp: 2; max-height: 42px;"
                                     v-html="link(investor.description)"
                                 />
+                                <!--eslint-enable-->
                             </td>
                         </tr>
                     </tbody>

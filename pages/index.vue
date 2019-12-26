@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 import Dashboard from '@/components/dashboard'
 import Login from '@/components/login'
 
@@ -20,11 +20,19 @@ export default {
         Login,
     },
     async fetch({ store, params }) {
-        await store.dispatch('bootstrap')
+        if (store.getters.isLoggedIn) {
+            await store.dispatch('bootstrap')
+        }
     },
     computed: {
         ...mapGetters(['isLoggedIn']),
-        ...mapState(['authUser']),
+    },
+    head() {
+        return {
+            title: this.isLoggedIn
+                ? 'Dashboard'
+                : 'Remove VC thought leadership and platitudes from your feed.',
+        }
     },
 }
 </script>

@@ -1,7 +1,5 @@
 const dev = process.env !== 'production'
-if (dev) {
-    require('dotenv').config()
-}
+if (dev) require('dotenv').config()
 
 const express = require('express')
 const consola = require('consola')

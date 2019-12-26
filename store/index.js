@@ -90,18 +90,11 @@ export const actions = {
             commit(SET_USER, req.session)
         }
     },
-    async bootstrap({ commit, getters }) {
-        if (getters.isLoggedIn) {
-            try {
-                const res = await this.$axios.$get('/api/me')
-                commit(SET_PROFILE, res.data)
-                const resx = await this.$axios.$get('/api/investors')
-                commit(SET_INVESTORS, resx.data)
-            } catch (err) {
-                // eslint-disable-next-line no-console
-                console.error(err)
-            }
-        }
+    async bootstrap({ commit }) {
+        const { data: profile } = await this.$axios.$get('/api/me')
+        commit(SET_PROFILE, profile)
+        const { data: investors } = await this.$axios.$get('/api/investors')
+        commit(SET_INVESTORS, investors)
     },
     async mute({ commit, getters, state }) {
         await this.$axios.$post('/api/mutes', {

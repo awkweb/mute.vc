@@ -1,7 +1,9 @@
 module.exports = {
     mode: 'universal',
     head: {
-        title: process.env.npm_package_name || '',
+        titleTemplate: (titleChunk) => {
+            return titleChunk ? `${titleChunk} ~ mute.vc` : 'mute.vc'
+        },
         meta: [
             { charset: 'utf-8' },
             {
@@ -15,6 +17,11 @@ module.exports = {
             },
         ],
         link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+        metaInfo: {
+            noscript: [
+                { innerHTML: 'This website requires JavaScript. Sorry :(' },
+            ],
+        },
     },
     loading: { color: '#fff' },
     css: [],
@@ -23,7 +30,13 @@ module.exports = {
     modules: ['@nuxtjs/axios', '@nuxtjs/dotenv'],
     axios: {},
     build: {
-        extend(config, ctx) {},
+        extend(config, ctx) {
+            if (ctx.isDev) {
+                config.devtool = ctx.isClient
+                    ? 'source-map'
+                    : 'inline-source-map'
+            }
+        },
         babel: {
             plugins: [
                 '@babel/plugin-proposal-optional-chaining',
