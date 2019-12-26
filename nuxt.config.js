@@ -57,6 +57,7 @@ module.exports = {
         https: !dev,
     },
     build: {
+        extractCSS: true,
         extend(config, ctx) {
             if (ctx.isDev) {
                 config.devtool = ctx.isClient
