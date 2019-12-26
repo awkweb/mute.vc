@@ -21,10 +21,10 @@ envVarGroups:
   envVars:
   # - key: FIREBASE_API_KEY
   #   sync: false
-  # - key: FIREBASE_AUTH_DOMAIN
-  #   sync: false
-  # - key: FIREBASE_PROJECT_ID
-  #   sync: false
+  - key: FIREBASE_AUTH_DOMAIN
+    value: mutevc.firebaseapp.com
+  - key: FIREBASE_PROJECT_ID
+    value: mutevc
   - key: NUXT_HOST
     value: 0.0.0.0
   - key: NUXT_PORT
