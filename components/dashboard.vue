@@ -5,6 +5,9 @@
             <button class="ml-2 underline" @click="handleLogOut">
                 Log out
             </button>
+            <button class="ml-2 underline" @click="handleUndoMutes">
+                Undo all mutes
+            </button>
         </div>
         <div
             v-if="investors.length > 0"
@@ -162,6 +165,9 @@ export default {
             } finally {
                 this.loading = false
             }
+        },
+        async handleUndoMutes() {
+            await this.$store.dispatch('undo')
         },
     },
 }

@@ -18,6 +18,7 @@ export const getters = {
         state.investors.length > 0 &&
         Object.keys(state.selectedInvestorsMap).length ===
             state.investors.length,
+    allInvestorUsernames: (state) => state.investors.map((i) => i.username),
     isLoggedIn: (state) => !!state.authUser,
     selectedInvestorUsernames: (state) =>
         Object.keys(state.selectedInvestorsMap),
@@ -97,7 +98,7 @@ export const actions = {
         commit(SET_INVESTORS, investors)
     },
     async mute({ commit, getters, state }) {
-        await this.$axios.$post('/api/mutes', {
+        await this.$axios.$post('/api/mutes/create', {
             usernames: getters.selectedInvestorUsernames,
         })
         state.investors.forEach((investor) => {
@@ -118,5 +119,10 @@ export const actions = {
     async logout({ commit }) {
         await this.$axios.$post('/logout')
         commit(SET_USER, null)
+    },
+    async undo({ commit, getters, state }) {
+        await this.$axios.$post('/api/mutes/delete', {
+            usernames: getters.allInvestorUsernames,
+        })
     },
 }
