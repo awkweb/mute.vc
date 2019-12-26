@@ -1,3 +1,4 @@
+const dev = process.env.NODE_ENV !== 'production'
 module.exports = {
     mode: 'universal',
     head: {
@@ -28,7 +29,9 @@ module.exports = {
     plugins: ['@plugins/filters.js'],
     buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/tailwindcss'],
     modules: ['@nuxtjs/axios', '@nuxtjs/dotenv'],
-    axios: {},
+    axios: {
+        https: !dev,
+    },
     build: {
         extend(config, ctx) {
             if (ctx.isDev) {

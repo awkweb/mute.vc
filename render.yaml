@@ -2,7 +2,7 @@ services:
 - type: web
   name: mute.vc
   env: node
-  plan: standard
+  plan: starter
   repo: https://github.com/tmm/mute.vc
   numInstances: 1
   buildCommand: yarn && yarn build
