@@ -80,7 +80,7 @@ router.post('/api/investors', async (req, res) => {
     }
 })
 
-router.post('/api/mutes', async (req, res) => {
+router.post('/api/mutes/create', async (req, res) => {
     try {
         const { usernames } = req.body
         const promises = usernames.map((u) =>
@@ -90,6 +90,23 @@ router.post('/api/mutes', async (req, res) => {
         )
         await Promise.all(promises)
         await db.investors.incrementMutes(usernames)
+        res.send({
+            status: res.statusCode,
+        })
+    } catch (err) {
+        res.send(err)
+    }
+})
+
+router.post('/api/mutes/delete', async (req, res) => {
+    try {
+        const { usernames } = req.body
+        const promises = usernames.map((u) =>
+            twit.post('mutes/users/destroy', {
+                screen_name: u,
+            }),
+        )
+        await Promise.all(promises)
         res.send({
             status: res.statusCode,
         })
