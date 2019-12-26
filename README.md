@@ -24,3 +24,20 @@ SECRET=supersecret
 TWITTER_KEY=xxxxxx
 TWITTER_SECRET=xxxxxx
 ```
+
+## Prod
+
+Render doesn't support `sync` in `envVarGroups` yet so need to add a few secrets manually.
+
+```yaml
+envVarGroups:
+- name: mute.vc
+  envVars:
+  ...
+  - key: FIREBASE_API_KEY
+    sync: false
+  - key: TWITTER_KEY
+    sync: false
+  - key: TWITTER_SECRET
+    sync: false
+```

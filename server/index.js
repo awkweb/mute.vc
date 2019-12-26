@@ -1,6 +1,3 @@
-const dev = process.env !== 'production'
-if (dev) require('dotenv').config()
-
 const express = require('express')
 const consola = require('consola')
 const session = require('cookie-session')
@@ -8,7 +5,7 @@ const { Nuxt, Builder } = require('nuxt')
 
 // Import and set Nuxt.js options
 const config = require('../nuxt.config.js')
-config.dev = dev
+config.dev = process.env !== 'production'
 
 const app = express()
 app.use(express.json()) // Handle parsing json data from requests

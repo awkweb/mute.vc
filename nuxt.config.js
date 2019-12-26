@@ -1,4 +1,10 @@
 const dev = process.env.NODE_ENV !== 'production'
+const devModules = []
+if (dev) {
+    require('dotenv').config()
+    devModules.push('@nuxtjs/dotenv')
+}
+
 module.exports = {
     mode: 'universal',
     head: {
@@ -28,7 +34,7 @@ module.exports = {
     css: [],
     plugins: ['@plugins/filters.js'],
     buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/tailwindcss'],
-    modules: ['@nuxtjs/axios', '@nuxtjs/dotenv'],
+    modules: [...devModules, '@nuxtjs/axios'],
     axios: {
         https: !dev,
     },

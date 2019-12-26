@@ -38,9 +38,6 @@ router.get('/auth/twitter/callback', (req, res) => {
                 console.log('failed twitter login', err)
                 res.redirect('/')
             }
-            console.log(user !== undefined)
-            console.log(user.userName)
-            console.log(process.env._AXIOS_BASE_URL_)
             delete req.session.oauthTokenSecret
             req.session.admin = user.userId === '106590533'
             req.session.userId = user.userId
