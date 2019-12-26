@@ -29,9 +29,7 @@ export default {
     },
     head() {
         return {
-            title: this.isLoggedIn
-                ? 'Dashboard'
-                : 'Remove VC thought leadership and platitudes from your feed.',
+            title: this.isLoggedIn ? 'Dashboard' : 'Mute investors on Twitter',
         }
     },
 }

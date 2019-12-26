@@ -1,7 +1,7 @@
 <template>
     <div class="mt-10">
         <div class="mb-1">
-            Mute investors
+            Mute investors on Twitter
         </div>
         <div class="mb-5 text-sm text-secondary">
             Remove VC thought leadership and platitudes from your feed.
