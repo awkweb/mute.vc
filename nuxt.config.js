@@ -52,7 +52,7 @@ module.exports = {
     css: [],
     plugins: ['@plugins/filters.js'],
     buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/tailwindcss'],
-    modules: [...devModules, '@nuxtjs/axios'],
+    modules: [...devModules, '@nuxtjs/axios', 'nuxt-purgecss'],
     axios: {
         https: !dev,
     },

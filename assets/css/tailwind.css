@@ -21,6 +21,7 @@
 }
 
 html {
+    @apply font-sans;
     @apply text-base;
 }
 
@@ -33,10 +34,6 @@ body {
 
 a {
     @apply underline;
-}
-
-.container {
-    @apply font-sans;
 }
 
 /* Everything else */
