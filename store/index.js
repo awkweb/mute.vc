@@ -3,14 +3,16 @@ const SELECT_ALL = 'SELECT_ALL'
 const SELECT_INVESTOR = 'SELECT_INVESTOR'
 const SET_INVESTOR = 'SET_INVESTOR'
 const SET_INVESTORS = 'SET_INVESTORS'
+const SET_MUTED = 'SET_MUTED'
 const SET_PROFILE = 'SET_PROFILE'
 const SET_USER = 'SET_USER'
 
 export const state = () => ({
     authUser: null,
     investors: [],
-    selectedInvestorsMap: {},
+    muted: {},
     profile: null,
+    selectedInvestorsMap: {},
 })
 
 export const getters = {
@@ -74,6 +76,9 @@ export const mutations = {
     [SET_INVESTORS](state, investors) {
         state.investors = investors
     },
+    [SET_MUTED](state, muted) {
+        state.muted = muted
+    },
     [SET_PROFILE](state, profile) {
         state.profile = profile
     },
@@ -96,6 +101,12 @@ export const actions = {
         commit(SET_PROFILE, profile)
         const { data: investors } = await this.$axios.$get('/api/investors')
         commit(SET_INVESTORS, investors)
+        const { data: mutes } = await this.$axios.$get('/api/mutes')
+        const muted = mutes.reduce((result, id) => {
+            result[id] = 1
+            return result
+        }, {})
+        commit(SET_MUTED, muted)
     },
     async mute({ commit, getters, state }) {
         await this.$axios.$post('/api/mutes/create', {
@@ -112,6 +123,10 @@ export const actions = {
                     ...investor,
                     mutes: (investor.mutes ?? 0) + 1,
                 })
+                commit(SET_MUTED, {
+                    ...state.muted,
+                    [investor.id]: 1,
+                })
             }
         })
         commit(RESET_FORM)
@@ -124,5 +139,6 @@ export const actions = {
         await this.$axios.$post('/api/mutes/delete', {
             usernames: getters.allInvestorUsernames,
         })
+        commit(SET_MUTED, {})
     },
 }

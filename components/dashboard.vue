@@ -47,6 +47,7 @@
                             v-for="investor in investors"
                             :key="investor.id"
                             class="hover:bg-light"
+                            :class="isMuted(investor.id) ? 'opacity-25' : ''"
                         >
                             <td class="align-top pb-4 pl-2 pr-6 pt-1">
                                 <input
@@ -132,7 +133,7 @@ export default {
     }),
     computed: {
         ...mapGetters(['allSelected', 'isLoggedIn', 'selectedInvestorCount']),
-        ...mapState(['authUser', 'investors', 'selectedInvestorsMap']),
+        ...mapState(['authUser', 'investors', 'muted', 'selectedInvestorsMap']),
     },
     methods: {
         link(text) {
@@ -147,6 +148,9 @@ export default {
                 this.selectedInvestorsMap,
                 username,
             )
+        },
+        isMuted(id) {
+            return Object.prototype.hasOwnProperty.call(this.muted, id)
         },
         handleCheckbox(event) {
             this.$store.commit('SELECT_INVESTOR', event.target.value)

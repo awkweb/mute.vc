@@ -80,6 +80,18 @@ router.post('/api/investors', async (req, res) => {
     }
 })
 
+router.get('/api/mutes', async (req, res) => {
+    try {
+        const { data } = await twit.get('mutes/users/ids')
+        res.send({
+            status: data.statusCode,
+            data: data.ids,
+        })
+    } catch (err) {
+        res.send(err)
+    }
+})
+
 router.post('/api/mutes/create', async (req, res) => {
     try {
         const { usernames } = req.body
