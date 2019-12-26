@@ -5,11 +5,14 @@ if (dev) {
     devModules.push('@nuxtjs/dotenv')
 }
 
+const title = 'Mute investors on Twitter'
+const description = process.env.npm_package_description
+
 module.exports = {
     mode: 'universal',
     head: {
         titleTemplate: (titleChunk) => {
-            return titleChunk ? `${titleChunk} ~ mute.vc` : 'mute.vc'
+            return titleChunk ? `${titleChunk} ~ Mute.vc` : 'Mute.vc'
         },
         meta: [
             { charset: 'utf-8' },
@@ -20,8 +23,17 @@ module.exports = {
             {
                 hid: 'description',
                 name: 'description',
-                content: process.env.npm_package_description || '',
+                content: description,
             },
+            { name: 'twitter:title', content: title },
+            { name: 'twitter:description', content: description },
+            { name: 'twitter:image', content: '' },
+            { name: 'twitter:card', content: 'summary' },
+            { property: 'og:url', content: 'https://mute.vc' },
+            { property: 'og:type', content: 'website' },
+            { property: 'og:title', content: title },
+            { property: 'og:description', content: description },
+            { property: 'og:image', content: '' },
         ],
         link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
         metaInfo: {

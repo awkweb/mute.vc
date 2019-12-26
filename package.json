@@ -1,7 +1,7 @@
 {
     "name": "mute.vc",
     "version": "1.0.0",
-    "description": "Remove VC though leadership and platitudes from your feed.",
+    "description": "Remove VC thought leadership and platitudes from your feed.",
     "author": "Tom Meagher",
     "private": true,
     "scripts": {
