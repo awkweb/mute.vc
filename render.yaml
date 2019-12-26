@@ -19,6 +19,8 @@ services:
 envVarGroups:
 - name: mute.vc
   envVars:
+  - key: API_URL
+    value: https://mute.vc
   # - key: FIREBASE_API_KEY
   #   sync: false
   - key: FIREBASE_AUTH_DOMAIN

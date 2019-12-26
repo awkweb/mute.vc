@@ -28,7 +28,6 @@ router.use('/api', (req, res, next) => {
 
 router.get('/api/me', async (req, res) => {
     try {
-        console.log('hi')
         const { data } = await twit.get('account/verify_credentials', {
             include_email: true,
         })

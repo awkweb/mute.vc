@@ -3,10 +3,9 @@ const LoginWithTwitter = require('login-with-twitter')
 
 const router = express.Router()
 
-const dev = process.env.NODE_ENV !== 'production'
-const baseUrl = dev
-    ? `http://${process.env.NUXT_HOST}:${process.env.NUXT_PORT}`
-    : `https://mute.vc`
+const baseUrl = process.env.API_URL
+    ? process.env.API_URL
+    : `http://${process.env.NUXT_HOST}:${process.env.NUXT_PORT}`
 const tw = new LoginWithTwitter({
     consumerKey: process.env.TWITTER_KEY,
     consumerSecret: process.env.TWITTER_SECRET,
