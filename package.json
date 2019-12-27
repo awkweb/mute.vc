@@ -33,9 +33,9 @@
         "inter-ui": "3.11.0",
         "login-with-twitter": "1.2.2",
         "nuxt": "2.11.0",
-        "nuxt-purgecss": "^0.2.1",
+        "nuxt-purgecss": "0.2.1",
         "twit": "2.2.11",
-        "vue-feather-icons": "^5.0.0"
+        "vue-feather-icons": "5.0.0"
     },
     "devDependencies": {
         "@babel/plugin-proposal-nullish-coalescing-operator": "7.7.4",
