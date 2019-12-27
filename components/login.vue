@@ -131,7 +131,7 @@
                             Donate
                         </a>
                     </li>
-                    <li class="mb-4 lg:mb-0 lg:ml-10">
+                    <li class="mb-4 lg:mb-0 lg:ml-8">
                         <a
                             class="lg:no-underline hover:underline text-secondary lg:text-sm"
                             href="mailto:tom@meagher.co?subject=mute.vc"
@@ -139,7 +139,7 @@
                             Contact
                         </a>
                     </li>
-                    <li class="mb-4 lg:mb-0 lg:ml-10">
+                    <li class="mb-4 lg:mb-0 lg:ml-8">
                         <a
                             class="lg:no-underline hover:underline text-secondary lg:text-sm"
                             href="https://twitter.com/tomfme"
