@@ -44,9 +44,6 @@ module.exports = {
         htmlAttrs: {
             lang: 'en',
         },
-        bodyAttrs: {
-            class: ['container'],
-        },
     },
     loading: { color: '#fff' },
     css: [],
