@@ -1,6 +1,6 @@
 <template>
     <div>
-        <header class="container mb-48 mt-32 text-center">
+        <header class="container lg:mb-48 mb-24 lg:mt-32 mt-20 text-center">
             <h1 class="font-bold mb-6 text-body text-headline">
                 Mute investors on Twitter
             </h1>
@@ -22,6 +22,8 @@
                     block
                     flex
                     font-semibold
+                    hover:opacity-75
+                    shadow-lg
                     items-center
                     justify-center
                     max-w-button
@@ -43,17 +45,26 @@
             class="
                 container
                 flex
+                flex-col
                 justify-around
                 max-w-5xl
+                items-center
+                lg:flex-row
+                lg:mb-32
+                mb-16
                 mx-auto
                 px-4
             "
-            style="margin-bottom: 7.65rem;"
         >
             <div
                 v-for="reason in reasons"
                 :key="reason.id"
-                class="max-w-reason"
+                class="
+                    lg:max-w-reason
+                    lg:mb-0
+                    max-w-sm
+                    mb-16
+                "
             >
                 <div
                     class="
@@ -83,41 +94,54 @@
             </div>
         </section>
 
-        <footer class="bg-footer border-edge border-t h-24">
+        <footer class="bg-footer border-edge border-t lg:h-24">
             <div
                 class="
                     flex
+                    flex-col
                     h-full
-                    items-center
-                    justify-between
+                    lg:items-center
+                    lg:justify-between
+                    lg:flex-row
                     max-w-5xl
                     mx-auto
                     px-4
+                    lg:py-4
+                    pt-8
+                    pb-10
                 "
             >
-                <div class="text-secondary text-sm">
-                    Designed in New York City.
+                <div
+                    class="
+                        lg:mb-0
+                        lg:order-first
+                        lg:text-sm
+                        order-last
+                        text-secondary
+                    "
+                >
+                    Designed in New York City
                 </div>
-                <ul class="flex">
-                    <li>
+                <ul class="flex flex-col lg:flex-row">
+                    <li class="mb-4 lg:mb-0">
                         <a
-                            class="no-underline text-secondary text-sm"
+                            class="lg:no-underline hover:underline text-secondary lg:text-sm"
                             href="https://watsi.org/"
                         >
                             Donate
                         </a>
                     </li>
-                    <li class="ml-10">
+                    <li class="mb-4 lg:mb-0 lg:ml-10">
                         <a
-                            class="no-underline text-secondary text-sm"
-                            href="mailto:tom@meagher.co"
+                            class="lg:no-underline hover:underline text-secondary lg:text-sm"
+                            href="mailto:tom@meagher.co?subject=mute.vc"
                         >
                             Contact
                         </a>
                     </li>
-                    <li class="ml-10">
+                    <li class="mb-4 lg:mb-0 lg:ml-10">
                         <a
-                            class="no-underline text-secondary text-sm"
+                            class="lg:no-underline hover:underline text-secondary lg:text-sm"
                             href="https://twitter.com/tomfme"
                         >
                             Twitter

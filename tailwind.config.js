@@ -5,7 +5,7 @@ module.exports = {
         backgroundColor: (theme) => theme('colors'),
         borderColor: (theme) => ({
             ...theme('colors'),
-            default: theme('colors.gray.300', 'currentColor'),
+            default: theme('colors.edge', 'currentColor'),
         }),
         borderRadius: {
             none: '0',
