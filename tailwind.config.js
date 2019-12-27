@@ -5,7 +5,7 @@ module.exports = {
         backgroundColor: (theme) => theme('colors'),
         borderColor: (theme) => ({
             ...theme('colors'),
-            default: theme('colors.gray.300', 'currentColor'),
+            default: theme('colors.edge', 'currentColor'),
         }),
         borderRadius: {
             none: '0',
@@ -38,8 +38,10 @@ module.exports = {
         colors: {
             background: 'var(--color-background)',
             body: 'var(--color-text)',
+            edge: 'var(--color-border)',
+            footer: 'var(--color-footer)',
             light: 'var(--color-light)',
-            primary: 'var(--color-primary)',
+            twitter: 'var(--color-twitter)',
             secondary: 'var(--color-secondary)',
             transparent: 'transparent',
         },
@@ -84,6 +86,7 @@ module.exports = {
             '4xl': '2.25rem',
             '5xl': '3rem',
             '6xl': '4rem',
+            headline: '2.125rem',
         },
         fontWeight: {
             hairline: '100',
@@ -128,6 +131,8 @@ module.exports = {
             screen: '100vh',
         },
         maxWidth: {
+            button: '16.25rem',
+            reason: '17.5rem',
             xs: '20rem',
             sm: '24rem',
             md: '28rem',
@@ -173,6 +178,7 @@ module.exports = {
             '4': '1rem',
             '5': '1.25rem',
             '6': '1.5rem',
+            '7': '1.75rem',
             '8': '2rem',
             '10': '2.5rem',
             '12': '3rem',
