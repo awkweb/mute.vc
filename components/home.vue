@@ -1,10 +1,7 @@
 <template>
     <div>
         <header class="container lg:mb-48 mb-24 lg:mt-32 mt-20 text-center">
-            <h1
-                class="font-bold mb-6 text-gray-900"
-                style="font-size: 2.125rem;"
-            >
+            <h1 class="font-bold mb-6 text-black" style="font-size: 2.125rem;">
                 Mute investors on Twitter
             </h1>
             <div

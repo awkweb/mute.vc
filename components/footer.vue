@@ -30,7 +30,7 @@
             <ul class="flex flex-col lg:flex-row">
                 <li class="mb-4 lg:mb-0">
                     <a
-                        class="lg:no-underline hover:underline text-gray-800 lg:text-sm"
+                        class="underline lg:no-underline text-gray-800 lg:text-sm"
                         href="https://watsi.org/"
                     >
                         Donate
@@ -38,7 +38,7 @@
                 </li>
                 <li class="mb-4 lg:mb-0 lg:ml-8">
                     <a
-                        class="lg:no-underline hover:underline text-gray-800 lg:text-sm"
+                        class="underline lg:no-underline text-gray-800 lg:text-sm"
                         href="mailto:tom@meagher.co?subject=mute.vc"
                     >
                         Contact
@@ -46,7 +46,7 @@
                 </li>
                 <li class="mb-4 lg:mb-0 lg:ml-8">
                     <a
-                        class="lg:no-underline hover:underline text-gray-800 lg:text-sm"
+                        class="underline lg:no-underline text-gray-800 lg:text-sm"
                         href="https://twitter.com/tomfme"
                     >
                         Twitter

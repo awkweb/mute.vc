@@ -1,6 +1,7 @@
 module.exports = {
     prefix: '',
     separator: ':',
+    important: true,
     theme: {
         backgroundColor: (theme) => theme('colors'),
         borderColor: (theme) => ({
@@ -38,7 +39,12 @@ module.exports = {
         colors: {
             white: 'hsl(104, 100%, 100%)',
             black: 'hsl(0, 0%, 0%)',
-            blue: 'hsl(203, 89%, 53%)',
+            red: 'hsl(341, 73%, 46%)',
+
+            blue: {
+                default: 'hsl(203, 89%, 53%)',
+                link: 'hsl(203, 79%, 49%)',
+            },
 
             gray: {
                 100: 'hsl(204, 45.5%, 98%)',
@@ -95,6 +101,7 @@ module.exports = {
             '4xl': '2.25rem',
             '5xl': '3rem',
             '6xl': '4rem',
+            '15': '0.9375rem',
         },
         fontWeight: {
             hairline: '100',
@@ -295,7 +302,7 @@ module.exports = {
         overflow: ['responsive'],
         padding: ['responsive'],
         placeholderColor: ['responsive', 'focus'],
-        pointerEvents: ['responsive'],
+        pointerEvents: ['disabled', 'responsive'],
         position: ['responsive'],
         resize: ['responsive'],
         stroke: ['responsive'],
