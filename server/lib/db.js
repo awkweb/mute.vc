@@ -10,7 +10,6 @@ firebase.initializeApp({
 
 const db = firebase.firestore()
 const ref = {
-    investors: db.collection('investors'),
     users: db.collection('users'),
 }
 
@@ -20,31 +19,6 @@ const users = {
     },
 }
 
-const investors = {
-    incrementMutes(usernames) {
-        usernames.forEach((username) => {
-            ref.investors
-                .doc(username)
-                .update('mutes', firebase.firestore.FieldValue.increment(1))
-        })
-    },
-    async list(username = '') {
-        const docs = await ref.investors.get()
-        const data = []
-        docs.forEach((doc) => {
-            const d = doc.data()
-            if (d.username !== username) {
-                data.push(d)
-            }
-        })
-        return data
-    },
-    async upsert(username, data) {
-        await ref.investors.doc(username).set(data, { merge: true })
-    },
-}
-
 module.exports = {
-    investors,
     users,
 }

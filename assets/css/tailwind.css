@@ -1,17 +1,6 @@
 /* Fonts */
 @import 'inter-ui/inter';
 
-/* Colors */
-:root {
-    --color-background: hsl(104, 100%, 100%);
-    --color-border: hsl(192, 3%, 90%);
-    --color-footer: hsl(0, 0%, 97%);
-    --color-light: hsl(0, 0%, 94%);
-    --color-twitter: hsl(203, 89%, 53%);
-    --color-secondary: hsl(192, 11%, 26%);
-    --color-text: hsl(18, 85%, 10%);
-}
-
 /* purgecss start ignore */
 @tailwind base;
 @tailwind components;
@@ -29,8 +18,8 @@ html {
 
 body {
     @apply antialiased;
-    @apply bg-background;
-    @apply text-body;
+    @apply bg-white;
+    @apply text-black;
     text-rendering: optimizeLegibility;
 }
 

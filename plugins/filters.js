@@ -18,4 +18,9 @@ function nFormatter(number, digits = 1) {
     return number.toFixed(digits).replace(rx, '$1')
 }
 
+function twitterImageUrl(image) {
+    return image.replace('_normal', '')
+}
+
 Vue.filter('nFormatter', nFormatter)
+Vue.filter('twitterImageUrl', twitterImageUrl)

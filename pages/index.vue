@@ -1,23 +1,17 @@
 <template>
-    <div>
-        <template v-if="isLoggedIn">
-            <Dashboard />
-        </template>
-        <template v-else>
-            <Login />
-        </template>
-    </div>
+    <Dashboard v-if="isLoggedIn" />
+    <Home v-else />
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import Dashboard from '@/components/dashboard'
-import Login from '@/components/login'
+import Home from '@/components/home'
 
 export default {
     components: {
         Dashboard,
-        Login,
+        Home,
     },
     async fetch({ store, params }) {
         if (store.getters.isLoggedIn) {
