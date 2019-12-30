@@ -21,6 +21,8 @@ envVarGroups:
   envVars:
   - key: API_URL
     value: https://mute.vc
+  - key: FIREBASE_API_KEY
+    sync: false
   - key: FIREBASE_AUTH_DOMAIN
     value: mutevc.firebaseapp.com
   - key: FIREBASE_PROJECT_ID
@@ -31,3 +33,7 @@ envVarGroups:
     value: 3000
   - key: SECRET
     generateValue: true
+  - key: TWITTER_KEY
+    sync: false
+  - key: TWITTER_SECRET
+    sync: false

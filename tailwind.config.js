@@ -5,7 +5,7 @@ module.exports = {
         backgroundColor: (theme) => theme('colors'),
         borderColor: (theme) => ({
             ...theme('colors'),
-            default: theme('colors.edge', 'currentColor'),
+            default: theme('colors.300', 'currentColor'),
         }),
         borderRadius: {
             none: '0',
@@ -36,13 +36,22 @@ module.exports = {
             none: 'none',
         },
         colors: {
-            background: 'var(--color-background)',
-            body: 'var(--color-text)',
-            edge: 'var(--color-border)',
-            footer: 'var(--color-footer)',
-            light: 'var(--color-light)',
-            twitter: 'var(--color-twitter)',
-            secondary: 'var(--color-secondary)',
+            white: 'hsl(104, 100%, 100%)',
+            black: 'hsl(0, 0%, 0%)',
+            blue: 'hsl(203, 89%, 53%)',
+
+            gray: {
+                100: 'hsl(204, 45.5%, 98%)',
+                200: 'hsl(210, 38.5%, 95%)',
+                300: 'hsl(214, 31.8%, 91%)',
+                400: 'hsl(211, 25.3%, 84%)',
+                500: 'hsl(213, 20.3%, 69%)',
+                600: 'hsl(215, 15%, 52%)',
+                700: 'hsl(218, 16.9%, 35%)',
+                800: 'hsl(217, 23.1%, 23%)',
+                900: 'hsl(220, 25.7%, 14%)',
+            },
+
             transparent: 'transparent',
         },
         container: {
@@ -86,7 +95,6 @@ module.exports = {
             '4xl': '2.25rem',
             '5xl': '3rem',
             '6xl': '4rem',
-            headline: '2.125rem',
         },
         fontWeight: {
             hairline: '100',
@@ -131,8 +139,7 @@ module.exports = {
             screen: '100vh',
         },
         maxWidth: {
-            button: '16.25rem',
-            reason: '17.5rem',
+            xxs: '18rem',
             xs: '20rem',
             sm: '24rem',
             md: '28rem',

@@ -26,66 +26,42 @@ router.use('/api', (req, res, next) => {
     next()
 })
 
-router.get('/api/me', async (req, res) => {
+router.get('/api/bootstrap', async (req, res) => {
     try {
-        const { data } = await twit.get('account/verify_credentials', {
-            include_email: true,
-        })
-        const cleaned = cleanTwitterUser(data)
+        const promises = [
+            twit.get('account/verify_credentials', {
+                include_email: true,
+            }),
+            twit.get('lists/members', {
+                slug: 'mute-vc',
+                owner_screen_name: 'tomfme',
+                count: 5000,
+                include_entities: false,
+                skip_status: true,
+            }),
+            twit.get('mutes/users/ids'),
+        ]
+        const [
+            { data: profile },
+            {
+                data: { users },
+            },
+            {
+                data: { ids: mutes },
+            },
+        ] = await Promise.all(promises)
+        const cleaned = cleanTwitterUser(profile)
+        const investors = users.filter(
+            (u) => u.screen_name !== req.session.username,
+        )
         await db.users.upsert(req.session.username, cleaned)
         res.send({
-            status: data.statusCode,
-            data: cleaned,
-        })
-    } catch (err) {
-        res.send(err)
-    }
-})
-
-router.get('/api/investors', async (req, res) => {
-    try {
-        const data = await db.investors.list(req.session.username)
-        res.send({
-            status: res.statusCode,
-            data,
-        })
-    } catch (err) {
-        res.send(err)
-    }
-})
-
-router.post('/api/investors', async (req, res) => {
-    try {
-        const { usernames } = req.body
-        const promises = usernames.map((u) =>
-            twit.get('users/show', {
-                screen_name: u,
-                include_entities: false,
-            }),
-        )
-        const all = await Promise.all(promises)
-        const data = []
-        all.forEach((value) => {
-            const { data: investorData } = value
-            const cleaned = cleanTwitterUser(investorData)
-            data.push(cleaned)
-            db.investors.upsert(cleaned.username, cleaned)
-        })
-        res.send({
-            status: res.statusCode,
-            data,
-        })
-    } catch (err) {
-        res.send(err)
-    }
-})
-
-router.get('/api/mutes', async (req, res) => {
-    try {
-        const { data } = await twit.get('mutes/users/ids')
-        res.send({
-            status: data.statusCode,
-            data: data.ids,
+            status: 200,
+            data: {
+                profile: cleaned,
+                investors,
+                mutes,
+            },
         })
     } catch (err) {
         res.send(err)
@@ -101,7 +77,6 @@ router.post('/api/mutes/create', async (req, res) => {
             }),
         )
         await Promise.all(promises)
-        await db.investors.incrementMutes(usernames)
         res.send({
             status: res.statusCode,
         })
@@ -110,7 +85,7 @@ router.post('/api/mutes/create', async (req, res) => {
     }
 })
 
-router.post('/api/mutes/delete', async (req, res) => {
+router.post('/api/mutes/destroy', async (req, res) => {
     try {
         const { usernames } = req.body
         const promises = usernames.map((u) =>
