@@ -6,7 +6,7 @@
                 border-gray-300
                 border-l
                 border-r
-                h-screen
+                h-full
                 max-w-2xl
                 mx-auto
             "

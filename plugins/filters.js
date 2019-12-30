@@ -19,7 +19,7 @@ function nFormatter(number, digits = 1) {
 }
 
 function twitterImageUrl(image) {
-    return image.replace('_normal', '')
+    return image.replace('normal', 'bigger')
 }
 
 Vue.filter('nFormatter', nFormatter)

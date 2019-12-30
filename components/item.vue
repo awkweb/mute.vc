@@ -1,30 +1,30 @@
 <template>
-    <li>
+    <li class="border-b border-gray-300 px-4 py-2">
         <div class="flex">
             <img
-                class="bg-light h-10 mr-3 mt-1 rounded-full w-10"
-                :src="image"
+                class="bg-light h-12 mr-3 mt-1 rounded-full w-full"
+                style="max-width: 3rem;"
+                :src="image | twitterImageUrl"
             />
-            <div class="leading-none">
-                <div class="leading-tight truncate" style="max-width: 10rem;">
-                    {{ name }}
+            <div>
+                <div class="leading-none">
+                    <div class="leading-tight">
+                        {{ name }}
+                    </div>
+                    <a
+                        class="text-secondary inline-block text-sm"
+                        :href="`https://twitter.com/${username}`"
+                        target="_blank"
+                        style="font-size: 0.8125rem;"
+                    >
+                        @{{ username }}
+                    </a>
                 </div>
-                <a
-                    class="text-secondary inline-block text-sm"
-                    :href="`https://twitter.com/${username}`"
-                    target="_blank"
-                    style="font-size: 0.8125rem;"
-                >
-                    @{{ username }}
-                </a>
+                <!-- eslint-disable vue/no-v-html -->
+                <div class="mt-2" v-html="linkedBio" />
+                <!--eslint-enable-->
             </div>
         </div>
-        <!-- eslint-disable vue/no-v-html -->
-        <div
-            class="max-w-xs overflow-hidden text-sm truncate"
-            v-html="linkedBio"
-        />
-        <!--eslint-enable-->
     </li>
 </template>
 

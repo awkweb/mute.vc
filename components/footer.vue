@@ -10,7 +10,7 @@
                     lg:flex-row
                     max-w-5xl
                     mx-auto
-                    px-4
+                    px-5
                     lg:py-4
                     pt-8
                     pb-10
