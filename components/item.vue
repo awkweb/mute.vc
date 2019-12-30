@@ -1,5 +1,5 @@
 <template>
-    <li class="border-b border-gray-300 px-4 py-2">
+    <li class="bg-white border-b border-gray-300 px-4 py-2">
         <div class="flex">
             <img
                 class="bg-light h-12 mr-3 mt-1 rounded-full w-full"

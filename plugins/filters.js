@@ -1,5 +1,11 @@
 import Vue from 'vue'
 
+function capitalize(value) {
+    if (!value) return ''
+    value = value.toString()
+    return value.charAt(0).toUpperCase() + value.slice(1)
+}
+
 function nFormatter(number, digits = 1) {
     const si = [
         { value: 1e6, symbol: 'M' },
@@ -22,5 +28,6 @@ function twitterImageUrl(image) {
     return image.replace('normal', 'bigger')
 }
 
+Vue.filter('capitalize', capitalize)
 Vue.filter('nFormatter', nFormatter)
 Vue.filter('twitterImageUrl', twitterImageUrl)
