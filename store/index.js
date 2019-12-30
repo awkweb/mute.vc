@@ -1,13 +1,13 @@
-const SET_INVESTORS = 'SET_INVESTORS'
-const SET_MUTED = 'SET_MUTED'
-const SET_PROFILE = 'SET_PROFILE'
+const SET_INITIAL_DATA = 'SET_INITIAL_DATA'
+const SET_TAB = 'SET_TAB'
 const SET_USER = 'SET_USER'
 
 export const state = () => ({
     authUser: null,
     investors: [],
-    muted: {},
+    mutesMap: {},
     profile: null,
+    tab: 'unmuted',
 })
 
 export const getters = {
@@ -15,23 +15,27 @@ export const getters = {
     isLoggedIn: (state) => !!state.authUser,
     unmutedInvestors: (state) =>
         state.investors.filter(
-            (i) => !Object.prototype.hasOwnProperty.call(state.muted, i.id),
+            (i) => !Object.prototype.hasOwnProperty.call(state.mutesMap, i.id),
         ),
     mutedInvestors: (state) =>
         state.investors.filter((i) =>
-            Object.prototype.hasOwnProperty.call(state.muted, i.id),
+            Object.prototype.hasOwnProperty.call(state.mutesMap, i.id),
         ),
+    tabInvestors: (state, getters) =>
+        state.tab === 'unmuted'
+            ? getters.unmutedInvestors
+            : getters.mutedInvestors,
 }
 
 export const mutations = {
-    [SET_INVESTORS](state, investors) {
+    [SET_INITIAL_DATA](state, data) {
+        const { investors, mutesMap, profile } = data
+        state.mutesMap = mutesMap
         state.investors = investors
-    },
-    [SET_MUTED](state, muted) {
-        state.muted = muted
-    },
-    [SET_PROFILE](state, profile) {
         state.profile = profile
+    },
+    [SET_TAB](state, tab) {
+        state.tab = tab
     },
     [SET_USER](state, user) {
         state.authUser = user
@@ -45,40 +49,21 @@ export const actions = {
         }
     },
     async bootstrap({ commit }) {
-        const {
-            data: { profile, investors, mutes },
-        } = await this.$axios.$get('/api/bootstrap')
-        commit(SET_PROFILE, profile)
-        commit(SET_INVESTORS, investors)
-        const muted = mutes.reduce((result, id) => {
+        const { data } = await this.$axios.$get('/api/bootstrap')
+        const mutesMap = data.mutes.reduce((result, id) => {
             result[id] = 1
             return result
         }, {})
-        commit(SET_MUTED, muted)
+        commit(SET_INITIAL_DATA, {
+            ...data,
+            mutesMap,
+        })
     },
     async createMutes({ commit, getters, state }) {
-        await this.$axios.$post('/api/mutes/create', {
-            usernames: getters.selectedInvestorUsernames,
-        })
-        state.investors.forEach((investor) => {
-            if (
-                Object.prototype.hasOwnProperty.call(
-                    state.selectedInvestorsMap,
-                    investor.username,
-                )
-            ) {
-                commit(SET_MUTED, {
-                    ...state.muted,
-                    [investor.id]: 1,
-                })
-            }
-        })
+        await this.$axios.$post('/api/mutes/create')
     },
     async destroyMutes({ commit, getters, state }) {
-        await this.$axios.$post('/api/mutes/destroy', {
-            usernames: getters.allInvestorUsernames,
-        })
-        commit(SET_MUTED, {})
+        await this.$axios.$post('/api/mutes/destroy')
     },
     async logout({ commit }) {
         await this.$axios.$post('/logout')

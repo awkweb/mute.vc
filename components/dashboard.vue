@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-gray-100 h-full">
+    <div class="md:bg-gray-100 h-full min-h-screen">
         <div
             class="
                 bg-white
@@ -7,27 +7,44 @@
                 border-l
                 border-r
                 h-full
-                max-w-2xl
-                mx-auto
+                min-h-screen
+                md:max-w-2xl
+                md:mx-auto
             "
         >
             <div
                 class="
+                    bg-white
                     border-b
                     border-gray-300
                     flex
+                    h-12
+                    md:h-16
                     items-center
                     justify-between
+                    pt-1
                     px-4
-                    py-3
+                    sticky
+                    top-0
                 "
+                style="box-shadow: rgba(0, 0, 0, 0.05) 0px 8px 24px 0px;"
             >
-                <div>
-                    Muted
+                <div class="flex h-full" style="padding-top: 2px;">
+                    <Tab
+                        name="unmuted"
+                        :current="tab"
+                        @select="handleSelectTab"
+                    />
+                    <Tab
+                        name="muted"
+                        :current="tab"
+                        @select="handleSelectTab"
+                    />
                 </div>
                 <div class="flex">
                     <button
-                        class="mr-4 text-gray-700 text-sm"
+                        class="font-medium mr-4 text-gray-700"
+                        style="font-size: 0.9375rem;"
                         @click="handleLogOut"
                     >
                         Log Out
@@ -40,7 +57,7 @@
             </div>
             <ul>
                 <Item
-                    v-for="investor in unmutedInvestors"
+                    v-for="investor in tabInvestors"
                     :key="investor.id"
                     :bio="investor.description"
                     :image="investor.profile_image_url_https"
@@ -54,19 +71,23 @@
 </template>
 
 <script>
-// `mapActions` and `mapMutations` aren't working :(
 import { mapState, mapGetters } from 'vuex'
 import Item from './item'
+import Tab from './tab'
 
 export default {
     components: {
         Item,
+        Tab,
     },
     computed: {
-        ...mapGetters(['unmutedInvestors']),
-        ...mapState(['authUser', 'profile']),
+        ...mapGetters(['tabInvestors']),
+        ...mapState(['authUser', 'profile', 'tab']),
     },
     methods: {
+        handleSelectTab(tab) {
+            this.$store.commit('SET_TAB', tab)
+        },
         handleLogOut() {
             this.$store.dispatch('logout')
         },
