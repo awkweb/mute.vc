@@ -31,6 +31,7 @@ router.get('/api/bootstrap', async (req, res) => {
         const promises = [
             twit.get('account/verify_credentials', {
                 include_email: true,
+                skip_status: true,
             }),
             twit.get('lists/members', {
                 slug: 'mute-vc',
@@ -42,28 +43,34 @@ router.get('/api/bootstrap', async (req, res) => {
             twit.get('mutes/users/ids'),
         ]
         const [
-            { data: profile },
-            {
-                data: { users },
-            },
-            {
-                data: { ids: mutes },
-            },
+            { data: profileData },
+            { data: userData },
+            { data: muteData },
         ] = await Promise.all(promises)
-        const cleaned = cleanTwitterUser(profile)
-        const investors = users.filter(
-            (u) => u.screen_name !== req.session.username,
-        )
-        await db.users.upsert(req.session.username, cleaned)
+
+        const users = userData ? userData.users : []
+        const mutes = muteData ? muteData.ids : []
+
+        const profile = cleanTwitterUser(profileData)
+        const investors = []
+        users.forEach((u) => {
+            const investor = cleanTwitterUser(u)
+            if (investor.username !== req.session.username) {
+                investors.push(investor)
+            }
+        })
+        await db.users.upsert(req.session.username, profile)
+
         res.send({
             status: 200,
             data: {
-                profile: cleaned,
                 investors,
                 mutes,
+                profile,
             },
         })
     } catch (err) {
+        console.log(err)
         res.send(err)
     }
 })

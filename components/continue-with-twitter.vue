@@ -5,15 +5,15 @@
             block
             flex
             font-semibold
+            hover:no-underline
             hover:opacity-75
-            shadow-lg
             items-center
             justify-center
             max-w-button
             mx-auto
-            no-underline
             relative
             rounded
+            shadow-lg
             text-white
         "
         href="/auth/twitter"

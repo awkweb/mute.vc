@@ -59,13 +59,13 @@ export const actions = {
             mutesMap,
         })
     },
-    async createMutes({ commit, getters, state }) {
-        await this.$axios.$post('/api/mutes/create')
+    async createMutes({ commit, getters, state }, usernames) {
+        await this.$axios.$post('/api/mutes/create', { usernames })
     },
-    async destroyMutes({ commit, getters, state }) {
-        await this.$axios.$post('/api/mutes/destroy')
+    async destroyMutes({ commit, getters, state }, usernames) {
+        await this.$axios.$post('/api/mutes/destroy', { usernames })
     },
-    async logout({ commit }) {
+    async logOut({ commit }) {
         await this.$axios.$post('/logout')
         commit(SET_USER, null)
     },

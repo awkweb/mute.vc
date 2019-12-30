@@ -1,7 +1,6 @@
 <template>
     <button
-        class="font-bold border-b-2 h-full mr-4"
-        style="font-size: 0.9375rem;"
+        class="font-bold border-b-2 h-full mr-4 text-15"
         :class="activeClass"
         :disabled="active"
         @click="click"

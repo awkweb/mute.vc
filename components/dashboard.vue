@@ -16,7 +16,7 @@
                 class="
                     bg-white
                     border-b
-                    border-gray-300
+                    border-gray-400
                     flex
                     h-12
                     md:h-16
@@ -27,7 +27,6 @@
                     sticky
                     top-0
                 "
-                style="box-shadow: rgba(0, 0, 0, 0.05) 0px 8px 24px 0px;"
             >
                 <div class="flex h-full" style="padding-top: 2px;">
                     <Tab
@@ -43,8 +42,7 @@
                 </div>
                 <div class="flex">
                     <button
-                        class="font-medium mr-4 text-gray-700"
-                        style="font-size: 0.9375rem;"
+                        class="font-medium mr-4 text-gray-700 text-15"
                         @click="handleLogOut"
                     >
                         Log Out
@@ -60,9 +58,9 @@
                     v-for="investor in tabInvestors"
                     :key="investor.id"
                     :bio="investor.description"
-                    :image="investor.profile_image_url_https"
+                    :image="investor.profileImageUrlHttps"
                     :name="investor.name"
-                    :username="investor.screen_name"
+                    :username="investor.username"
                     :verified="investor.verified"
                 />
             </ul>
@@ -89,7 +87,7 @@ export default {
             this.$store.commit('SET_TAB', tab)
         },
         handleLogOut() {
-            this.$store.dispatch('logout')
+            this.$store.dispatch('logOut')
         },
     },
 }
