@@ -1,5 +1,5 @@
 <template>
-    <li class="bg-white border-b border-gray-300 px-4 py-2">
+    <li class="bg-white hover:bg-gray-100 border-b border-gray-300 px-4 py-2">
         <div class="flex">
             <img
                 class="bg-gray-200 h-12 mr-3 mt-1 rounded-full w-full"
@@ -104,9 +104,7 @@ export default {
             default: false,
         },
     },
-    data() {
-        return { muted: false, loading: false }
-    },
+    data: () => ({ muted: false, loading: false }),
     computed: {
         ...mapState(['tab']),
         linkedBio() {

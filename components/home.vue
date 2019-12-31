@@ -82,6 +82,7 @@ import ContinueWithTwitter from './continue-with-twitter'
 import Footer from './footer'
 
 export default {
+    scrollToTop: true,
     components: {
         ClockIcon,
         ContinueWithTwitter,

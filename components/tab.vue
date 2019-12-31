@@ -1,6 +1,15 @@
 <template>
     <button
-        class="font-bold border-b-2 flex-1 h-full pb-2 md:pb-3 text-15"
+        class="
+            hover:bg-gray-100
+            font-bold
+            border-b-2
+            flex-1
+            h-full
+            pb-2
+            md:pb-3
+            text-15
+        "
         :class="activeClass"
         :disabled="active"
         @click="click"
@@ -11,6 +20,7 @@
 
 <script>
 import { mapState } from 'vuex'
+
 export default {
     props: {
         name: {
