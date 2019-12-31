@@ -114,5 +114,8 @@ export default {
             },
         ],
     }),
+    head: () => ({
+        title: 'Mute investors on Twitter',
+    }),
 }
 </script>

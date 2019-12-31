@@ -11,7 +11,6 @@ export const state = () => ({
 })
 
 export const getters = {
-    allInvestorUsernames: (state) => state.investors.map((i) => i.username),
     isLoggedIn: (state) => !!state.authUser,
     unmutedInvestors: (state) =>
         state.investors.filter(
@@ -22,9 +21,9 @@ export const getters = {
             Object.prototype.hasOwnProperty.call(state.mutesMap, i.id),
         ),
     tabInvestors: (state, getters) =>
-        state.tab === 'unmuted'
-            ? getters.unmutedInvestors
-            : getters.mutedInvestors,
+        state.tab === 'muted'
+            ? getters.mutedInvestors
+            : getters.unmutedInvestors,
 }
 
 export const mutations = {
@@ -43,30 +42,42 @@ export const mutations = {
 }
 
 export const actions = {
-    nuxtServerInit({ commit }, { req }) {
+    nuxtServerInit({ commit }, { req, route }) {
         if (req.session?.username) {
             commit(SET_USER, req.session)
+            const tab = route.query?.tab
+            if (tab) {
+                commit(SET_TAB, tab)
+            }
         }
     },
     async bootstrap({ commit }) {
-        const { data } = await this.$axios.$get('/api/bootstrap')
-        const mutesMap = data.mutes.reduce((result, id) => {
-            result[id] = 1
-            return result
-        }, {})
-        commit(SET_INITIAL_DATA, {
-            ...data,
-            mutesMap,
-        })
+        try {
+            const { data } = await this.$axios.$get('/api/bootstrap')
+            const mutesMap = data.mutes.reduce((result, id) => {
+                result[id] = 1
+                return result
+            }, {})
+            commit(SET_INITIAL_DATA, {
+                ...data,
+                mutesMap,
+            })
+        } catch (err) {}
     },
     async createMutes({ commit, getters, state }, usernames) {
-        await this.$axios.$post('/api/mutes/create', { usernames })
+        try {
+            await this.$axios.$post('/api/mutes/create', { usernames })
+        } catch (err) {}
     },
     async destroyMutes({ commit, getters, state }, usernames) {
-        await this.$axios.$post('/api/mutes/destroy', { usernames })
+        try {
+            await this.$axios.$post('/api/mutes/destroy', { usernames })
+        } catch (err) {}
     },
     async logOut({ commit }) {
-        await this.$axios.$post('/logout')
-        commit(SET_USER, null)
+        try {
+            await this.$axios.$post('/logout')
+            commit(SET_USER, null)
+        } catch (err) {}
     },
 }

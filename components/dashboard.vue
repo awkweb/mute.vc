@@ -29,27 +29,20 @@
                 "
             >
                 <div class="flex h-full" style="padding-top: 2px;">
-                    <Tab
-                        name="unmuted"
-                        :current="tab"
-                        @select="handleSelectTab"
-                    />
-                    <Tab
-                        name="muted"
-                        :current="tab"
-                        @select="handleSelectTab"
-                    />
+                    <Tab name="unmuted" />
+                    <Tab name="muted" />
                 </div>
                 <div class="flex">
                     <button
-                        class="font-medium mr-4 text-gray-700 text-15"
+                        class="font-medium text-gray-700 text-15"
                         @click="handleLogOut"
                     >
                         Log Out
                     </button>
                     <img
+                        v-if="profile"
                         :src="profile.profileImageUrlHttps | twitterImageUrl"
-                        class="h-8 rounded-full w-8"
+                        class="h-8 ml-4 rounded-full w-8"
                     />
                 </div>
             </div>
@@ -82,13 +75,27 @@ export default {
         ...mapGetters(['tabInvestors']),
         ...mapState(['authUser', 'profile', 'tab']),
     },
-    methods: {
-        handleSelectTab(tab) {
-            this.$store.commit('SET_TAB', tab)
+    watch: {
+        $route(to, from) {
+            const nextTab = to.query?.tab
+            if (nextTab) {
+                this.$store.commit('SET_TAB', nextTab)
+            }
         },
+    },
+    methods: {
         handleLogOut() {
             this.$store.dispatch('logOut')
+            this.$router.push({ path: '/' })
         },
+    },
+    head() {
+        const title = `${this.$options.filters.capitalize(this.tab)} (${
+            this.tabInvestors?.length
+        })`
+        return {
+            title,
+        }
     },
 }
 </script>

@@ -6,7 +6,7 @@
                 style="max-width: 3rem;"
                 :src="image | twitterImageUrl"
             />
-            <div class="overflow-hidden pt-2 w-full">
+            <div class="overflow-hidden w-full" style="padding-top: 0.35rem;">
                 <div class="flex justify-between items-start">
                     <div class="leading-none max-w-full mr-2 overflow-hidden">
                         <div class="flex items-center">
@@ -40,6 +40,7 @@
                             class="text-gray-700 text-15"
                             :href="`https://twitter.com/${username}`"
                             target="_blank"
+                            style="line-height: 1.1;"
                         >
                             @{{ username }}
                         </a>
@@ -49,9 +50,9 @@
                         class="
                             disabled:pointer-events-none
                             focus:shadow-outline
-                            hover:bg-red
-                            hover:border-red
-                            hover:text-white
+                            md:hover:bg-red
+                            md:hover:border-red
+                            md:hover:text-white
                             border
                             border-blue
                             font-bold
