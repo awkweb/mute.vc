@@ -21,10 +21,5 @@ export default {
     computed: {
         ...mapGetters(['isLoggedIn']),
     },
-    head() {
-        return {
-            title: this.isLoggedIn ? 'Dashboard' : 'Mute investors on Twitter',
-        }
-    },
 }
 </script>

@@ -86,7 +86,6 @@ export default {
         $route(to, from) {
             const nextTab = to.query?.tab
             if (nextTab) {
-                console.log(nextTab)
                 this.$store.commit('SET_TAB', nextTab)
             }
         },
@@ -97,7 +96,13 @@ export default {
         },
         handleLogOut() {
             this.$store.dispatch('logOut')
+            this.$router.push({ path: '/' })
         },
+    },
+    head() {
+        return {
+            title: this.tab,
+        }
     },
 }
 </script>
