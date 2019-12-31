@@ -82,9 +82,18 @@ export default {
         ...mapGetters(['tabInvestors']),
         ...mapState(['authUser', 'profile', 'tab']),
     },
+    watch: {
+        $route(to, from) {
+            const nextTab = to.query?.tab
+            if (nextTab) {
+                console.log(nextTab)
+                this.$store.commit('SET_TAB', nextTab)
+            }
+        },
+    },
     methods: {
         handleSelectTab(tab) {
-            this.$store.commit('SET_TAB', tab)
+            this.$router.push({ path: '/', query: { tab } })
         },
         handleLogOut() {
             this.$store.dispatch('logOut')

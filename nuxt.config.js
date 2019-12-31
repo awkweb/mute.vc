@@ -12,7 +12,7 @@ module.exports = {
     mode: 'universal',
     head: {
         titleTemplate: (titleChunk) => {
-            return titleChunk ? `${titleChunk} ~ Mute.vc` : 'Mute.vc'
+            return titleChunk ? `${titleChunk} — Mute.vc` : 'Mute.vc'
         },
         meta: [
             { charset: 'utf-8' },

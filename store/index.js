@@ -43,9 +43,13 @@ export const mutations = {
 }
 
 export const actions = {
-    nuxtServerInit({ commit }, { req }) {
+    nuxtServerInit({ commit }, { req, route }) {
         if (req.session?.username) {
             commit(SET_USER, req.session)
+            const tab = route.query?.tab
+            if (tab) {
+                commit(SET_TAB, tab)
+            }
         }
     },
     async bootstrap({ commit }) {
