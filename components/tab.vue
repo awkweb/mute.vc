@@ -10,20 +10,18 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
     props: {
-        current: {
-            type: String,
-            required: true,
-        },
         name: {
             type: String,
             required: true,
         },
     },
     computed: {
+        ...mapState(['tab']),
         active() {
-            return this.current === this.name
+            return this.tab === this.name
         },
         activeClass() {
             return this.active
@@ -33,7 +31,7 @@ export default {
     },
     methods: {
         click() {
-            this.$emit('select', this.name)
+            this.$router.push({ path: '/', query: { tab: this.name } })
         },
     },
 }

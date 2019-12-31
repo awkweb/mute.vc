@@ -11,9 +11,6 @@ const description = process.env.npm_package_description
 module.exports = {
     mode: 'universal',
     head: {
-        titleTemplate: (titleChunk) => {
-            return titleChunk ? `${titleChunk} — Mute.vc` : 'Mute.vc'
-        },
         meta: [
             { charset: 'utf-8' },
             {
