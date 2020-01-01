@@ -16,17 +16,7 @@
             style="padding-bottom: 3.5rem;"
         >
             <Nav :shadow="topShadow" />
-            <ul style="min-height: calc(100vh - 7rem)">
-                <Item
-                    v-for="investor in tabInvestors"
-                    :key="investor.id"
-                    :bio="investor.description"
-                    :image="investor.profileImageUrlHttps"
-                    :name="investor.name"
-                    :username="investor.username"
-                    :verified="investor.verified"
-                />
-            </ul>
+            <List />
             <Toolbar :shadow="bottomShadow" />
         </div>
     </div>
@@ -34,38 +24,49 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import Item from './item'
+import List from './list'
 import Nav from './nav'
 import Toolbar from './toolbar'
 
 export default {
     components: {
-        Item,
+        List,
         Nav,
         Toolbar,
     },
     data: () => ({
-        bottomShadow: true,
+        bottomShadow: false,
         topShadow: false,
     }),
     computed: {
         ...mapGetters(['tabInvestors']),
         ...mapState(['authUser', 'tab']),
+        title() {
+            return `${this.$options.filters.capitalize(this.tab)} (${
+                this.tabInvestors?.length
+            })`
+        },
     },
     watch: {
         $route(to, from) {
             const nextTab = to.query?.tab
             if (nextTab) {
                 this.$store.commit('SET_TAB', nextTab)
-                this.$nextTick(() => {
-                    const documentEl = document.documentElement
-                    this.bottomShadow =
-                        documentEl.scrollHeight > documentEl.clientHeight
-                })
+                this.$nextTick(() => this.initShadow())
             }
         },
     },
+    mounted() {
+        this.initShadow()
+    },
     methods: {
+        initShadow() {
+            const documentEl = document.documentElement
+            const winScroll = document.body.scrollTop || documentEl.scrollTop
+            this.bottomShadow =
+                documentEl.scrollHeight > documentEl.clientHeight
+            this.topShadow = winScroll !== 0
+        },
         handleScroll(event, el) {
             const documentEl = document.documentElement
             const winScroll = document.body.scrollTop || documentEl.scrollTop
@@ -83,11 +84,8 @@ export default {
         },
     },
     head() {
-        const title = `${this.$options.filters.capitalize(this.tab)} (${
-            this.tabInvestors?.length
-        })`
         return {
-            title,
+            title: this.title,
         }
     },
 }

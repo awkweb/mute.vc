@@ -19,6 +19,7 @@
         :style="{
             boxShadow: shadow ? '0 -3px 6px -3px rgba(0, 0, 0, 0.15)' : '',
         }"
+        style="height: 3.59375rem;"
     >
         <button @click="logOut">
             <img
@@ -32,26 +33,26 @@
             v-show="tabInvestors.length > 0"
             :disabled="loading"
             class="
+                bg-black
+                border
+                border-black
+                disabled:opacity-50
                 disabled:pointer-events-none
-                disabled:opacity-75
                 focus:shadow-outline
+                font-bold
                 md:hover:bg-red
                 md:hover:border-red
                 md:hover:text-white
-                border
-                border-black
-                bg-black
-                font-bold
                 outline-none
                 px-4
                 py-2
                 rounded-full
-                text-white
                 text-15
+                text-white
             "
             @click="click"
         >
-            {{ actionText | capitalize }}
+            {{ actionText }}
         </button>
     </div>
 </template>
@@ -66,24 +67,29 @@ export default {
             default: false,
         },
     },
-    data: () => ({ loading: false }),
+    data: () => ({ muted: false, loading: false }),
     computed: {
         ...mapGetters(['tabInvestors']),
         ...mapState(['profile', 'tab']),
+        isMutedTab() {
+            return this.tab === 'muted'
+        },
         actionText() {
-            return this.tab === 'muted' ? 'unmute all' : 'mute all'
+            const root = this.isMutedTab ? 'Unmut' : 'Mut'
+            return this.loading ? `${root}ing...` : `${root}e`
         },
     },
     methods: {
-        click() {
+        async click() {
             try {
                 this.loading = true
-                // if (this.muted) {
-                //     await this.$store.dispatch('destroyMutes', [this.username])
-                // } else {
-                //     await this.$store.dispatch('createMutes', [this.username])
-                // }
-                // this.muted = !this.muted
+                const usernames = this.tabInvestors.map((t) => t.username)
+                if (this.isMutedTab) {
+                    await this.$store.dispatch('destroyMutes', usernames)
+                } else {
+                    await this.$store.dispatch('createMutes', usernames)
+                }
+                this.muted = !this.muted
             } finally {
                 this.loading = false
             }

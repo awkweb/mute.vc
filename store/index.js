@@ -71,14 +71,14 @@ export const actions = {
             })
         } catch (err) {}
     },
-    async createMutes({ commit, getters, state }, usernames) {
+    createMutes({ commit, getters, state }, usernames) {
         try {
-            await this.$axios.$post('/api/mutes/create', { usernames })
+            // await this.$axios.$post('/api/mutes/create', { usernames })
         } catch (err) {}
     },
-    async destroyMutes({ commit, getters, state }, usernames) {
+    destroyMutes({ commit, getters, state }, usernames) {
         try {
-            await this.$axios.$post('/api/mutes/destroy', { usernames })
+            // await this.$axios.$post('/api/mutes/destroy', { usernames })
         } catch (err) {}
     },
     async logOut({ commit }) {

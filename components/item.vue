@@ -50,9 +50,6 @@
                         class="
                             disabled:pointer-events-none
                             focus:shadow-outline
-                            md:hover:bg-red
-                            md:hover:border-red
-                            md:hover:text-white
                             border
                             border-blue
                             font-bold
@@ -63,10 +60,10 @@
                             text-white
                             text-15
                         "
-                        :class="off ? 'bg-white text-blue' : 'bg-blue'"
+                        :class="classes"
                         @click="click"
                     >
-                        {{ actionText | capitalize }}
+                        {{ actionText }}
                     </button>
                 </div>
                 <!-- eslint-disable vue/no-v-html -->
@@ -118,18 +115,21 @@ export default {
             return this.tab === 'muted'
         },
         actionText() {
-            return this.muted ? 'unmute' : 'mute'
+            return this.muted ? 'Unmute' : 'Mute'
         },
-        off() {
-            // Different state than tab
-            // i.e. user is muted, but unmuted tab is active
+        classes() {
             if (
                 (!this.isMutedTab && this.muted) ||
                 (this.isMutedTab && !this.muted)
             ) {
-                return true
+                return ['bg-white', 'md:hover:bg-gray-100', 'text-blue']
             } else {
-                return false
+                return [
+                    'bg-blue',
+                    'md:hover:bg-red',
+                    'md:hover:border-red',
+                    'md:hover:text-white',
+                ]
             }
         },
     },

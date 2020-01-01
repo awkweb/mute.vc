@@ -56,9 +56,10 @@
                     "
                     style="height: 3.25rem; width: 3.25rem;"
                 >
-                    <RadioIcon v-if="reason.icon === 'radio'" size="23" />
-                    <ZapIcon v-else-if="reason.icon === 'zap'" size="22" />
-                    <ClockIcon v-else-if="reason.icon === 'clock'" size="22" />
+                    <component
+                        :is="reason.icon.component"
+                        v-bind="{ size: reason.icon.size }"
+                    />
                 </div>
                 <h4 class="font-bold mb-3 text-gray-900 text-lg">
                     {{ reason.title }}
@@ -94,21 +95,30 @@ export default {
         reasons: [
             {
                 id: 1,
-                icon: 'radio',
+                icon: {
+                    component: RadioIcon,
+                    size: '23',
+                },
                 title: 'Cut through noise',
                 description:
                     'Builders spend more time building and less time tweeting — don’t miss their tweets in a jumble of nonsense.',
             },
             {
                 id: 2,
-                icon: 'zap',
+                icon: {
+                    component: ZapIcon,
+                    size: '22',
+                },
                 title: 'Built for speed',
                 description:
                     'Blazing fast mute and unmute so you can switch on and off investor chatter whenever you’d like.',
             },
             {
                 id: 3,
-                icon: 'clock',
+                icon: {
+                    component: ClockIcon,
+                    size: '22',
+                },
                 title: 'More quality time',
                 description:
                     'Less investor tweets means less content to consume and more time to do literally anything else.',
