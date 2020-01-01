@@ -48,24 +48,34 @@ router.get('/api/bootstrap', async (req, res) => {
             { data: muteData },
         ] = await Promise.all(promises)
 
-        const users = userData ? userData.users : []
         const mutes = muteData ? muteData.ids : []
+        const mutesMap = mutes.reduce((result, id) => {
+            result[id] = 1
+            return result
+        }, {})
 
-        const profile = cleanTwitterUser(profileData)
         const investors = []
+        const users = userData ? userData.users : []
         users.forEach((u) => {
             const investor = cleanTwitterUser(u)
             if (investor.username !== req.session.username) {
-                investors.push(investor)
+                investors.push({
+                    ...investor,
+                    muted: Object.prototype.hasOwnProperty.call(
+                        mutesMap,
+                        investor.id,
+                    ),
+                })
             }
         })
+
+        const profile = cleanTwitterUser(profileData)
         await db.users.upsert(req.session.username, profile)
 
         res.send({
             status: 200,
             data: {
                 investors,
-                mutes,
                 profile,
             },
         })

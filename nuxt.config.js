@@ -42,9 +42,9 @@ module.exports = {
             lang: 'en',
         },
     },
-    loading: { color: '#fff' },
+    loading: { color: 'hsl(203, 89%, 53%)' },
     css: [],
-    plugins: ['@plugins/filters.js'],
+    plugins: ['@plugins/directives.js', '@plugins/filters.js'],
     buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/tailwindcss'],
     modules: [...devModules, '@nuxtjs/axios', 'nuxt-purgecss'],
     axios: {

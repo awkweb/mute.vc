@@ -1,6 +1,7 @@
 <template>
     <div class="md:bg-gray-100 h-full min-h-screen">
         <div
+            v-scroll="handleScroll"
             class="
                 bg-white
                 md:border-gray-300
@@ -9,57 +10,82 @@
                 h-full
                 md:max-w-xl
                 md:mx-auto
-                pb-12
                 relative
+                md:shadow-md
             "
+            style="padding-bottom: 3.5rem;"
         >
-            <Nav />
-            <ul style="min-height: calc(100vh - 6.25rem)">
-                <Item
-                    v-for="investor in tabInvestors"
-                    :key="investor.id"
-                    :bio="investor.description"
-                    :image="investor.profileImageUrlHttps"
-                    :name="investor.name"
-                    :username="investor.username"
-                    :verified="investor.verified"
-                />
-            </ul>
-            <Toolbar />
+            <Nav :shadow="topShadow" />
+            <List />
+            <Toolbar :shadow="bottomShadow" />
         </div>
     </div>
 </template>
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import Item from './item'
+import List from './list'
 import Nav from './nav'
 import Toolbar from './toolbar'
 
 export default {
     components: {
-        Item,
+        List,
         Nav,
         Toolbar,
     },
+    data: () => ({
+        bottomShadow: false,
+        topShadow: false,
+    }),
     computed: {
-        ...mapGetters(['tabInvestors']),
+        ...mapGetters(['tabCount']),
         ...mapState(['authUser', 'tab']),
+        title() {
+            return `${this.$options.filters.capitalize(this.tab)} (${
+                this.tabCount
+            })`
+        },
     },
     watch: {
         $route(to, from) {
             const nextTab = to.query?.tab
             if (nextTab) {
                 this.$store.commit('SET_TAB', nextTab)
+                this.$nextTick(() => this.initShadow())
+            }
+        },
+    },
+    mounted() {
+        this.initShadow()
+    },
+    methods: {
+        initShadow() {
+            const documentEl = document.documentElement
+            const winScroll = document.body.scrollTop || documentEl.scrollTop
+            this.bottomShadow =
+                documentEl.scrollHeight > documentEl.clientHeight
+            this.topShadow = winScroll !== 0
+        },
+        handleScroll(event, el) {
+            const documentEl = document.documentElement
+            const winScroll = document.body.scrollTop || documentEl.scrollTop
+            const height = documentEl.scrollHeight - documentEl.clientHeight
+            const scrolled = (winScroll / height) * 100
+
+            if (scrolled === 0) {
+                this.topShadow = false
+            } else if (scrolled > 0 && scrolled < 100) {
+                if (!this.bottomShadow) this.bottomShadow = true
+                if (!this.topShadow) this.topShadow = true
+            } else if (scrolled === 100) {
+                this.bottomShadow = false
             }
         },
     },
     head() {
-        const title = `${this.$options.filters.capitalize(this.tab)} (${
-            this.tabInvestors?.length
-        })`
         return {
-            title,
+            title: this.title,
         }
     },
 }

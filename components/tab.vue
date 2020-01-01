@@ -1,6 +1,17 @@
 <template>
     <button
-        class="font-bold border-b-2 flex-1 h-full pb-2 md:pb-3 text-15"
+        class="
+            cursor-pointer
+            font-bold
+            border-b-2
+            flex-1
+            h-full
+            pb-2
+            pt-2
+            md:pt-3
+            md:pb-3
+            text-15
+        "
         :class="activeClass"
         :disabled="active"
         @click="click"
@@ -11,6 +22,7 @@
 
 <script>
 import { mapState } from 'vuex'
+
 export default {
     props: {
         name: {
@@ -26,7 +38,7 @@ export default {
         activeClass() {
             return this.active
                 ? 'text-blue'
-                : 'border-transparent text-gray-700'
+                : 'hover:bg-gray-100 border-transparent text-gray-700'
         },
     },
     methods: {

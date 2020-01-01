@@ -1,5 +1,5 @@
 <template>
-    <li class="bg-white border-b border-gray-300 px-4 py-2">
+    <li class="bg-white hover:bg-gray-100 border-b border-gray-300 px-4 py-2">
         <div class="flex">
             <img
                 class="bg-gray-200 h-12 mr-3 mt-1 rounded-full w-full"
@@ -50,9 +50,6 @@
                         class="
                             disabled:pointer-events-none
                             focus:shadow-outline
-                            md:hover:bg-red
-                            md:hover:border-red
-                            md:hover:text-white
                             border
                             border-blue
                             font-bold
@@ -63,10 +60,10 @@
                             text-white
                             text-15
                         "
-                        :class="off ? 'bg-white text-blue' : 'bg-blue'"
+                        :class="classes"
                         @click="click"
                     >
-                        {{ actionText | capitalize }}
+                        {{ actionText }}
                     </button>
                 </div>
                 <!-- eslint-disable vue/no-v-html -->
@@ -79,7 +76,7 @@
 
 <script>
 import Autolinker from 'autolinker'
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
     props: {
@@ -95,6 +92,10 @@ export default {
             type: String,
             required: true,
         },
+        on: {
+            type: Boolean,
+            required: true,
+        },
         username: {
             type: String,
             required: true,
@@ -104,10 +105,9 @@ export default {
             default: false,
         },
     },
-    data() {
-        return { muted: false, loading: false }
-    },
+    data: () => ({ loading: false }),
     computed: {
+        ...mapGetters(['isMutedTab']),
         ...mapState(['tab']),
         linkedBio() {
             return Autolinker.link(this.bio, {
@@ -116,38 +116,41 @@ export default {
                 truncate: 25,
             })
         },
-        isMutedTab() {
-            return this.tab === 'muted'
-        },
         actionText() {
-            return this.muted ? 'unmute' : 'mute'
+            if (this.isMutedTab) {
+                return this.on ? 'Unmute' : 'Mute'
+            }
+            return this.on ? 'Mute' : 'Unmute'
         },
-        off() {
-            // Different state than tab
-            // i.e. user is muted, but unmuted tab is active
-            if (
-                (!this.isMutedTab && this.muted) ||
-                (this.isMutedTab && !this.muted)
-            ) {
-                return true
+        classes() {
+            if (this.on) {
+                return [
+                    'bg-blue',
+                    'md:hover:bg-red',
+                    'md:hover:border-red',
+                    'md:hover:text-white',
+                ]
             } else {
-                return false
+                return ['bg-white', 'md:hover:bg-gray-100', 'text-blue']
             }
         },
-    },
-    mounted() {
-        this.muted = this.tab === 'muted'
     },
     methods: {
         async click() {
             try {
                 this.loading = true
-                if (this.muted) {
-                    await this.$store.dispatch('destroyMutes', [this.username])
-                } else {
-                    await this.$store.dispatch('createMutes', [this.username])
+                const data = {
+                    usernames: [this.username],
+                    undo: true,
                 }
-                this.muted = !this.muted
+                if (
+                    (this.on && !this.isMutedTab) ||
+                    (!this.on && this.isMutedTab)
+                ) {
+                    await this.$store.dispatch('createMutes', data)
+                } else {
+                    await this.$store.dispatch('destroyMutes', data)
+                }
             } finally {
                 this.loading = false
             }
