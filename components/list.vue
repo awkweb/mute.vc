@@ -7,11 +7,7 @@
                 :bio="investor.description"
                 :image="investor.profileImageUrlHttps"
                 :name="investor.name"
-                :on="
-                    investor.on ||
-                        (investor.on === undefined &&
-                            investor.muted !== isMutedTab)
-                "
+                :on="investor.on"
                 :username="investor.username"
                 :verified="investor.verified"
             />

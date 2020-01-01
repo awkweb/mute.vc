@@ -31,7 +31,7 @@
         </button>
         <div>
             <button
-                v-show="lastAction"
+                v-show="undoAction"
                 :disabled="networkActive"
                 class="
                     bg-gray-200
@@ -97,7 +97,7 @@ export default {
     data: () => ({ loading: false, undoing: false }),
     computed: {
         ...mapGetters(['anyOn', 'isMutedTab', 'tabInvestors', 'tabCount']),
-        ...mapState(['lastAction', 'profile', 'tab']),
+        ...mapState(['undoAction', 'profile', 'tab']),
         networkActive() {
             return this.loading || this.undoing
         },
@@ -114,16 +114,13 @@ export default {
             try {
                 this.loading = true
                 const usernames = this.tabInvestors
-                    .filter((t) => t.on || t.on === undefined)
+                    .filter((t) => t.on)
                     .map((t) => t.username)
                 const data = {
+                    type: this.isMutedTab ? 'destroy' : 'create',
                     usernames,
                 }
-                if (this.isMutedTab) {
-                    await this.$store.dispatch('destroyMutes', data)
-                } else {
-                    await this.$store.dispatch('createMutes', data)
-                }
+                await this.$store.dispatch('mute', data)
             } finally {
                 this.loading = false
             }
@@ -136,14 +133,11 @@ export default {
             try {
                 this.undoing = true
                 const data = {
-                    usernames: this.lastAction.usernames,
+                    type: this.undoAction.type,
+                    usernames: this.undoAction.usernames,
                     undo: true,
                 }
-                if (this.lastAction.type === 'mute') {
-                    await this.$store.dispatch('destroyMutes', data)
-                } else {
-                    await this.$store.dispatch('createMutes', data)
-                }
+                await this.$store.dispatch('mute', data)
             } finally {
                 this.undoing = false
             }

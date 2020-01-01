@@ -1,20 +1,20 @@
 const SET_INITIAL_DATA = 'SET_INITIAL_DATA'
 const SET_INVESTORS = 'SET_INVESTORS'
-const SET_LAST_ACTION = 'SET_LAST_ACTION'
+const SET_UNDO_ACTION = 'SET_UNDO_ACTION'
 const SET_TAB = 'SET_TAB'
 const SET_USER = 'SET_USER'
 
 export const state = () => ({
     authUser: null,
     investors: [],
-    lastAction: null,
+    undoAction: null,
+    loading: false,
     profile: null,
     tab: 'unmuted',
 })
 
 export const getters = {
-    anyOn: (state, getters) =>
-        getters.tabInvestors.some((t) => t.on || t.on === undefined),
+    anyOn: (state, getters) => getters.tabInvestors.some((t) => t.on),
     isLoggedIn: (state) => !!state.authUser,
     isMutedTab: (state) => state.tab === 'muted',
     tabInvestors: (state, getters) =>
@@ -32,18 +32,18 @@ export const mutations = {
     [SET_INVESTORS](state, investors) {
         state.investors = investors
     },
-    [SET_LAST_ACTION](state, action) {
-        state.lastAction = action
+    [SET_UNDO_ACTION](state, action) {
+        state.undoAction = action
     },
     [SET_TAB](state, tab) {
         const investors = state.investors.map((i) => ({
             ...i,
             on: true,
-            muted: i.on || i.on === undefined ? i.muted : !i.muted,
+            muted: i.on ? i.muted : !i.muted,
         }))
         state.investors = investors
         state.tab = tab
-        state.lastAction = null
+        state.undoAction = null
     },
     [SET_USER](state, user) {
         state.authUser = user
@@ -88,32 +88,21 @@ export const actions = {
             })
         } catch (err) {}
     },
-    async createMutes({ commit, getters, state }, data) {
+    async mute({ commit, getters, state }, data) {
         try {
-            const { usernames, undo } = data
-            await this.$axios.$post('/api/mutes/create', { usernames })
+            const { type, usernames, undo } = data
+
+            await this.$axios.$post(`/api/mutes/${type}`, { usernames })
             const investors = flipInvestors(
                 state.investors,
                 usernames,
-                getters.isMutedTab,
+                type === 'destroy' ? !getters.isMutedTab : getters.isMutedTab,
             )
             commit(SET_INVESTORS, investors)
-            const lastAction = undo ? null : { type: 'mute', usernames }
-            commit(SET_LAST_ACTION, lastAction)
-        } catch (err) {}
-    },
-    async destroyMutes({ commit, getters, state }, data) {
-        try {
-            const { usernames, undo } = data
-            await this.$axios.$post('/api/mutes/destroy', { usernames })
-            const investors = flipInvestors(
-                state.investors,
-                usernames,
-                !getters.isMutedTab,
-            )
-            commit(SET_INVESTORS, investors)
-            const lastAction = undo ? null : { type: 'unmute', usernames }
-            commit(SET_LAST_ACTION, lastAction)
+
+            const undoType = type === 'destroy' ? 'create' : 'destroy'
+            const undoAction = undo ? null : { type: undoType, usernames }
+            commit(SET_UNDO_ACTION, undoAction)
         } catch (err) {}
     },
     async logOut({ commit }) {

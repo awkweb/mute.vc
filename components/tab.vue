@@ -6,10 +6,8 @@
             border-b-2
             flex-1
             h-full
-            pb-2
-            pt-2
-            md:pt-3
-            md:pb-3
+            pt-3
+            pb-3
             text-15
         "
         :class="activeClass"

@@ -65,6 +65,7 @@ router.get('/api/bootstrap', async (req, res) => {
                         mutesMap,
                         investor.id,
                     ),
+                    on: true,
                 })
             }
         })

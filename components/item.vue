@@ -139,18 +139,17 @@ export default {
         async click() {
             try {
                 this.loading = true
+                const type =
+                    (this.on && !this.isMutedTab) ||
+                    (!this.on && this.isMutedTab)
+                        ? 'create'
+                        : 'destroy'
                 const data = {
+                    type,
                     usernames: [this.username],
                     undo: true,
                 }
-                if (
-                    (this.on && !this.isMutedTab) ||
-                    (!this.on && this.isMutedTab)
-                ) {
-                    await this.$store.dispatch('createMutes', data)
-                } else {
-                    await this.$store.dispatch('destroyMutes', data)
-                }
+                await this.$store.dispatch('mute', data)
             } finally {
                 this.loading = false
             }
