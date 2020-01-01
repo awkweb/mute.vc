@@ -16,12 +16,16 @@
             px-4
             py-2
         "
+        :style="{
+            boxShadow: shadow ? '0 -3px 6px -3px rgba(0, 0, 0, 0.15)' : '',
+        }"
     >
         <button @click="logOut">
             <img
                 v-if="profile"
                 :src="profile.profileImageUrlHttps | twitterImageUrl"
-                class="bg-gray-200 h-8 mr-4 rounded-full w-8"
+                class="bg-gray-200 rounded-full"
+                style="height: 2.25rem; width: 2.25rem;"
             />
         </button>
         <button
@@ -40,7 +44,7 @@
                 font-bold
                 outline-none
                 px-4
-                py-1
+                py-2
                 rounded-full
                 text-white
                 text-15
@@ -56,6 +60,12 @@
 import { mapState, mapGetters } from 'vuex'
 
 export default {
+    props: {
+        shadow: {
+            type: Boolean,
+            default: false,
+        },
+    },
     data: () => ({ loading: false }),
     computed: {
         ...mapGetters(['tabInvestors']),

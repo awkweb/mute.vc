@@ -1,6 +1,7 @@
 <template>
     <div class="md:bg-gray-100 h-full min-h-screen">
         <div
+            v-scroll="handleScroll"
             class="
                 bg-white
                 md:border-gray-300
@@ -9,12 +10,13 @@
                 h-full
                 md:max-w-xl
                 md:mx-auto
-                pb-12
                 relative
+                md:shadow-md
             "
+            style="padding-bottom: 3.5rem;"
         >
-            <Nav />
-            <ul style="min-height: calc(100vh - 6.25rem)">
+            <Nav :shadow="topShadow" />
+            <ul style="min-height: calc(100vh - 7rem)">
                 <Item
                     v-for="investor in tabInvestors"
                     :key="investor.id"
@@ -25,7 +27,7 @@
                     :verified="investor.verified"
                 />
             </ul>
-            <Toolbar />
+            <Toolbar :shadow="bottomShadow" />
         </div>
     </div>
 </template>
@@ -42,6 +44,10 @@ export default {
         Nav,
         Toolbar,
     },
+    data: () => ({
+        bottomShadow: true,
+        topShadow: false,
+    }),
     computed: {
         ...mapGetters(['tabInvestors']),
         ...mapState(['authUser', 'tab']),
@@ -51,6 +57,28 @@ export default {
             const nextTab = to.query?.tab
             if (nextTab) {
                 this.$store.commit('SET_TAB', nextTab)
+                this.$nextTick(() => {
+                    const documentEl = document.documentElement
+                    this.bottomShadow =
+                        documentEl.scrollHeight > documentEl.clientHeight
+                })
+            }
+        },
+    },
+    methods: {
+        handleScroll(event, el) {
+            const documentEl = document.documentElement
+            const winScroll = document.body.scrollTop || documentEl.scrollTop
+            const height = documentEl.scrollHeight - documentEl.clientHeight
+            const scrolled = (winScroll / height) * 100
+
+            if (scrolled === 0) {
+                this.topShadow = false
+            } else if (scrolled > 0 && scrolled < 100) {
+                if (!this.bottomShadow) this.bottomShadow = true
+                if (!this.topShadow) this.topShadow = true
+            } else if (scrolled === 100) {
+                this.bottomShadow = false
             }
         },
     },

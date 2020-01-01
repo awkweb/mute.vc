@@ -53,13 +53,20 @@ export const actions = {
     },
     async bootstrap({ commit }) {
         try {
-            const { data } = await this.$axios.$get('/api/bootstrap')
+            const {
+                data,
+                data: { profile },
+            } = await this.$axios.$get('/api/bootstrap')
+            const investors = data.investors.sort(
+                (a, b) => b.followersCount - a.followersCount,
+            )
             const mutesMap = data.mutes.reduce((result, id) => {
                 result[id] = 1
                 return result
             }, {})
             commit(SET_INITIAL_DATA, {
-                ...data,
+                profile,
+                investors,
                 mutesMap,
             })
         } catch (err) {}
