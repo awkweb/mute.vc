@@ -29,31 +29,58 @@
                 style="height: 2.25rem; width: 2.25rem;"
             />
         </button>
-        <button
-            v-show="tabInvestors.length > 0"
-            :disabled="loading"
-            class="
-                bg-black
-                border
-                border-black
-                disabled:opacity-50
-                disabled:pointer-events-none
-                focus:shadow-outline
-                font-bold
-                md:hover:bg-red
-                md:hover:border-red
-                md:hover:text-white
-                outline-none
-                px-4
-                py-2
-                rounded-full
-                text-15
-                text-white
-            "
-            @click="click"
-        >
-            {{ actionText }}
-        </button>
+        <div>
+            <button
+                v-show="lastAction"
+                :disabled="networkActive"
+                class="
+                    bg-gray-200
+                    border
+                    border-gray-200
+                    disabled:opacity-50
+                    disabled:pointer-events-none
+                    focus:shadow-outline
+                    font-bold
+                    md:hover:bg-gray-300
+                    md:hover:border-gray-300
+                    outline-none
+                    px-4
+                    py-2
+                    rounded-full
+                    text-15
+                    text-gray-900
+                    mr-2
+                "
+                @click="undo"
+            >
+                {{ undoText }}
+            </button>
+            <button
+                v-show="tabCount > 0"
+                :disabled="!anyOn || networkActive"
+                class="
+                    bg-black
+                    border
+                    border-black
+                    disabled:opacity-50
+                    disabled:pointer-events-none
+                    focus:shadow-outline
+                    font-bold
+                    md:hover:bg-red
+                    md:hover:border-red
+                    md:hover:text-white
+                    outline-none
+                    px-4
+                    py-2
+                    rounded-full
+                    text-15
+                    text-white
+                "
+                @click="click"
+            >
+                {{ actionText }}
+            </button>
+        </div>
     </div>
 </template>
 
@@ -67,29 +94,36 @@ export default {
             default: false,
         },
     },
-    data: () => ({ muted: false, loading: false }),
+    data: () => ({ loading: false, undoing: false }),
     computed: {
-        ...mapGetters(['tabInvestors']),
-        ...mapState(['profile', 'tab']),
-        isMutedTab() {
-            return this.tab === 'muted'
+        ...mapGetters(['anyOn', 'isMutedTab', 'tabInvestors', 'tabCount']),
+        ...mapState(['lastAction', 'profile', 'tab']),
+        networkActive() {
+            return this.loading || this.undoing
+        },
+        undoText() {
+            return this.undoing ? `Undoing...` : `Undo`
         },
         actionText() {
             const root = this.isMutedTab ? 'Unmut' : 'Mut'
-            return this.loading ? `${root}ing...` : `${root}e`
+            return this.loading ? `${root}ing all...` : `${root}e all`
         },
     },
     methods: {
         async click() {
             try {
                 this.loading = true
-                const usernames = this.tabInvestors.map((t) => t.username)
-                if (this.isMutedTab) {
-                    await this.$store.dispatch('destroyMutes', usernames)
-                } else {
-                    await this.$store.dispatch('createMutes', usernames)
+                const usernames = this.tabInvestors
+                    .filter((t) => t.on || t.on === undefined)
+                    .map((t) => t.username)
+                const data = {
+                    usernames,
                 }
-                this.muted = !this.muted
+                if (this.isMutedTab) {
+                    await this.$store.dispatch('destroyMutes', data)
+                } else {
+                    await this.$store.dispatch('createMutes', data)
+                }
             } finally {
                 this.loading = false
             }
@@ -97,6 +131,22 @@ export default {
         logOut() {
             this.$store.dispatch('logOut')
             this.$router.push({ path: '/' })
+        },
+        async undo() {
+            try {
+                this.undoing = true
+                const data = {
+                    usernames: this.lastAction.usernames,
+                    undo: true,
+                }
+                if (this.lastAction.type === 'mute') {
+                    await this.$store.dispatch('destroyMutes', data)
+                } else {
+                    await this.$store.dispatch('createMutes', data)
+                }
+            } finally {
+                this.undoing = false
+            }
         },
     },
 }

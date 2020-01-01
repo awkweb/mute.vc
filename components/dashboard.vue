@@ -39,11 +39,11 @@ export default {
         topShadow: false,
     }),
     computed: {
-        ...mapGetters(['tabInvestors']),
+        ...mapGetters(['tabCount']),
         ...mapState(['authUser', 'tab']),
         title() {
             return `${this.$options.filters.capitalize(this.tab)} (${
-                this.tabInvestors?.length
+                this.tabCount
             })`
         },
     },

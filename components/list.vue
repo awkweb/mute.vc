@@ -7,6 +7,11 @@
                 :bio="investor.description"
                 :image="investor.profileImageUrlHttps"
                 :name="investor.name"
+                :on="
+                    investor.on ||
+                        (investor.on === undefined &&
+                            investor.muted !== isMutedTab)
+                "
                 :username="investor.username"
                 :verified="investor.verified"
             />
@@ -14,16 +19,17 @@
         <template v-else>
             <li
                 class="flex flex-col justify-center items-center px-4 py-4"
-                style="min-height: 50vh"
+                style="min-height: 70vh"
             >
                 <component
                     :is="placeholder.icon"
-                    v-bind="{ size: '25', class: 'text-gray-700' }"
+                    v-bind="{ size: '21', class: 'text-gray-600' }"
                 />
                 <div
                     class="
+                        font-medium
                         mt-2
-                        text-gray-800
+                        text-gray-600
                         truncate
                     "
                 >
@@ -47,11 +53,11 @@ export default {
     },
     computed: {
         ...mapGetters(['tabInvestors']),
-        ...mapState(['tab']),
+        ...mapState(['tab', 'isMutedTab']),
         placeholder() {
             return {
                 text: `No ${this.tab} investors`,
-                icon: this.tab === 'muted' ? VolumeXIcon : Volume2Icon,
+                icon: this.isMutedTab ? VolumeXIcon : Volume2Icon,
             }
         },
     },

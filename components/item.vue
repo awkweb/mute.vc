@@ -76,7 +76,7 @@
 
 <script>
 import Autolinker from 'autolinker'
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
     props: {
@@ -92,6 +92,10 @@ export default {
             type: String,
             required: true,
         },
+        on: {
+            type: Boolean,
+            required: true,
+        },
         username: {
             type: String,
             required: true,
@@ -101,8 +105,9 @@ export default {
             default: false,
         },
     },
-    data: () => ({ muted: false, loading: false }),
+    data: () => ({ loading: false }),
     computed: {
+        ...mapGetters(['isMutedTab']),
         ...mapState(['tab']),
         linkedBio() {
             return Autolinker.link(this.bio, {
@@ -111,41 +116,41 @@ export default {
                 truncate: 25,
             })
         },
-        isMutedTab() {
-            return this.tab === 'muted'
-        },
         actionText() {
-            return this.muted ? 'Unmute' : 'Mute'
+            if (this.isMutedTab) {
+                return this.on ? 'Unmute' : 'Mute'
+            }
+            return this.on ? 'Mute' : 'Unmute'
         },
         classes() {
-            if (
-                (!this.isMutedTab && this.muted) ||
-                (this.isMutedTab && !this.muted)
-            ) {
-                return ['bg-white', 'md:hover:bg-gray-100', 'text-blue']
-            } else {
+            if (this.on) {
                 return [
                     'bg-blue',
                     'md:hover:bg-red',
                     'md:hover:border-red',
                     'md:hover:text-white',
                 ]
+            } else {
+                return ['bg-white', 'md:hover:bg-gray-100', 'text-blue']
             }
         },
-    },
-    mounted() {
-        this.muted = this.tab === 'muted'
     },
     methods: {
         async click() {
             try {
                 this.loading = true
-                if (this.muted) {
-                    await this.$store.dispatch('destroyMutes', [this.username])
-                } else {
-                    await this.$store.dispatch('createMutes', [this.username])
+                const data = {
+                    usernames: [this.username],
+                    undo: true,
                 }
-                this.muted = !this.muted
+                if (
+                    (this.on && !this.isMutedTab) ||
+                    (!this.on && this.isMutedTab)
+                ) {
+                    await this.$store.dispatch('createMutes', data)
+                } else {
+                    await this.$store.dispatch('destroyMutes', data)
+                }
             } finally {
                 this.loading = false
             }
