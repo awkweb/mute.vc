@@ -1,3 +1,4 @@
+const SET_APPEARANCE = 'SET_APPEARANCE'
 const SET_INITIAL_DATA = 'SET_INITIAL_DATA'
 const SET_INVESTORS = 'SET_INVESTORS'
 const SET_UNDO_ACTION = 'SET_UNDO_ACTION'
@@ -5,6 +6,7 @@ const SET_TAB = 'SET_TAB'
 const SET_USER = 'SET_USER'
 
 export const state = () => ({
+    appearance: 'light',
     authUser: null,
     investors: [],
     undoAction: null,
@@ -25,6 +27,9 @@ export const getters = {
 }
 
 export const mutations = {
+    [SET_APPEARANCE](state, appearance) {
+        state.appearance = appearance
+    },
     [SET_INITIAL_DATA](state, { investors, profile }) {
         state.investors = investors
         state.profile = profile

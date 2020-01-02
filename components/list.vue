@@ -15,7 +15,7 @@
         <template v-else>
             <li
                 class="flex flex-col justify-center items-center px-4 py-4"
-                style="min-height: 70vh"
+                style="min-height: 30vh"
             >
                 <component
                     :is="placeholder.icon"

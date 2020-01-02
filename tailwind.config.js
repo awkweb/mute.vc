@@ -37,7 +37,7 @@ module.exports = {
             none: 'none',
         },
         colors: {
-            white: 'hsl(104, 100%, 100%)',
+            white: 'var(--color-background)',
             black: 'hsl(0, 0%, 0%)',
             red: 'hsl(341, 73%, 46%)',
 
