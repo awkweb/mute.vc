@@ -7,29 +7,18 @@
 /* purgecss end ignore */
 
 /* Custom global styles */
-::placeholder {
-    opacity: 1;
-}
-
 html {
     @apply font-sans;
     @apply text-base;
 }
-
 body {
     @apply antialiased;
-    @apply bg-white;
-    @apply text-black;
+    @apply bg-background;
+    @apply text-body;
     text-rendering: optimizeLegibility;
 }
-
-a {
-    @apply text-blue-link;
-}
-
-a:hover {
-    @apply underline;
-}
+a { @apply text-link; }
+a:hover { @apply underline; }
 
 /* Everything else */
 @tailwind utilities;

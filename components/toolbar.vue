@@ -1,8 +1,7 @@
 <template>
     <div
         class="
-            bg-white
-            border-gray-300
+            bg-background
             border-t
             bottom-0
             fixed
@@ -25,7 +24,7 @@
             <img
                 v-if="profile"
                 :src="profile.profileImageUrlHttps | twitterImageUrl"
-                class="bg-gray-200 rounded-full"
+                class="bg-gray-dark rounded-full"
                 style="height: 2.25rem; width: 2.25rem;"
             />
         </button>
@@ -34,21 +33,21 @@
                 v-show="undoAction"
                 :disabled="networkActive"
                 class="
-                    bg-gray-200
+                    bg-gray
                     border
-                    border-gray-200
+                    border-gray
                     disabled:opacity-50
                     disabled:pointer-events-none
                     focus:shadow-outline
                     font-bold
-                    md:hover:bg-gray-300
-                    md:hover:border-gray-300
+                    md:hover:bg-gray-dark
+                    md:hover:border-gray-dark
                     outline-none
                     px-4
                     py-2
                     rounded-full
                     text-15
-                    text-gray-900
+                    text-title
                     mr-2
                 "
                 @click="undo"
@@ -59,22 +58,22 @@
                 v-show="tabCount > 0"
                 :disabled="!anyOn || networkActive"
                 class="
-                    bg-black
+                    bg-body
                     border
-                    border-black
+                    border-body
                     disabled:opacity-50
                     disabled:pointer-events-none
                     focus:shadow-outline
                     font-bold
                     md:hover:bg-red
                     md:hover:border-red
-                    md:hover:text-white
+                    md:hover:text-background
                     outline-none
                     px-4
                     py-2
                     rounded-full
                     text-15
-                    text-white
+                    text-background
                 "
                 @click="click"
             >

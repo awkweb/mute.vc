@@ -1,10 +1,9 @@
 <template>
-    <div class="md:bg-gray-100 h-full min-h-screen">
+    <div class="md:bg-gray-light h-full min-h-screen">
         <div
             v-scroll="handleScroll"
             class="
-                bg-white
-                md:border-gray-300
+                bg-background
                 md:border-l
                 md:border-r
                 h-full

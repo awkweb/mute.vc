@@ -28,6 +28,7 @@ export const getters = {
 
 export const mutations = {
     [SET_APPEARANCE](state, appearance) {
+        localStorage.setItem('appearance', appearance)
         state.appearance = appearance
     },
     [SET_INITIAL_DATA](state, { investors, profile }) {

@@ -1,9 +1,8 @@
 <template>
     <div
         class="
-            bg-white
+            bg-background
             border-b
-            border-gray-300
             flex
             sticky
             top-0

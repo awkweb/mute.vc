@@ -1,12 +1,11 @@
 module.exports = {
     prefix: '',
     separator: ':',
-    important: true,
     theme: {
         backgroundColor: (theme) => theme('colors'),
         borderColor: (theme) => ({
             ...theme('colors'),
-            default: theme('colors.300', 'currentColor'),
+            default: theme('colors.border', 'currentColor'),
         }),
         borderRadius: {
             none: '0',
@@ -37,28 +36,27 @@ module.exports = {
             none: 'none',
         },
         colors: {
-            white: 'var(--color-background)',
             black: 'hsl(0, 0%, 0%)',
+            white: 'hsl(104, 100%, 100%)',
             red: 'hsl(341, 73%, 46%)',
-
-            blue: {
-                default: 'hsl(203, 89%, 53%)',
-                link: 'hsl(203, 79%, 49%)',
-            },
-
-            gray: {
-                100: 'hsl(204, 45.5%, 98%)',
-                200: 'hsl(210, 38.5%, 95%)',
-                300: 'hsl(214, 31.8%, 91%)',
-                400: 'hsl(211, 25.3%, 84%)',
-                500: 'hsl(213, 20.3%, 69%)',
-                600: 'hsl(215, 15%, 52%)',
-                700: 'hsl(218, 16.9%, 35%)',
-                800: 'hsl(217, 23.1%, 23%)',
-                900: 'hsl(220, 25.7%, 14%)',
-            },
-
             transparent: 'transparent',
+
+            background: 'var(--colors-background)',
+            body: 'var(--colors-body)',
+            title: 'var(--colors-title)',
+            description: 'var(--colors-description)',
+            border: 'var(--colors-border)',
+            link: 'var(--colors-link)',
+            primary: {
+                default: 'var(--colors-primary-default)',
+                dark: 'var(--colors-primary-dark)',
+            },
+            gray: {
+                light: 'var(--colors-gray-light)',
+                default: 'var(--colors-gray-default)',
+                dark: 'var(--colors-gray-dark)',
+            },
+            verified: 'var(--colors-verified)',
         },
         container: {
             center: true,

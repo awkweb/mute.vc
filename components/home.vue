@@ -1,7 +1,7 @@
 <template>
     <div>
         <header class="container lg:mb-48 mb-24 lg:pt-32 pt-20 text-center">
-            <h1 class="font-bold mb-6 text-black" style="font-size: 2.125rem;">
+            <h1 class="font-bold mb-6 text-body" style="font-size: 2.125rem;">
                 Mute investors on Twitter
             </h1>
             <div
@@ -11,7 +11,7 @@
                     mb-7
                     mx-auto 
                     text-xl 
-                    text-gray-700
+                    text-description
                 "
             >
                 Silence VC thought leadership and platitudes from your feed
@@ -46,7 +46,7 @@
             >
                 <div
                     class="
-                        bg-gray-200
+                        bg-gray-light
                         flex
                         items-center
                         justify-center
@@ -61,11 +61,11 @@
                         v-bind="{ size: reason.icon.size }"
                     />
                 </div>
-                <h4 class="font-bold mb-3 text-gray-900 text-lg">
+                <h4 class="font-bold mb-3 text-title text-lg">
                     {{ reason.title }}
                 </h4>
                 <p
-                    class="leading-normal text-gray-700"
+                    class="leading-normal text-description"
                     style="font-size: 1.0625rem;"
                 >
                     {{ reason.description }}

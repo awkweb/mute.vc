@@ -19,14 +19,13 @@
             >
                 <component
                     :is="placeholder.icon"
-                    v-bind="{ size: '21', class: 'text-gray-600' }"
+                    v-bind="{ size: '21', class: 'text-a-color' }"
                 />
                 <div
                     class="
                         font-medium
                         mt-2
-                        text-gray-600
-                        truncate
+                        text-a-color
                     "
                 >
                     {{ placeholder.text }}
