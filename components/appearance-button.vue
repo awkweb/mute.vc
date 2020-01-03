@@ -60,7 +60,7 @@ export default {
             return []
         },
         noTextClasses() {
-            if (!this.next) {
+            if (!this.text) {
                 return [
                     'border',
                     'border-gray',

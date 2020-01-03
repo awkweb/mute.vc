@@ -2,9 +2,10 @@
     <li
         class="
             bg-background
-            hover:bg-gray-light
             border-b
-            px-4
+            md:hover:bg-gray-light
+            md:px-4
+            px-3
             py-2
         "
     >

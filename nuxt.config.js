@@ -42,7 +42,10 @@ module.exports = {
             lang: 'en',
         },
     },
-    loading: { color: 'hsl(203, 89%, 53%)' },
+    loading: {
+        color: 'hsl(203, 89%, 53%)',
+        failedColor: 'hsl(341, 73%, 46%)',
+    },
     css: [],
     plugins: ['@plugins/directives.js', '@plugins/filters.js'],
     buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/tailwindcss'],

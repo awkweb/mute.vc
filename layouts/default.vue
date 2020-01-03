@@ -11,6 +11,7 @@ const sharedColors = {
         default: 'hsl(203, 89%, 53%)',
         dark: 'hsl(203, 79%, 48%)',
     },
+    red: 'hsl(341, 73%, 46%)',
 }
 
 const appearances = {

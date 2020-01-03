@@ -12,7 +12,8 @@
             md:border-r
             md:max-w-xl
             md:mx-auto
-            px-4
+            md:px-4
+            px-3
             py-2
         "
         :class="{ 'shadow-bottom': shadow }"
