@@ -50,7 +50,7 @@ export default {
                     'lg:mt-3',
                     'lg:opacity-50',
                     'lg:top-0',
-                    'mb-2',
+                    'mb-3',
                     'mr-2',
                     'px-4',
                     'py-2',

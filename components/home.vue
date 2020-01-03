@@ -3,7 +3,10 @@
         <AppearanceButton fixed text />
 
         <header class="container lg:mb-48 mb-24 lg:pt-40 pt-20 text-center">
-            <h1 class="font-bold mb-6 text-body" style="font-size: 2.125rem;">
+            <h1
+                class="font-bold max-w-headline mx-auto lg:max-w-full mb-6 text-body"
+                style="font-size: 2.125rem;"
+            >
                 Mute investors on Twitter
             </h1>
             <div
@@ -44,6 +47,8 @@
                     lg:mb-0
                     max-w-sm
                     mb-16
+                    lg:px-0
+                    px-1
                 "
             >
                 <div

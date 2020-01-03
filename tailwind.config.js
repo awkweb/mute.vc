@@ -144,6 +144,7 @@ module.exports = {
             screen: '100vh',
         },
         maxWidth: {
+            headline: '17rem',
             xxs: '18rem',
             xs: '20rem',
             sm: '24rem',
