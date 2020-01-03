@@ -17,28 +17,40 @@ const appearances = {
     light: {
         ...sharedColors,
         background: 'hsl(104, 100%, 100%)',
+        'background-app': 'hsl(0, 0%, 98%)',
         body: 'hsl(0, 0%, 0%)',
         border: 'hsl(204, 25%, 92%)',
         description: 'hsl(198, 11%, 38%)',
         title: 'hsl(210, 13%, 9%)',
         gray: {
-            light: 'hsl(204, 33.3%, 97.1%)',
-            default: 'hsl(204, 25%, 92.2%)',
-            dark: 'hsl(205, 16.4%, 71.4%)',
+            light: 'hsl(204, 33%, 97%)',
+            default: 'hsl(204, 25%, 92%)',
+            dark: 'hsl(204, 11%, 83%)',
+        },
+        shadow: {
+            bar: 'rgba(0, 0, 0, 0.15)',
+            dark: 'rgba(0, 0, 0, 0.1)',
+            light: 'rgba(0, 0, 0, 0.05)',
         },
         verified: 'hsl(203, 89%, 53%)',
     },
     dark: {
         ...sharedColors,
         background: 'hsl(0, 0%, 0%)',
+        'background-app': 'hsl(0, 0%, 4%)',
         body: 'hsl(104, 100%, 100%)',
         border: 'hsl(206, 7%, 20%)',
         description: 'hsl(208, 6%, 52%)',
         title: 'hsl(0, 0%, 85%)',
         gray: {
-            light: 'hsl(214.3, 14.3%, 9.6%)',
-            default: 'hsl(214.3, 9.9%, 13.9%)',
-            dark: 'hsl(210, 6.2%, 25.5%)',
+            light: 'hsl(214, 14%, 10%)',
+            default: 'hsl(214, 10%, 14%)',
+            dark: 'hsl(214, 6%, 23%)',
+        },
+        shadow: {
+            bar: 'rgba(255, 255, 255, 0.2)',
+            dark: 'rgba(255, 255, 255, 0.1)',
+            light: 'rgba(255, 255, 255, 0.04)',
         },
         verified: 'hsl(0, 0%, 85%)',
     },
@@ -71,12 +83,10 @@ export default {
     },
     mounted() {
         const mql = window.matchMedia('(prefers-color-scheme: dark)')
-        let appearance = localStorage.getItem('appearance')
-        if (!appearance) appearance = mql.matches ? 'dark' : 'light'
-        this.$store.commit('SET_APPEARANCE', appearance)
-
         mql.addEventListener('change', this.handleMediaChange)
         this.mql = mql
+
+        if (!this.appearance) this.handleMediaChange()
     },
     destroyed() {
         this.mql.removeEventListener('change', this.handleMediaChange)
@@ -85,10 +95,10 @@ export default {
         handleMediaChange() {
             const appearance = this.mql.matches ? 'dark' : 'light'
             this.$store.commit('SET_APPEARANCE', appearance)
-        },
-        click() {
-            const appearance = this.appearance === 'light' ? 'dark' : 'light'
-            this.$store.commit('SET_APPEARANCE', appearance)
+            this.$cookies.set('appearance', appearance, {
+                path: '/',
+                maxAge: 60 * 60 * 24 * 7,
+            })
         },
     },
     head() {

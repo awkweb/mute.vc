@@ -56,17 +56,19 @@
                     <button
                         :disabled="loading"
                         class="
-                            disabled:pointer-events-none
                             border
                             border-primary
+                            disabled:pointer-events-none
+                            focus:shadow-outline
                             font-bold
                             outline-none
                             px-4
                             py-1
                             rounded-full
-                            text-white
                             text-15
+                            text-white
                         "
+                        style="margin-right: 3px;"
                         :class="classes"
                         @click="click"
                     >

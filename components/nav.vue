@@ -7,9 +7,7 @@
             sticky
             top-0
         "
-        :style="{
-            boxShadow: shadow ? '0 3px 6px -3px rgba(0, 0, 0, 0.15)' : '',
-        }"
+        :class="{ 'shadow-top': shadow }"
     >
         <Tab name="unmuted" />
         <Tab name="muted" />

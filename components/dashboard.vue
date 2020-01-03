@@ -1,16 +1,15 @@
 <template>
-    <div class="md:bg-gray-light h-full min-h-screen">
+    <div class="md:bg-background-app h-full min-h-screen">
         <div
             v-scroll="handleScroll"
             class="
                 bg-background
+                h-full
                 md:border-l
                 md:border-r
-                h-full
                 md:max-w-xl
                 md:mx-auto
                 relative
-                md:shadow-md
             "
             style="padding-bottom: 3.5rem;"
         >

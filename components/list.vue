@@ -14,20 +14,11 @@
         </template>
         <template v-else>
             <li
-                class="flex flex-col justify-center items-center px-4 py-4"
+                class="flex flex-col justify-center items-center px-4 py-4 text-description"
                 style="min-height: 30vh"
             >
-                <component
-                    :is="placeholder.icon"
-                    v-bind="{ size: '21', class: 'text-a-color' }"
-                />
-                <div
-                    class="
-                        font-medium
-                        mt-2
-                        text-a-color
-                    "
-                >
+                <component :is="placeholder.icon" v-bind="{ size: '22' }" />
+                <div class="font-medium mt-2">
                     {{ placeholder.text }}
                 </div>
             </li>

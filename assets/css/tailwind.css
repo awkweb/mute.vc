@@ -19,6 +19,10 @@ body {
 }
 a { @apply text-link; }
 a:hover { @apply underline; }
+button:focus {
+    @apply shadow-outline;
+    outline: none;
+}
 
 /* Everything else */
 @tailwind utilities;

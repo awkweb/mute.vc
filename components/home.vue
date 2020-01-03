@@ -1,6 +1,8 @@
 <template>
     <div>
-        <header class="container lg:mb-48 mb-24 lg:pt-32 pt-20 text-center">
+        <AppearanceButton fixed text />
+
+        <header class="container lg:mb-48 mb-24 lg:pt-40 pt-20 text-center">
             <h1 class="font-bold mb-6 text-body" style="font-size: 2.125rem;">
                 Mute investors on Twitter
             </h1>
@@ -52,7 +54,8 @@
                         justify-center
                         mb-5
                         rounded-full
-                        text-gray-900
+                        text-title
+                        shadow
                     "
                     style="height: 3.25rem; width: 3.25rem;"
                 >
@@ -79,12 +82,14 @@
 
 <script>
 import { ClockIcon, RadioIcon, ZapIcon } from 'vue-feather-icons'
+import AppearanceButton from './appearance-button'
 import ContinueWithTwitter from './continue-with-twitter'
 import Footer from './footer'
 
 export default {
     scrollToTop: true,
     components: {
+        AppearanceButton,
         ClockIcon,
         ContinueWithTwitter,
         Footer,
