@@ -1,3 +1,4 @@
+const SET_APPEARANCE = 'SET_APPEARANCE'
 const SET_INITIAL_DATA = 'SET_INITIAL_DATA'
 const SET_INVESTORS = 'SET_INVESTORS'
 const SET_UNDO_ACTION = 'SET_UNDO_ACTION'
@@ -5,6 +6,7 @@ const SET_TAB = 'SET_TAB'
 const SET_USER = 'SET_USER'
 
 export const state = () => ({
+    appearance: 'light',
     authUser: null,
     investors: [],
     undoAction: null,
@@ -15,6 +17,7 @@ export const state = () => ({
 
 export const getters = {
     anyOn: (state, getters) => getters.tabInvestors.some((t) => t.on),
+    isDark: (state) => state.appearance === 'dark',
     isLoggedIn: (state) => !!state.authUser,
     isMutedTab: (state) => state.tab === 'muted',
     tabInvestors: (state, getters) =>
@@ -25,6 +28,9 @@ export const getters = {
 }
 
 export const mutations = {
+    [SET_APPEARANCE](state, appearance) {
+        state.appearance = appearance
+    },
     [SET_INITIAL_DATA](state, { investors, profile }) {
         state.investors = investors
         state.profile = profile
@@ -66,7 +72,7 @@ const flipInvestors = (investors, usernames, on) => {
 }
 
 export const actions = {
-    nuxtServerInit({ commit }, { req, route }) {
+    nuxtServerInit({ commit }, { app, req, route }) {
         if (req.session?.username) {
             commit(SET_USER, req.session)
             const tab = route.query?.tab
@@ -74,6 +80,8 @@ export const actions = {
                 commit(SET_TAB, tab)
             }
         }
+        const appearance = app.$cookies.get('appearance')
+        if (appearance) commit('SET_APPEARANCE', appearance)
     },
     async bootstrap({ commit }) {
         try {

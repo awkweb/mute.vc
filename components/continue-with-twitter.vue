@@ -1,12 +1,12 @@
 <template>
     <a
         class="
-            bg-blue
+            bg-primary
             block
             flex
             font-semibold
             hover:no-underline
-            hover:opacity-75
+            hover:bg-primary-dark
             items-center
             justify-center
             max-w-button

@@ -1,8 +1,7 @@
 <template>
     <div
         class="
-            bg-white
-            border-gray-300
+            bg-background
             border-t
             bottom-0
             fixed
@@ -16,39 +15,42 @@
             px-4
             py-2
         "
-        :style="{
-            boxShadow: shadow ? '0 -3px 6px -3px rgba(0, 0, 0, 0.15)' : '',
-        }"
+        :class="{ 'shadow-bottom': shadow }"
         style="height: 3.59375rem;"
     >
-        <button @click="logOut">
-            <img
-                v-if="profile"
-                :src="profile.profileImageUrlHttps | twitterImageUrl"
-                class="bg-gray-200 rounded-full"
-                style="height: 2.25rem; width: 2.25rem;"
-            />
-        </button>
+        <div class="flex">
+            <button
+                class="border border-transparent h-avatar w-avatar mr-2 rounded-full overflow-hidden"
+                title="Log Out"
+                @click="logOut"
+            >
+                <img
+                    v-if="profile"
+                    :src="profile.profileImageUrlHttps | twitterImageUrl"
+                    class="bg-gray-dark"
+                />
+            </button>
+            <AppearanceButton title="Toggle Theme" />
+        </div>
         <div>
             <button
                 v-show="undoAction"
                 :disabled="networkActive"
                 class="
-                    bg-gray-200
+                    bg-gray
                     border
-                    border-gray-200
+                    border-gray
                     disabled:opacity-50
                     disabled:pointer-events-none
-                    focus:shadow-outline
                     font-bold
-                    md:hover:bg-gray-300
-                    md:hover:border-gray-300
+                    md:hover:bg-gray-dark
+                    md:hover:border-gray-dark
                     outline-none
                     px-4
                     py-2
                     rounded-full
                     text-15
-                    text-gray-900
+                    text-title
                     mr-2
                 "
                 @click="undo"
@@ -59,22 +61,24 @@
                 v-show="tabCount > 0"
                 :disabled="!anyOn || networkActive"
                 class="
-                    bg-black
+                    bg-body
                     border
-                    border-black
-                    disabled:opacity-50
+                    border-body
+                    disabled:opacity-25
                     disabled:pointer-events-none
                     focus:shadow-outline
                     font-bold
                     md:hover:bg-red
                     md:hover:border-red
-                    md:hover:text-white
                     outline-none
                     px-4
                     py-2
                     rounded-full
                     text-15
-                    text-white
+                    text-background
+                "
+                :class="
+                    isDark ? 'md:hover:text-white' : 'md:hover:text-background'
                 "
                 @click="click"
             >
@@ -86,8 +90,12 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import AppearanceButton from './appearance-button'
 
 export default {
+    components: {
+        AppearanceButton,
+    },
     props: {
         shadow: {
             type: Boolean,
@@ -96,7 +104,13 @@ export default {
     },
     data: () => ({ loading: false, undoing: false }),
     computed: {
-        ...mapGetters(['anyOn', 'isMutedTab', 'tabInvestors', 'tabCount']),
+        ...mapGetters([
+            'anyOn',
+            'isDark',
+            'isMutedTab',
+            'tabInvestors',
+            'tabCount',
+        ]),
         ...mapState(['undoAction', 'profile', 'tab']),
         networkActive() {
             return this.loading || this.undoing

@@ -1,19 +1,19 @@
 <template>
-    <footer class="bg-gray-100 border-gray-300 border-t lg:h-24">
+    <footer class="bg-gray-light border-t lg:h-24">
         <div
             class="
                     flex
                     flex-col
                     h-full
+                    lg:flex-row
                     lg:items-center
                     lg:justify-between
-                    lg:flex-row
+                    lg:py-4
                     max-w-5xl
                     mx-auto
-                    px-5
-                    lg:py-4
-                    pt-8
                     pb-10
+                    pt-8
+                    px-5
                 "
         >
             <div
@@ -22,7 +22,7 @@
                         lg:order-first
                         lg:text-sm
                         order-last
-                        text-gray-800
+                        text-description
                     "
             >
                 Designed in New York City
@@ -30,7 +30,7 @@
             <ul class="flex flex-col lg:flex-row">
                 <li class="mb-4 lg:mb-0">
                     <a
-                        class="underline lg:no-underline text-gray-800 lg:text-sm"
+                        class="underline lg:no-underline text-description lg:text-sm"
                         href="https://watsi.org/"
                     >
                         Donate
@@ -38,7 +38,7 @@
                 </li>
                 <li class="mb-4 lg:mb-0 lg:ml-8">
                     <a
-                        class="underline lg:no-underline text-gray-800 lg:text-sm"
+                        class="underline lg:no-underline text-description lg:text-sm"
                         href="mailto:tom@meagher.co?subject=mute.vc"
                     >
                         Contact
@@ -46,7 +46,7 @@
                 </li>
                 <li class="mb-4 lg:mb-0 lg:ml-8">
                     <a
-                        class="underline lg:no-underline text-gray-800 lg:text-sm"
+                        class="underline lg:no-underline text-description lg:text-sm"
                         href="https://twitter.com/tomfme"
                     >
                         Twitter

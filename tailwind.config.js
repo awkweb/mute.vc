@@ -1,12 +1,11 @@
 module.exports = {
     prefix: '',
     separator: ':',
-    important: true,
     theme: {
         backgroundColor: (theme) => theme('colors'),
         borderColor: (theme) => ({
             ...theme('colors'),
-            default: theme('colors.300', 'currentColor'),
+            default: theme('colors.border', 'currentColor'),
         }),
         borderRadius: {
             none: '0',
@@ -23,42 +22,41 @@ module.exports = {
             '8': '8px',
         },
         boxShadow: {
+            top: '0 3px 6px -3px var(--colors-shadow-bar)',
+            bottom: '0 -3px 6px -3px var(--colors-shadow-bar)',
             default:
-                '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-            md:
-                '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                '0 2px 3px 1px var(--colors-shadow-light), 0 1px 2px 0 var(--colors-shadow-light)',
             lg:
-                '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-            xl:
-                '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-            '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-            inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
+                '0 10px 15px -3px var(--colors-shadow-dark), 0 4px 6px -2px var(--colors-shadow-light)',
             outline: '0 0 0 3px rgba(66, 153, 225, 0.5)',
             none: 'none',
         },
         colors: {
-            white: 'hsl(104, 100%, 100%)',
             black: 'hsl(0, 0%, 0%)',
+            white: 'hsl(104, 100%, 100%)',
             red: 'hsl(341, 73%, 46%)',
+            transparent: 'transparent',
 
-            blue: {
-                default: 'hsl(203, 89%, 53%)',
-                link: 'hsl(203, 79%, 49%)',
+            background: 'var(--colors-background)',
+            'background-app': 'var(--colors-background-app)',
+            body: 'var(--colors-body)',
+            title: 'var(--colors-title)',
+            description: 'var(--colors-description)',
+            border: 'var(--colors-border)',
+            link: 'var(--colors-link)',
+
+            primary: {
+                default: 'var(--colors-primary-default)',
+                dark: 'var(--colors-primary-dark)',
             },
 
             gray: {
-                100: 'hsl(204, 45.5%, 98%)',
-                200: 'hsl(210, 38.5%, 95%)',
-                300: 'hsl(214, 31.8%, 91%)',
-                400: 'hsl(211, 25.3%, 84%)',
-                500: 'hsl(213, 20.3%, 69%)',
-                600: 'hsl(215, 15%, 52%)',
-                700: 'hsl(218, 16.9%, 35%)',
-                800: 'hsl(217, 23.1%, 23%)',
-                900: 'hsl(220, 25.7%, 14%)',
+                light: 'var(--colors-gray-light)',
+                default: 'var(--colors-gray-default)',
+                dark: 'var(--colors-gray-dark)',
             },
 
-            transparent: 'transparent',
+            verified: 'var(--colors-verified)',
         },
         container: {
             center: true,
@@ -185,6 +183,7 @@ module.exports = {
         },
         spacing: {
             px: '1px',
+            avatar: '2.375rem',
             '0': '0',
             '1': '0.25rem',
             '2': '0.5rem',

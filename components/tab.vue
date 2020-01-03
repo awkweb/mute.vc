@@ -35,8 +35,8 @@ export default {
         },
         activeClass() {
             return this.active
-                ? 'text-blue'
-                : 'hover:bg-gray-100 border-transparent text-gray-700'
+                ? 'text-primary border-primary'
+                : 'hover:bg-gray-light border-transparent text-description'
         },
     },
     methods: {

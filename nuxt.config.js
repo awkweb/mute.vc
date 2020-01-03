@@ -46,7 +46,12 @@ module.exports = {
     css: [],
     plugins: ['@plugins/directives.js', '@plugins/filters.js'],
     buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/tailwindcss'],
-    modules: [...devModules, '@nuxtjs/axios', 'nuxt-purgecss'],
+    modules: [
+        ...devModules,
+        '@nuxtjs/axios',
+        'nuxt-purgecss',
+        'cookie-universal-nuxt',
+    ],
     axios: {
         https: !dev,
     },

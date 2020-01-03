@@ -1,8 +1,16 @@
 <template>
-    <li class="bg-white hover:bg-gray-100 border-b border-gray-300 px-4 py-2">
+    <li
+        class="
+            bg-background
+            hover:bg-gray-light
+            border-b
+            px-4
+            py-2
+        "
+    >
         <div class="flex">
             <img
-                class="bg-gray-200 h-12 mr-3 mt-1 rounded-full w-full"
+                class="bg-gray-dark h-12 mr-3 mt-1 rounded-full w-full"
                 style="max-width: 3rem;"
                 :src="image | twitterImageUrl"
             />
@@ -13,7 +21,7 @@
                             <div
                                 class="
                                     leading-normal
-                                    text-black
+                                    text-title
                                     truncate
                                     font-bold
                                     text-15
@@ -23,7 +31,7 @@
                             </div>
                             <div v-if="verified">
                                 <svg
-                                    class="fill-current select-none text-blue"
+                                    class="fill-current select-none text-verified"
                                     viewBox="0 0 24 24"
                                     aria-label="Verified account"
                                     style="height: 1.171875rem; margin-left: 2px;"
@@ -37,7 +45,7 @@
                             </div>
                         </div>
                         <a
-                            class="text-gray-700 text-15"
+                            class="text-description text-15"
                             :href="`https://twitter.com/${username}`"
                             target="_blank"
                             style="line-height: 1.1;"
@@ -48,18 +56,19 @@
                     <button
                         :disabled="loading"
                         class="
+                            border
+                            border-primary
                             disabled:pointer-events-none
                             focus:shadow-outline
-                            border
-                            border-blue
                             font-bold
                             outline-none
                             px-4
                             py-1
                             rounded-full
-                            text-white
                             text-15
+                            text-white
                         "
+                        style="margin-right: 3px;"
                         :class="classes"
                         @click="click"
                     >
@@ -108,7 +117,7 @@ export default {
     data: () => ({ loading: false }),
     computed: {
         ...mapGetters(['isMutedTab']),
-        ...mapState(['tab']),
+        ...mapState(['appearance', 'tab']),
         linkedBio() {
             return Autolinker.link(this.bio, {
                 hashtag: 'twitter',
@@ -124,14 +133,13 @@ export default {
         },
         classes() {
             if (this.on) {
-                return [
-                    'bg-blue',
-                    'md:hover:bg-red',
-                    'md:hover:border-red',
-                    'md:hover:text-white',
-                ]
+                return ['bg-primary', 'md:hover:bg-red', 'md:hover:border-red']
             } else {
-                return ['bg-white', 'md:hover:bg-gray-100', 'text-blue']
+                return [
+                    'bg-background',
+                    'md:hover:bg-gray-light',
+                    'text-primary',
+                ]
             }
         },
     },
