@@ -83,7 +83,11 @@ export default {
     beforeMount() {
         const mql = window.matchMedia('(prefers-color-scheme: dark)')
         mql.addListener(this.colorSchemeListener)
-        if (!this.appearance) this.colorSchemeListener(mql)
+        if (!this.appearance) {
+            const appearance = mql.matches ? 'dark' : 'light'
+            window.sa(`has_appearance_${appearance}`)
+            this.colorSchemeListener(mql)
+        }
     },
     methods: {
         colorSchemeListener(event) {
