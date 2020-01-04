@@ -1,5 +1,5 @@
 <template>
-    <a
+    <button
         class="
             bg-primary
             block
@@ -17,19 +17,20 @@
             rounded
             shadow-lg
             text-white
+            w-full
         "
-        href="/auth/twitter"
         @click="click"
     >
         Continue with Twitter
-    </a>
+    </button>
 </template>
 
 <script>
 export default {
     methods: {
-        click() {
-            window.sa('click_login')
+        async click() {
+            await window.sa('click_login')
+            window.location = '/auth/twitter'
         },
     },
 }

@@ -32,6 +32,8 @@
                     <a
                         class="underline lg:no-underline text-description lg:text-sm"
                         href="https://watsi.org/"
+                        target="_blank"
+                        @click="click('donate')"
                     >
                         Donate
                     </a>
@@ -40,6 +42,8 @@
                     <a
                         class="underline lg:no-underline text-description lg:text-sm"
                         href="mailto:tom@meagher.co?subject=mute.vc"
+                        target="_blank"
+                        @click="click('mailto')"
                     >
                         Contact
                     </a>
@@ -48,6 +52,8 @@
                     <a
                         class="underline lg:no-underline text-description lg:text-sm"
                         href="https://twitter.com/tomfme"
+                        target="_blank"
+                        @click="click('twitter')"
                     >
                         Twitter
                     </a>
@@ -56,3 +62,13 @@
         </div>
     </footer>
 </template>
+
+<script>
+export default {
+    methods: {
+        click(link) {
+            window.sa(`click_footer_${link}`)
+        },
+    },
+}
+</script>

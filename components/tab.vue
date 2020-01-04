@@ -41,6 +41,7 @@ export default {
     },
     methods: {
         click() {
+            window.sa(`click_tab_${this.name}`)
             this.$router.push({ path: '/', query: { tab: this.name } })
         },
     },
