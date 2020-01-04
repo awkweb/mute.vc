@@ -19,7 +19,18 @@
             text-white
         "
         href="/auth/twitter"
+        @click="click"
     >
         Continue with Twitter
     </a>
 </template>
+
+<script>
+export default {
+    methods: {
+        click() {
+            window.sa('click_login')
+        },
+    },
+}
+</script>

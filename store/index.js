@@ -129,6 +129,7 @@ export const actions = {
     },
     async logOut({ commit }) {
         try {
+            window.sa('click_logout')
             if (state.error) commit(SET_ERROR, null)
             await this.$axios.$post('/logout')
             commit(SET_USER, null)
