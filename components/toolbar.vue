@@ -47,7 +47,7 @@
             class="flex flex-col items-center leading-tight text-sm text-red  text-center"
         >
             <div>{{ error.message }}</div>
-            <div class="hidden md:block">
+            <div v-show="error.description" class="hidden md:block">
                 {{ error.description }}
             </div>
         </div>

@@ -50,7 +50,11 @@ module.exports = {
         failedColor: 'hsl(341, 73%, 46%)',
     },
     css: [],
-    plugins: ['@plugins/directives.js', '@plugins/filters.js'],
+    plugins: [
+        '@plugins/directives',
+        '@plugins/filters',
+        '@plugins/simple-analytics',
+    ],
     buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/tailwindcss'],
     modules: [
         ...devModules,
