@@ -35,5 +35,9 @@ envVarGroups:
     generateValue: true
   - key: TWITTER_KEY
     sync: false
+  - key: TWITTER_LIST_OWNER
+    value: tomfme
+  - key: TWITTER_LIST_SLUG
+    value: mute-vc
   - key: TWITTER_SECRET
     sync: false

@@ -22,5 +22,7 @@ NUXT_HOST=localhost
 NUXT_PORT=3000
 SECRET=supersecret
 TWITTER_KEY=xxxxxx
+TWITTER_LIST_OWNER=tomfme
+TWITTER_LIST_SLUG=mute-vc
 TWITTER_SECRET=xxxxxx
 ```

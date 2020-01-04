@@ -40,8 +40,8 @@ router.get('/api/bootstrap', async (req, res) => {
                 skip_status: true,
             }),
             twit.get('lists/members', {
-                slug: 'mute-vc',
-                owner_screen_name: 'tomfme',
+                slug: process.env.TWITTER_LIST_SLUG,
+                owner_screen_name: process.env.TWITTER_LIST_OWNER,
                 count: 5000,
                 include_entities: false,
                 skip_status: true,
