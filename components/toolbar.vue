@@ -7,6 +7,7 @@
             fixed
             flex
             inset-x-0
+            items-center
             justify-between
             md:border-l
             md:border-r
@@ -17,7 +18,7 @@
             py-2
         "
         :class="{ 'shadow-bottom': shadow }"
-        style="height: 3.59375rem;"
+        style="height: 3.59375rem; transition: box-shadow 0.5s;"
     >
         <div class="flex">
             <button
@@ -40,6 +41,15 @@
                 />
             </button>
             <AppearanceButton title="Toggle Theme" />
+        </div>
+        <div
+            v-if="error"
+            class="flex flex-col items-center leading-tight text-sm text-red  text-center"
+        >
+            <div>{{ error.message }}</div>
+            <div class="hidden md:block">
+                {{ error.description }}
+            </div>
         </div>
         <div>
             <button
@@ -85,6 +95,7 @@
                     rounded-full
                     text-15
                     text-background
+                    whitespace-no-wrap
                 "
                 :class="
                     isDark ? 'md:hover:text-white' : 'md:hover:text-background'
@@ -120,7 +131,7 @@ export default {
             'tabInvestors',
             'tabCount',
         ]),
-        ...mapState(['undoAction', 'profile', 'tab']),
+        ...mapState(['error', 'undoAction', 'profile', 'tab']),
         networkActive() {
             return this.loading || this.undoing
         },
