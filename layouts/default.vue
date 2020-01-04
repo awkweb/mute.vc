@@ -1,8 +1,5 @@
 <template>
-    <div>
-        {{ error }}
-        <nuxt />
-    </div>
+    <nuxt />
 </template>
 
 <script>
@@ -62,7 +59,7 @@ const appearances = {
 
 export default {
     computed: {
-        ...mapState(['appearance', 'error']),
+        ...mapState(['appearance']),
         cssText() {
             const appearance = this.appearance ?? 'dark'
             const { [appearance]: colors } = appearances

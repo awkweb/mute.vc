@@ -36,9 +36,10 @@ export const mutations = {
     [SET_ERROR](state, error) {
         state.error = error
     },
-    [SET_INITIAL_DATA](state, { investors, profile }) {
+    [SET_INITIAL_DATA](state, { investors, profile, error }) {
         state.investors = investors
         state.profile = profile
+        if (error) state.error = error
     },
     [SET_INVESTORS](state, investors) {
         state.investors = investors
@@ -55,6 +56,7 @@ export const mutations = {
         state.investors = investors
         state.tab = tab
         state.undoAction = null
+        state.error = null
     },
     [SET_USER](state, user) {
         state.authUser = user
@@ -98,6 +100,7 @@ export const actions = {
             commit(SET_INITIAL_DATA, {
                 profile,
                 investors,
+                error: data.error,
             })
         } catch (err) {
             commit(SET_ERROR, err)
@@ -105,6 +108,8 @@ export const actions = {
     },
     async mute({ commit, getters, state }, data) {
         try {
+            if (state.error) commit(SET_ERROR, null)
+
             const { type, usernames, undo } = data
 
             await this.$axios.$post(`/api/mutes/${type}`, { usernames })
@@ -124,6 +129,7 @@ export const actions = {
     },
     async logOut({ commit }) {
         try {
+            if (state.error) commit(SET_ERROR, null)
             await this.$axios.$post('/logout')
             commit(SET_USER, null)
         } catch (err) {

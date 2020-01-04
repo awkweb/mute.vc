@@ -26,6 +26,12 @@ router.use('/api', (req, res, next) => {
     next()
 })
 
+function softFail(promise) {
+    return new Promise((resolve) => {
+        promise.then(resolve).catch(resolve)
+    })
+}
+
 router.get('/api/bootstrap', async (req, res) => {
     try {
         const promises = [
@@ -44,18 +50,27 @@ router.get('/api/bootstrap', async (req, res) => {
         ]
         const [
             { data: profileData },
-            { data: userData },
-            { data: muteData },
-        ] = await Promise.all(promises)
+            { data: listData },
+            mutesRes,
+        ] = await Promise.all(promises.map(softFail))
 
-        const mutes = muteData ? muteData.ids : []
+        let error
+        if (mutesRes.statusCode === 429)
+            error = {
+                ...mutesRes,
+                message: `Twitter ${mutesRes.message.toLowerCase()}`,
+                description: 'Mutes may not show up for 15m',
+            }
+
+        const { data: mutesData } = mutesRes
+        const mutes = mutesData ? mutesData.ids : []
         const mutesMap = mutes.reduce((result, id) => {
             result[id] = 1
             return result
         }, {})
 
         const investors = []
-        const users = userData ? userData.users : []
+        const users = listData ? listData.users : []
         users.forEach((u) => {
             const investor = cleanTwitterUser(u)
             if (investor.username !== req.session.username) {
@@ -78,6 +93,7 @@ router.get('/api/bootstrap', async (req, res) => {
             data: {
                 investors,
                 profile,
+                error,
             },
         })
     } catch (err) {

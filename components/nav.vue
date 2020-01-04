@@ -8,6 +8,7 @@
             top-0
         "
         :class="{ 'shadow-top': shadow }"
+        style="transition: box-shadow 0.5s;"
     >
         <Tab name="unmuted" />
         <Tab name="muted" />
