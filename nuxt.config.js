@@ -1,8 +1,11 @@
 const dev = process.env.NODE_ENV !== 'production'
 const devModules = []
+const prodModules = []
 if (dev) {
     require('dotenv').config()
     devModules.push('@nuxtjs/dotenv')
+} else {
+    prodModules.push('nuxt-purgecss')
 }
 
 const title = 'Mute investors on Twitter'
@@ -51,8 +54,8 @@ module.exports = {
     buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/tailwindcss'],
     modules: [
         ...devModules,
+        ...prodModules,
         '@nuxtjs/axios',
-        'nuxt-purgecss',
         'cookie-universal-nuxt',
     ],
     axios: {

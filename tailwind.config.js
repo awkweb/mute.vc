@@ -32,7 +32,6 @@ module.exports = {
             none: 'none',
         },
         colors: {
-            black: 'hsl(0, 0%, 0%)',
             white: 'hsl(104, 100%, 100%)',
             red: 'var(--colors-red)',
             transparent: 'transparent',
@@ -100,6 +99,8 @@ module.exports = {
             '5xl': '3rem',
             '6xl': '4rem',
             '15': '0.9375rem',
+            headline: '2.125rem',
+            reason: '1.0625rem',
         },
         fontWeight: {
             hairline: '100',
@@ -144,6 +145,7 @@ module.exports = {
             screen: '100vh',
         },
         maxWidth: {
+            button: '16.25rem',
             headline: '17rem',
             xxs: '18rem',
             xs: '20rem',
@@ -162,6 +164,7 @@ module.exports = {
             '0': '0',
             full: '100%',
             screen: '100vh',
+            list: 'calc(100vh - 6.625rem)',
         },
         minWidth: {
             '0': '0',
@@ -185,6 +188,8 @@ module.exports = {
         spacing: {
             px: '1px',
             avatar: '2.375rem',
+            button: '0.625rem',
+            disc: '3.25rem',
             '0': '0',
             '1': '0.25rem',
             '2': '0.5rem',

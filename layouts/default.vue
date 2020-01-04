@@ -1,5 +1,8 @@
 <template>
-    <nuxt />
+    <div>
+        {{ error }}
+        <nuxt />
+    </div>
 </template>
 
 <script>
@@ -58,13 +61,11 @@ const appearances = {
 }
 
 export default {
-    data: () => ({
-        mql: null,
-    }),
     computed: {
-        ...mapState(['appearance']),
+        ...mapState(['appearance', 'error']),
         cssText() {
-            const { [this.appearance]: colors } = appearances
+            const appearance = this.appearance ?? 'dark'
+            const { [appearance]: colors } = appearances
             const vars = []
             for (const [key, value] of Object.entries(colors)) {
                 if (typeof value === 'object') {
@@ -82,19 +83,14 @@ export default {
             `
         },
     },
-    mounted() {
+    beforeMount() {
         const mql = window.matchMedia('(prefers-color-scheme: dark)')
-        mql.addEventListener('change', this.handleMediaChange)
-        this.mql = mql
-
-        if (!this.appearance) this.handleMediaChange()
-    },
-    destroyed() {
-        this.mql.removeEventListener('change', this.handleMediaChange)
+        mql.addListener(this.colorSchemeListener)
+        if (!this.appearance) this.colorSchemeListener(mql)
     },
     methods: {
-        handleMediaChange() {
-            const appearance = this.mql.matches ? 'dark' : 'light'
+        colorSchemeListener(event) {
+            const appearance = event.matches ? 'dark' : 'light'
             this.$store.commit('SET_APPEARANCE', appearance)
             this.$cookies.set('appearance', appearance, {
                 path: '/',

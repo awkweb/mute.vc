@@ -21,14 +21,22 @@
     >
         <div class="flex">
             <button
-                class="border border-transparent h-avatar w-avatar mr-2 rounded-full overflow-hidden"
+                class="
+                    border
+                    border-transparent
+                    bg-gray-dark
+                    h-avatar
+                    w-avatar
+                    mr-2
+                    rounded-full
+                    overflow-hidden
+                "
                 title="Log Out"
                 @click="logOut"
             >
                 <img
                     v-if="profile"
                     :src="profile.profileImageUrlHttps | twitterImageUrl"
-                    class="bg-gray-dark"
                 />
             </button>
             <AppearanceButton title="Toggle Theme" />

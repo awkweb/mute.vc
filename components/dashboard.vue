@@ -1,5 +1,5 @@
 <template>
-    <div class="md:bg-background-app h-full min-h-screen">
+    <div class="md:bg-background-app">
         <div
             v-scroll="handleScroll"
             class="

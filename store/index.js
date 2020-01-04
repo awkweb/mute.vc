@@ -1,18 +1,20 @@
 const SET_APPEARANCE = 'SET_APPEARANCE'
+const SET_ERROR = 'SET_ERROR'
 const SET_INITIAL_DATA = 'SET_INITIAL_DATA'
 const SET_INVESTORS = 'SET_INVESTORS'
-const SET_UNDO_ACTION = 'SET_UNDO_ACTION'
 const SET_TAB = 'SET_TAB'
+const SET_UNDO_ACTION = 'SET_UNDO_ACTION'
 const SET_USER = 'SET_USER'
 
 export const state = () => ({
-    appearance: 'light',
+    appearance: null,
     authUser: null,
     investors: [],
     undoAction: null,
     loading: false,
     profile: null,
     tab: 'unmuted',
+    error: null,
 })
 
 export const getters = {
@@ -30,6 +32,9 @@ export const getters = {
 export const mutations = {
     [SET_APPEARANCE](state, appearance) {
         state.appearance = appearance
+    },
+    [SET_ERROR](state, error) {
+        state.error = error
     },
     [SET_INITIAL_DATA](state, { investors, profile }) {
         state.investors = investors
@@ -94,7 +99,9 @@ export const actions = {
                 profile,
                 investors,
             })
-        } catch (err) {}
+        } catch (err) {
+            commit(SET_ERROR, err)
+        }
     },
     async mute({ commit, getters, state }, data) {
         try {
@@ -111,12 +118,16 @@ export const actions = {
             const undoType = type === 'destroy' ? 'create' : 'destroy'
             const undoAction = undo ? null : { type: undoType, usernames }
             commit(SET_UNDO_ACTION, undoAction)
-        } catch (err) {}
+        } catch (err) {
+            commit(SET_ERROR, err)
+        }
     },
     async logOut({ commit }) {
         try {
             await this.$axios.$post('/logout')
             commit(SET_USER, null)
-        } catch (err) {}
+        } catch (err) {
+            commit(SET_ERROR, err)
+        }
     },
 }

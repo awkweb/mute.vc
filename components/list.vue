@@ -1,5 +1,5 @@
 <template>
-    <ul style="min-height: calc(100vh - 7rem)">
+    <ul class="md:min-h-list">
         <template v-if="tabInvestors.length">
             <Item
                 v-for="investor in tabInvestors"

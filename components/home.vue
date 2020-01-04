@@ -4,14 +4,23 @@
 
         <header class="container lg:mb-48 mb-24 lg:pt-40 pt-20 text-center">
             <h1
-                class="font-bold max-w-headline mx-auto lg:max-w-full mb-6 text-body"
-                style="font-size: 2.125rem;"
+                class="
+                    font-bold
+                    leading-snug
+                    lg:leading-normal
+                    lg:max-w-full
+                    max-w-headline
+                    mb-6
+                    mx-auto
+                    text-body
+                    text-headline
+                "
             >
                 Mute investors on Twitter
             </h1>
             <div
                 class="
-                    leading-relaxed 
+                    leading-relaxed
                     max-w-xs 
                     mb-7
                     mx-auto 
@@ -55,14 +64,15 @@
                     class="
                         bg-gray-light
                         flex
+                        h-disc
                         items-center
                         justify-center
                         mb-5
                         rounded-full
-                        text-title
                         shadow
+                        text-title
+                        w-disc
                     "
-                    style="height: 3.25rem; width: 3.25rem;"
                 >
                     <component
                         :is="reason.icon.component"
@@ -72,10 +82,7 @@
                 <h4 class="font-bold mb-3 text-title text-lg">
                     {{ reason.title }}
                 </h4>
-                <p
-                    class="leading-normal text-description"
-                    style="font-size: 1.0625rem;"
-                >
+                <p class="leading-normal text-description text-reason">
                     {{ reason.description }}
                 </p>
             </div>
