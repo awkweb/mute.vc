@@ -53,7 +53,7 @@ module.exports = {
     plugins: [
         '@plugins/directives',
         '@plugins/filters',
-        '@plugins/simple-analytics',
+        { src: '@plugins/simple-analytics', mode: 'client' },
     ],
     buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/tailwindcss'],
     modules: [
