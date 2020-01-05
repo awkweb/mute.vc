@@ -25,7 +25,7 @@
                 class="
                     border
                     border-transparent
-                    bg-gray-dark
+                    bg-gray
                     h-avatar
                     w-avatar
                     mr-2

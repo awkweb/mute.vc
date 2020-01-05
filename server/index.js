@@ -5,7 +5,8 @@ const { Nuxt, Builder } = require('nuxt')
 
 // Import and set Nuxt.js options
 const config = require('../nuxt.config.js')
-config.dev = process.env.NODE_ENV !== 'production'
+const dev = process.env.NODE_ENV !== 'production'
+config.dev = dev
 
 const app = express()
 app.use(express.json()) // Handle parsing json data from requests

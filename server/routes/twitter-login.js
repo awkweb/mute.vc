@@ -49,10 +49,7 @@ router.get('/auth/twitter/callback', (req, res) => {
 })
 
 router.post('/logout', (req, res) => {
-    delete req.session.userId
-    delete req.session.username
-    delete req.session.token
-    delete req.session.secret
+    req.session = null
     res.redirect('/')
 })
 

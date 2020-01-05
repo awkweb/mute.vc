@@ -7,7 +7,7 @@
                     the last month.
                 </p>
                 <div
-                    data-sa-graph-url="https://simpleanalytics.com/mute.vc?color=75b5aa"
+                    data-sa-graph-url="https://simpleanalytics.com/mute.vc?color=1ca0f2"
                     data-sa-page-views-selector="#pageviews"
                 >
                     <p>

@@ -15,6 +15,8 @@ function genTwit(token, secret) {
 }
 
 let twit
+const membersCache = {}
+const profileCache = {}
 
 router.use('/api', (req, res, next) => {
     res.setHeader('Content-Type', 'application/json')
@@ -34,18 +36,46 @@ function softFail(promise) {
 
 router.get('/api/bootstrap', async (req, res) => {
     try {
-        const promises = [
-            twit.get('account/verify_credentials', {
+        const key = req.session.username
+        const profileCached = Object.prototype.hasOwnProperty.call(
+            profileCache,
+            key,
+        )
+        const membersCached = Object.prototype.hasOwnProperty.call(
+            membersCache,
+            key,
+        )
+
+        let profilePromise
+        if (profileCached) {
+            profilePromise = new Promise((resolve, reject) =>
+                resolve({ data: profileCache[key] }),
+            )
+        } else {
+            profilePromise = twit.get('account/verify_credentials', {
                 include_email: true,
                 skip_status: true,
-            }),
-            twit.get('lists/members', {
+            })
+        }
+
+        let listPromise
+        if (membersCached) {
+            listPromise = new Promise((resolve, reject) =>
+                resolve({ data: membersCache[key] }),
+            )
+        } else {
+            listPromise = twit.get('lists/members', {
                 slug: process.env.TWITTER_LIST_SLUG,
                 owner_screen_name: process.env.TWITTER_LIST_OWNER,
                 count: 5000,
                 include_entities: false,
                 skip_status: true,
-            }),
+            })
+        }
+
+        const promises = [
+            profilePromise,
+            listPromise,
             twit.get('mutes/users/ids'),
         ]
         const [
@@ -54,25 +84,31 @@ router.get('/api/bootstrap', async (req, res) => {
             mutesRes,
         ] = await Promise.all(promises.map(softFail))
 
+        // Handle mutes rate limit
         let error
-        if (mutesRes.statusCode === 429)
+        if (mutesRes.statusCode === 429) {
             error = {
                 ...mutesRes,
                 message: `Twitter ${mutesRes.message.toLowerCase()}`,
                 description: 'Mutes may not show up for 15m',
             }
+        }
 
+        // Get mutes table for lookup
         const { data: mutesData } = mutesRes
         const mutes = mutesData ? mutesData.ids : []
-        const mutesMap = mutes.reduce((result, id) => {
-            result[id] = 1
-            return result
-        }, {})
+        const mutesMap = {}
+        for (let i = 0, n = mutes.length; i < n; ++i) {
+            const id = mutes[i]
+            mutesMap[id] = 1
+        }
 
+        // Create investors list
         const investors = []
         const users = listData ? listData.users : []
-        users.forEach((u) => {
-            const investor = cleanTwitterUser(u)
+        for (let i = 0, n = users.length; i < n; ++i) {
+            const user = users[i]
+            const investor = cleanTwitterUser(user)
             if (investor.username !== req.session.username) {
                 investors.push({
                     ...investor,
@@ -83,10 +119,17 @@ router.get('/api/bootstrap', async (req, res) => {
                     on: true,
                 })
             }
-        })
+        }
+
+        // Set up "caches"
+        if (!membersCached && users.length) membersCache[key] = listData
+        else delete membersCache[key]
 
         const profile = cleanTwitterUser(profileData)
-        await db.users.upsert(req.session.username, profile)
+        if (!profileCached) {
+            profileCache[key] = profileData
+            await db.users.upsert(req.session.username, profile)
+        }
 
         res.send({
             status: 200,
