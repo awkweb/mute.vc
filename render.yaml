@@ -38,6 +38,6 @@ envVarGroups:
   - key: TWITTER_LIST_OWNER
     value: tomfme
   - key: TWITTER_LIST_SLUG
-    value: mute-vc
+    value: investors
   - key: TWITTER_SECRET
     sync: false
