@@ -10,11 +10,14 @@
         "
     >
         <div class="flex">
-            <img
-                class="bg-gray-dark h-12 mr-3 mt-1 rounded-full w-full"
+            <a
+                class="bg-gray-dark h-12 mr-3 mt-1 overflow-hidden rounded-full w-full"
                 style="max-width: 3rem;"
-                :src="image | twitterImageUrl"
-            />
+                :href="`https://twitter.com/${username}`"
+                target="_blank"
+            >
+                <img :src="image | twitterImageUrl" />
+            </a>
             <div class="overflow-hidden w-full" style="padding-top: 0.35rem;">
                 <div class="flex justify-between items-start">
                     <div class="leading-none max-w-full mr-2 overflow-hidden">

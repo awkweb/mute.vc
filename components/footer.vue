@@ -58,6 +58,16 @@
                         Twitter
                     </a>
                 </li>
+                <li class="mb-4 lg:mb-0 lg:ml-6">
+                    <a
+                        class="underline lg:no-underline text-description lg:text-sm"
+                        href="https://github.com/tmm/mute.vc"
+                        target="_blank"
+                        @click="click('github')"
+                    >
+                        GitHub
+                    </a>
+                </li>
             </ul>
         </div>
     </footer>

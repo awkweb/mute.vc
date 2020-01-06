@@ -26,3 +26,7 @@ TWITTER_LIST_OWNER=tomfme
 TWITTER_LIST_SLUG=mute-vc
 TWITTER_SECRET=xxxxxx
 ```
+
+## License
+
+[MIT](LICENSE) © [Tom Meagher](https://meagher.co)

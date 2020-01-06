@@ -15,8 +15,6 @@ function genTwit(token, secret) {
 }
 
 let twit
-const membersCache = {}
-const profileCache = {}
 
 router.use('/api', (req, res, next) => {
     res.setHeader('Content-Type', 'application/json')
@@ -36,46 +34,18 @@ function softFail(promise) {
 
 router.get('/api/bootstrap', async (req, res) => {
     try {
-        const key = req.session.username
-        const profileCached = Object.prototype.hasOwnProperty.call(
-            profileCache,
-            key,
-        )
-        const membersCached = Object.prototype.hasOwnProperty.call(
-            membersCache,
-            key,
-        )
-
-        let profilePromise
-        if (profileCached) {
-            profilePromise = new Promise((resolve, reject) =>
-                resolve({ data: profileCache[key] }),
-            )
-        } else {
-            profilePromise = twit.get('account/verify_credentials', {
+        const promises = [
+            twit.get('account/verify_credentials', {
                 include_email: true,
                 skip_status: true,
-            })
-        }
-
-        let listPromise
-        if (membersCached) {
-            listPromise = new Promise((resolve, reject) =>
-                resolve({ data: membersCache[key] }),
-            )
-        } else {
-            listPromise = twit.get('lists/members', {
+            }),
+            twit.get('lists/members', {
                 slug: process.env.TWITTER_LIST_SLUG,
                 owner_screen_name: process.env.TWITTER_LIST_OWNER,
                 count: 5000,
                 include_entities: false,
                 skip_status: true,
-            })
-        }
-
-        const promises = [
-            profilePromise,
-            listPromise,
+            }),
             twit.get('mutes/users/ids'),
         ]
         const [
@@ -121,15 +91,8 @@ router.get('/api/bootstrap', async (req, res) => {
             }
         }
 
-        // Set up "caches"
-        if (!membersCached && users.length) membersCache[key] = listData
-        else delete membersCache[key]
-
         const profile = cleanTwitterUser(profileData)
-        if (!profileCached) {
-            profileCache[key] = profileData
-            await db.users.upsert(req.session.username, profile)
-        }
+        await db.users.upsert(req.session.username, profile)
 
         res.send({
             status: 200,
