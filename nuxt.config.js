@@ -27,7 +27,7 @@ module.exports = {
             },
             { name: 'twitter:title', content: title },
             { name: 'twitter:description', content: description },
-            { name: 'twitter:image', content: '' },
+            { name: 'twitter:image', content: '/card.png' },
             { name: 'twitter:card', content: 'summary_large_image' },
             { name: 'twitter:creator', content: '@tomfme' },
             { property: 'og:url', content: 'https://mute.vc' },
