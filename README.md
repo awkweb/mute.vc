@@ -47,14 +47,31 @@ Finally, create a new Twitter list and fill out `TWITTER_LIST_OWNER` and `TWITTE
 
 <h4>Firebase</h4>
 
-[Create an app](https://firebase.google.com/), fire up a Firestore, and fill in `FIREBASE_API_KEY`.
+[Create an app](https://firebase.google.com/), fire up Firestore, and fill in `FIREBASE_API_KEY`.
 
 </p>
 </details>
 
 ## Prod
 
-Deploy on [Render](https://render.com). [`render.yaml`](render.yaml) does most of the heavy lifting.
+Deploy on [Render](https://render.com) ([`render.yaml`](render.yaml) does the heavy lifting).
+
+## Tools
+
+An incomplete list of tools I used:
+
+- [Feather](https://feathericons.com/)
+- [Figma](https://www.figma.com/c/file/796516444238599837)
+- [Firebase](https://firebase.google.com/)
+- [HEY META](https://www.heymeta.com/)
+- [Linear](https://linear.app/)
+- [Nuxt](https://nuxtjs.org/)
+- [Render](https://render.com/)
+- [Tailwind](https://tailwindcss.com/)
+- [Twitter](https://twitter.com/)
+- [VS Code](https://code.visualstudio.com/)
+
+See [package.json](package.json) for JS packages.
 
 ## License
 
