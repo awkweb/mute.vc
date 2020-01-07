@@ -45,6 +45,9 @@ module.exports = {
         htmlAttrs: {
             lang: 'en',
         },
+        bodyAttrs: {
+            class: 'max-w-app mx-auto',
+        },
     },
     loading: {
         color: 'hsl(203, 89%, 53%)',
