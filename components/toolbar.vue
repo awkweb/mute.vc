@@ -23,14 +23,14 @@
         <div class="flex">
             <button
                 class="
+                    bg-gray
                     border
                     border-transparent
-                    bg-gray
                     h-avatar
-                    w-avatar
                     mr-2
-                    rounded-full
                     overflow-hidden
+                    rounded-full
+                    w-avatar
                 "
                 title="Log Out"
                 @click="logOut"
@@ -44,7 +44,15 @@
         </div>
         <div
             v-if="error"
-            class="flex flex-col items-center leading-tight text-sm text-red  text-center"
+            class="
+                flex
+                flex-col
+                items-center
+                leading-tight
+                text-center
+                text-red
+                text-sm
+            "
         >
             <div>{{ error.message }}</div>
             <div v-show="error.description" class="hidden md:block">
@@ -64,13 +72,13 @@
                     font-bold
                     md:hover:bg-gray-dark
                     md:hover:border-gray-dark
+                    mr-2
                     outline-none
                     px-4
                     py-2
                     rounded-full
                     text-15
                     text-title
-                    mr-2
                 "
                 @click="undo"
             >

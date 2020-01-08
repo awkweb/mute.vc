@@ -36,8 +36,8 @@ module.exports = {
             red: 'var(--colors-red)',
             transparent: 'transparent',
 
+            app: 'var(--colors-app)',
             background: 'var(--colors-background)',
-            'background-app': 'var(--colors-background-app)',
             body: 'var(--colors-body)',
             title: 'var(--colors-title)',
             description: 'var(--colors-description)',

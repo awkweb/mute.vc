@@ -17,8 +17,8 @@ const sharedColors = {
 const appearances = {
     light: {
         ...sharedColors,
+        app: 'hsl(0, 0%, 98%)',
         background: 'hsl(104, 100%, 100%)',
-        'background-app': 'hsl(0, 0%, 98%)',
         body: 'hsl(0, 0%, 0%)',
         border: 'hsl(204, 25%, 92%)',
         description: 'hsl(198, 11%, 38%)',
@@ -37,8 +37,8 @@ const appearances = {
     },
     dark: {
         ...sharedColors,
+        app: 'hsl(0, 0%, 4%)',
         background: 'hsl(0, 0%, 0%)',
-        'background-app': 'hsl(0, 0%, 4%)',
         body: 'hsl(104, 100%, 100%)',
         border: 'hsl(206, 7%, 20%)',
         description: 'hsl(208, 6%, 52%)',
@@ -58,6 +58,9 @@ const appearances = {
 }
 
 export default {
+    data: () => ({
+        mql: null,
+    }),
     computed: {
         ...mapState(['appearance']),
         cssText() {
@@ -82,12 +85,16 @@ export default {
     },
     beforeMount() {
         const mql = window.matchMedia('(prefers-color-scheme: dark)')
-        mql.addListener(this.colorSchemeListener)
+        this.mql = mql
+        this.mql.addListener(this.colorSchemeListener)
         if (!this.appearance) {
             const appearance = mql.matches ? 'dark' : 'light'
             window.sa(`has_appearance_${appearance}`)
             this.colorSchemeListener(mql)
         }
+    },
+    destroyed() {
+        this.mql.removeListener(this.colorSchemeListener)
     },
     methods: {
         colorSchemeListener(event) {

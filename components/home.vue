@@ -2,7 +2,16 @@
     <div class="relative min-h-screen pb-64 lg:pb-16">
         <AppearanceButton fixed text />
 
-        <header class="container lg:mb-48 mb-24 lg:pt-40 pt-20 text-center">
+        <header
+            class="
+                container
+                lg:mb-48
+                mb-24
+                lg:pt-40
+                pt-20
+                text-center
+            "
+        >
             <h1
                 class="
                     font-bold

@@ -1,5 +1,14 @@
 <template>
-    <footer class="absolute bottom-0 inset-x-0 bg-gray-light border-t lg:h-24">
+    <footer
+        class="
+            absolute
+            bottom-0
+            inset-x-0
+            bg-gray-light
+            border-t
+            lg:h-24
+        "
+    >
         <div
             class="
                     flex
@@ -28,44 +37,18 @@
                 Designed in New York City
             </div>
             <ul class="flex flex-col lg:flex-row">
-                <li class="mb-4 lg:mb-0">
+                <li
+                    v-for="link in links"
+                    :key="link.text"
+                    class="mb-4 lg:mb-0 lg:ml-6"
+                >
                     <a
                         class="underline lg:no-underline text-description lg:text-sm"
-                        href="https://watsi.org/"
+                        :href="link.href"
                         target="_blank"
-                        @click="click('donate')"
+                        @click="click(link.text.toLowerCase())"
                     >
-                        Donate
-                    </a>
-                </li>
-                <li class="mb-4 lg:mb-0 lg:ml-6">
-                    <a
-                        class="underline lg:no-underline text-description lg:text-sm"
-                        href="mailto:tom@meagher.co?subject=mute.vc"
-                        target="_blank"
-                        @click="click('mailto')"
-                    >
-                        Contact
-                    </a>
-                </li>
-                <li class="mb-4 lg:mb-0 lg:ml-6">
-                    <a
-                        class="underline lg:no-underline text-description lg:text-sm"
-                        href="https://twitter.com/tomfme"
-                        target="_blank"
-                        @click="click('twitter')"
-                    >
-                        Twitter
-                    </a>
-                </li>
-                <li class="mb-4 lg:mb-0 lg:ml-6">
-                    <a
-                        class="underline lg:no-underline text-description lg:text-sm"
-                        href="https://github.com/tmm/mute.vc"
-                        target="_blank"
-                        @click="click('github')"
-                    >
-                        GitHub
+                        {{ link.text }}
                     </a>
                 </li>
             </ul>
@@ -75,6 +58,14 @@
 
 <script>
 export default {
+    data: () => ({
+        links: [
+            { text: 'Donate', href: 'https://watsi.org/' },
+            { text: 'Contact', href: 'mailto:tom@meagher.co?subject=mute.vc' },
+            { text: 'Twitter', href: 'https://twitter.com/tomfme' },
+            { text: 'GitHub', href: 'https://github.com/tmm/mute.vc' },
+        ],
+    }),
     methods: {
         click(link) {
             window.sa(`click_footer_${link}`)

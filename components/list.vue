@@ -14,7 +14,15 @@
         </template>
         <template v-else>
             <li
-                class="flex flex-col justify-center items-center px-4 py-4 text-description"
+                class="
+                    flex
+                    flex-col
+                    items-center
+                    justify-center
+                    px-4
+                    py-4
+                    text-description
+                "
                 style="min-height: 30vh"
             >
                 <component :is="placeholder.icon" v-bind="{ size: '22' }" />
