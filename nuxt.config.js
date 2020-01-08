@@ -10,6 +10,8 @@ if (dev) {
 
 const title = 'Mute investors on Twitter'
 const description = process.env.npm_package_description
+const ogTitle = `mute.vc – ${title}`
+const ogImage = 'https://mute.vc/card.png'
 
 module.exports = {
     mode: 'universal',
@@ -25,16 +27,16 @@ module.exports = {
                 name: 'description',
                 content: description,
             },
-            { name: 'twitter:title', content: title },
+            { name: 'twitter:title', content: ogTitle },
             { name: 'twitter:description', content: description },
-            { name: 'twitter:image', content: 'https://mute.vc/card.png' },
+            { name: 'twitter:image', content: ogImage },
             { name: 'twitter:card', content: 'summary_large_image' },
             { name: 'twitter:creator', content: '@tomfme' },
             { property: 'og:url', content: 'https://mute.vc' },
             { property: 'og:type', content: 'website' },
-            { property: 'og:title', content: title },
+            { property: 'og:title', content: ogTitle },
             { property: 'og:description', content: description },
-            { property: 'og:image', content: 'https://mute.vc/card.png' },
+            { property: 'og:image', content: ogImage },
         ],
         link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
         metaInfo: {

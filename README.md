@@ -1,6 +1,8 @@
-# mute.vc
+## mute.vc
 
-Remove VC thought leadership and platitudes from your feed. 
+Remove VC thought leadership and platitudes from your feed.
+
+View [screenshots](.github/screenshots)
 
 ## Scripts
 
@@ -75,4 +77,4 @@ See [package.json](package.json) for JS packages.
 
 ## License
 
-[MIT](LICENSE) © [Tom Meagher](https://meagher.co)
+[MIT](.github/LICENSE) © [Tom Meagher](https://meagher.co)
