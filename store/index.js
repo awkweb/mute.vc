@@ -34,7 +34,6 @@ export const mutations = {
         state.appearance = appearance
     },
     [SET_ERROR](state, error) {
-        console.log(error)
         state.error = error
     },
     [SET_INITIAL_DATA](state, { investors, profile, error }) {
@@ -125,7 +124,6 @@ export const actions = {
                 ...err,
                 description: 'Sorry about that. This project was a quick hack.',
             }
-            console.log(error)
             commit(SET_ERROR, error)
         }
     },

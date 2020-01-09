@@ -51,8 +51,6 @@ module.exports = {
     loading: {
         color: 'hsl(203, 89%, 53%)',
         failedColor: 'hsl(341, 73%, 46%)',
-        duration: 1000,
-        continuous: true,
     },
     css: [],
     plugins: ['@plugins/directives', '@plugins/filters'],
