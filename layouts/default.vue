@@ -17,7 +17,7 @@ const sharedColors = {
 const appearances = {
     light: {
         ...sharedColors,
-        app: 'hsl(0, 0%, 98%)',
+        app: 'hsl(0, 0%, 99%)',
         background: 'hsl(104, 100%, 100%)',
         body: 'hsl(0, 0%, 0%)',
         border: 'hsl(204, 25%, 92%)',
@@ -37,7 +37,7 @@ const appearances = {
     },
     dark: {
         ...sharedColors,
-        app: 'hsl(0, 0%, 4%)',
+        app: 'hsl(0, 0%, 2%)',
         background: 'hsl(0, 0%, 0%)',
         body: 'hsl(104, 100%, 100%)',
         border: 'hsl(206, 7%, 20%)',

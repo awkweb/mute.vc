@@ -34,6 +34,7 @@ export const mutations = {
         state.appearance = appearance
     },
     [SET_ERROR](state, error) {
+        console.log(error)
         state.error = error
     },
     [SET_INITIAL_DATA](state, { investors, profile, error }) {
@@ -91,20 +92,16 @@ export const actions = {
         if (appearance) commit('SET_APPEARANCE', appearance)
     },
     async bootstrap({ commit }) {
-        try {
-            const {
-                data,
-                data: { profile },
-            } = await this.$axios.$get('/api/bootstrap')
-            const investors = data.investors.sort(followerSorter)
-            commit(SET_INITIAL_DATA, {
-                profile,
-                investors,
-                error: data.error,
-            })
-        } catch (err) {
-            commit(SET_ERROR, err)
-        }
+        const {
+            data,
+            data: { profile },
+        } = await this.$axios.$get('/api/bootstrap')
+        const investors = data.investors.sort(followerSorter)
+        commit(SET_INITIAL_DATA, {
+            profile,
+            investors,
+            error: data.error,
+        })
     },
     async mute({ commit, getters, state }, data) {
         try {
@@ -124,16 +121,17 @@ export const actions = {
             const undoAction = undo ? null : { type: undoType, usernames }
             commit(SET_UNDO_ACTION, undoAction)
         } catch (err) {
-            commit(SET_ERROR, err)
+            const error = err.response?.data ?? {
+                ...err,
+                description: 'Sorry about that. This project was a quick hack.',
+            }
+            console.log(error)
+            commit(SET_ERROR, error)
         }
     },
     async logOut({ commit }) {
-        try {
-            if (state.error) commit(SET_ERROR, null)
-            await this.$axios.$post('/logout')
-            commit(SET_USER, null)
-        } catch (err) {
-            commit(SET_ERROR, err)
-        }
+        if (state.error) commit(SET_ERROR, null)
+        await this.$axios.$post('/logout')
+        commit(SET_USER, null)
     },
 }

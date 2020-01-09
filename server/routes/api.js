@@ -58,9 +58,8 @@ router.get('/api/bootstrap', async (req, res) => {
         let error
         if (mutesRes.statusCode === 429) {
             error = {
-                ...mutesRes,
-                message: `Twitter ${mutesRes.message.toLowerCase()}`,
-                description: 'Mutes may not show up for 15m',
+                message: 'Twitter rate limit exceeded',
+                description: 'Mutes may not show up for 15m.',
             }
         }
 
@@ -103,7 +102,7 @@ router.get('/api/bootstrap', async (req, res) => {
             },
         })
     } catch (err) {
-        res.send(err)
+        res.status(err.statusCode || 400).send(err)
     }
 })
 
@@ -116,11 +115,16 @@ router.post('/api/mutes/create', async (req, res) => {
             }),
         )
         await Promise.all(promises)
-        res.send({
-            status: res.statusCode,
-        })
+        res.send({ status: 200 })
     } catch (err) {
-        res.send(err)
+        let error = err
+        if (err.statusCode === 429) {
+            error = {
+                message: 'Twitter rate limit exceeded',
+                description: 'Mute failed. Try again in a few minutes.',
+            }
+        }
+        res.status(error.statusCode || 400).send(error)
     }
 })
 
@@ -133,11 +137,16 @@ router.post('/api/mutes/destroy', async (req, res) => {
             }),
         )
         await Promise.all(promises)
-        res.send({
-            status: res.statusCode,
-        })
+        res.send({ status: 200 })
     } catch (err) {
-        res.send(err)
+        let error = err
+        if (err.statusCode === 429) {
+            error = {
+                message: 'Twitter rate limit exceeded',
+                description: 'Unmute failed. Try again in a few minutes.',
+            }
+        }
+        res.status(error.statusCode || 400).send(error)
     }
 })
 
