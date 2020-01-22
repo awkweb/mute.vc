@@ -69,6 +69,7 @@ An incomplete list of tools I used:
 - [Linear](https://linear.app/)
 - [Nuxt](https://nuxtjs.org/)
 - [Render](https://render.com/)
+- [Simple Analytics](https://simpleanalytics.com/)
 - [Tailwind](https://tailwindcss.com/)
 - [Twitter](https://twitter.com/)
 - [VS Code](https://code.visualstudio.com/)
