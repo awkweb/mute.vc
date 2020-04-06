@@ -31,7 +31,7 @@ module.exports = {
             { name: 'twitter:description', content: description },
             { name: 'twitter:image', content: ogImage },
             { name: 'twitter:card', content: 'summary_large_image' },
-            { name: 'twitter:creator', content: '@tomfme' },
+            { name: 'twitter:creator', content: '@awkweb' },
             { property: 'og:url', content: 'https://mute.vc' },
             { property: 'og:type', content: 'website' },
             { property: 'og:title', content: ogTitle },

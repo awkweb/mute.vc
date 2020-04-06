@@ -36,7 +36,7 @@ envVarGroups:
   - key: TWITTER_KEY
     sync: false
   - key: TWITTER_LIST_OWNER
-    value: tomfme
+    value: awkweb
   - key: TWITTER_LIST_SLUG
     value: investors
   - key: TWITTER_SECRET
