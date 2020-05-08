@@ -1,17 +1,3 @@
-## mute.vc
-
-Remove VC thought leadership and platitudes from your feed.
-
-View [screenshots](.github/screenshots)
-
-## Scripts
-
-| Script       | Description                               |
-| ------------ | ------------------------------------------|
-| `yarn build` | Build for production                      |
-| `yarn dev`   | Serve with hot reload at `localhost:3000` |
-| `yarn start` | Launch server                             |
-
 ## Dev
 
 Create a `.env` file in project root:
@@ -58,24 +44,4 @@ Finally, create a new Twitter list and fill out `TWITTER_LIST_OWNER` and `TWITTE
 
 Deploy on [Render](https://render.com) ([`render.yaml`](render.yaml) does the heavy lifting).
 
-## Tools
-
-An incomplete list of tools I used:
-
-- [Feather](https://feathericons.com/)
-- [Figma](https://www.figma.com/c/file/796516444238599837)
-- [Firebase](https://firebase.google.com/)
-- [HEY META](https://www.heymeta.com/)
-- [Linear](https://linear.app/)
-- [Nuxt](https://nuxtjs.org/)
-- [Render](https://render.com/)
-- [Simple Analytics](https://simpleanalytics.com/)
-- [Tailwind](https://tailwindcss.com/)
-- [Twitter](https://twitter.com/)
-- [VS Code](https://code.visualstudio.com/)
-
-See [package.json](package.json) for JS packages.
-
-## License
-
-[MIT](.github/LICENSE) © [Tom Meagher](https://meagher.co)
+View [screenshots](.github/screenshots)

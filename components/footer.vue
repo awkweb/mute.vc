@@ -11,28 +11,28 @@
     >
         <div
             class="
-                    flex
-                    flex-col
-                    h-full
-                    lg:flex-row
-                    lg:items-center
-                    lg:justify-between
-                    lg:py-4
-                    max-w-5xl
-                    mx-auto
-                    pb-10
-                    pt-8
-                    px-5
+                flex
+                flex-col
+                h-full
+                lg:flex-row
+                lg:items-center
+                lg:justify-between
+                lg:py-4
+                max-w-5xl
+                mx-auto
+                pb-10
+                pt-8
+                px-5
                 "
         >
             <div
                 class="
-                        lg:mb-0
-                        lg:order-first
-                        lg:text-sm
-                        order-last
-                        text-description
-                    "
+                    lg:mb-0
+                    lg:order-first
+                    lg:text-sm
+                    order-last
+                    text-description
+                "
             >
                 Designed in New York City
             </div>
@@ -60,9 +60,8 @@
 export default {
     data: () => ({
         links: [
-            { text: 'Donate', href: 'https://watsi.org/' },
             { text: 'Contact', href: 'mailto:tom@meagher.co?subject=mute.vc' },
-            { text: 'Twitter', href: 'https://twitter.com/tomfme' },
+            { text: 'Twitter', href: 'https://twitter.com/awkweb' },
             { text: 'GitHub', href: 'https://github.com/tmm/mute.vc' },
         ],
     }),
