@@ -1,25 +1,11 @@
 {
     "name": "mute.vc",
-    "version": "1.0.0",
-    "description": "Remove VC thought leadership and platitudes from your feed.",
-    "author": "Tom Meagher",
-    "private": true,
+    "license": "MIT",
     "scripts": {
+        "commit": "git-cz",
         "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
         "build": "nuxt build",
         "start": "cross-env NODE_ENV=production node server/index.js"
-    },
-    "lint-staged": {
-        "*.{js,vue}": [
-            "prettier --write",
-            "eslint --cache --fix --ext .js,.vue",
-            "git add"
-        ]
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
     },
     "dependencies": {
         "@nuxtjs/axios": "5.9.0",
@@ -42,11 +28,15 @@
         "@babel/plugin-proposal-nullish-coalescing-operator": "7.7.4",
         "@babel/plugin-proposal-optional-chaining": "7.7.5",
         "@babel/runtime-corejs3": "7.7.7",
+        "@commitlint/cli": "^9.0.1",
+        "@commitlint/config-conventional": "^9.0.1",
         "@nuxtjs/eslint-config": "2.0.0",
         "@nuxtjs/eslint-module": "1.1.0",
         "@nuxtjs/tailwindcss": "1.2.0",
         "babel-eslint": "10.0.3",
+        "commitizen": "^4.1.2",
         "core-js": "3",
+        "cz-conventional-changelog": "^3.2.0",
         "eslint": "6.7.2",
         "eslint-config-prettier": "6.7.0",
         "eslint-plugin-nuxt": "0.5.0",
@@ -58,5 +48,60 @@
     },
     "engines": {
         "node": ">=12 <13"
+    },
+    "commitlint": {
+        "extends": [
+            "@commitlint/config-conventional"
+        ]
+    },
+    "lint-staged": {
+        "*.{js,vue}": [
+            "prettier --write",
+            "eslint --cache --fix --ext .js,.vue",
+            "git add"
+        ]
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged",
+            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+        }
+    },
+    "prettier": {
+        "tabWidth": 4,
+        "trailingComma": "all",
+        "endOfLine": "lf",
+        "printWidth": 80,
+        "arrowParens": "always",
+        "semi": false,
+        "singleQuote": true
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
+    },
+    "eslintConfig": {
+        "root": true,
+        "env": {
+            "browser": true,
+            "node": true
+        },
+        "parserOptions": {
+            "parser": "babel-eslint"
+        },
+        "extends": [
+            "@nuxtjs",
+            "prettier",
+            "prettier/vue",
+            "plugin:prettier/recommended",
+            "plugin:nuxt/recommended"
+        ],
+        "plugins": [
+            "prettier"
+        ],
+        "rules": {
+            "nuxt/no-cjs-in-config": "off"
+        }
     }
 }

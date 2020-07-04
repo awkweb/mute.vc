@@ -11,6 +11,7 @@
     @apply bg-gray-dark;
     text-shadow: none;
 }
+
 html {
     @apply font-sans;
     font-size: 15px;
@@ -20,14 +21,21 @@ html {
         font-size: 16px;
     }
 }
+
 body {
     @apply antialiased;
     @apply bg-background;
     @apply text-body;
     text-rendering: optimizeLegibility;
 }
-a { @apply text-link; }
-a:hover { @apply underline; }
+
+a {
+    @apply text-link;
+}
+a:hover {
+    @apply underline;
+}
+
 button:focus {
     @apply shadow-outline;
     outline: none;

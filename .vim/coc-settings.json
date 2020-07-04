@@ -1,4 +1,10 @@
 {
+    "coc.preferences.formatOnSaveFiletypes": [
+        "javascript",
+        "json",
+        "css",
+        "vue"
+    ],
     "eslint.enable": true,
     "eslint.packageManager": "yarn",
     "eslint.autoFixOnSave": true
