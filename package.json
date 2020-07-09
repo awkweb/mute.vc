@@ -1,6 +1,7 @@
 {
     "name": "mute.vc",
     "license": "MIT",
+    "description": "Remove VC thought leadership and platitudes from your feed.",
     "scripts": {
         "commit": "git-cz",
         "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
