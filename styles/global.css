@@ -1,0 +1,52 @@
+/* purgecss start ignore */
+@import './fonts.css';
+
+@tailwind base;
+@tailwind components;
+
+:root {
+    --color-accent: hsl(146, 100%, 55%);
+    --color-background: hsl(210, 5%, 8%);
+    --color-border: hsl(210, 3%, 30%);
+    --color-heading: hsl(210, 25%, 95%);
+    --color-body: hsl(210, 3%, 70%);
+    --color-fill: hsl(210, 7%, 13%);
+    --color-muted: hsl(210, 3%, 55%);
+    --color-shadow: rgba(255, 255, 255, 0.03);
+
+    --font-sans: Sans, -apple-system, 'BlinkMacSystemFont', sans-serif;
+    --font-mono: Mono, 'SFMono-Regular', Consolas, monospace;
+}
+
+[data-theme='light'] {
+    --color-accent: hsl(225, 80%, 57%);
+    --color-background: hsl(104, 100%, 100%);
+    --color-border: hsl(204, 0%, 80%);
+    --color-heading: hsl(0, 0%, 0%);
+    --color-body: hsl(109, 0%, 30%);
+    --color-fill: hsl(255, 0%, 90%);
+    --color-muted: hsl(109, 0%, 45%);
+    --color-shadow: rgba(0, 0, 0, 0.1);
+}
+
+::selection {
+    @apply bg-body;
+    @apply text-background;
+    text-shadow: none;
+}
+
+html {
+    @apply font-sans;
+    @apply antialiased;
+    font-size: 16px;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    @apply bg-background;
+    @apply leading-relaxed;
+    @apply text-body;
+}
+/* purgecss end ignore */
+
+@tailwind utilities;

@@ -1,9 +1,11 @@
 {
     "coc.preferences.formatOnSaveFiletypes": [
-        "javascript",
-        "json",
         "css",
-        "vue"
+        "javascript",
+        "javascriptreact",
+        "json",
+        "typescript",
+        "typescriptreact"
     ],
     "eslint.enable": true,
     "eslint.packageManager": "yarn",

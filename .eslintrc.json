@@ -1,0 +1,75 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "sourceType": "module"
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "plugin:jsx-a11y/recommended",
+        "plugin:import/errors",
+        "prettier/@typescript-eslint",
+        "plugin:prettier/recommended"
+    ],
+    "plugins": [
+        "import",
+        "react",
+        "react-hooks",
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "import/order": [
+            "error",
+            {
+                "groups": [
+                    "external",
+                    "internal"
+                ],
+                "newlines-between": "always-and-inside-groups"
+            }
+        ],
+        "import/no-unresolved": [
+            "error"
+        ],
+        "react/jsx-boolean-value": [
+            "warn",
+            "never"
+        ],
+        "react/no-array-index-key": "error",
+        "react/no-did-mount-set-state": "error",
+        "react/no-did-update-set-state": "error",
+        "react/no-multi-comp": "warn",
+        "react/prop-types": "off",
+        "react/react-in-jsx-scope": "off",
+        "react/self-closing-comp": "warn",
+        "react/jsx-sort-props": [
+            "error",
+            {
+                "callbacksLast": true
+            }
+        ],
+        "react/jsx-wrap-multilines": "error",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "sort-imports": [
+            "warn",
+            {
+                "ignoreCase": false,
+                "ignoreDeclarationSort": true,
+                "ignoreMemberSort": false
+            }
+        ]
+    },
+    "settings": {
+        "import/resolver": {
+            "typescript": {
+                "alwaysTryTypes": true
+            }
+        },
+        "react": {
+            "version": "detect"
+        }
+    }
+}

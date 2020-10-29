@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'Sans';
+    font-weight: 100 900;
+    font-display: block;
+    font-style: normal;
+    src: url('/fonts/inter/roman.woff2?v=3.13') format('woff2');
+}
+@font-face {
+    font-family: 'Sans';
+    font-weight: 100 900;
+    font-display: block;
+    font-style: italic;
+    src: url('/fonts/inter/italic.woff2?v=3.13') format('woff2');
+}

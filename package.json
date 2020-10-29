@@ -1,65 +1,55 @@
 {
     "name": "mute.vc",
+    "version": "1.0.0",
     "license": "MIT",
-    "description": "Remove VC thought leadership and platitudes from your feed.",
     "scripts": {
+        "build": "next build",
         "commit": "git-cz",
-        "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
-        "build": "nuxt build",
-        "start": "cross-env NODE_ENV=production node server/index.js"
+        "dev": "next dev",
+        "start": "next start",
+        "typecheck": "tsc"
     },
     "dependencies": {
-        "@nuxtjs/axios": "5.9.0",
-        "@nuxtjs/dotenv": "1.4.1",
-        "@ridi/object-case-converter": "2.0.4",
-        "autolinker": "3.11.1",
-        "cookie-session": "1.3.3",
-        "cookie-universal-nuxt": "2.1.0",
-        "cross-env": "6.0.3",
-        "express": "4.17.1",
-        "firebase": "7.6.1",
-        "inter-ui": "3.11.0",
-        "login-with-twitter": "1.2.2",
-        "nuxt": "2.11.0",
-        "nuxt-purgecss": "0.2.1",
-        "twit": "2.2.11",
-        "vue-feather-icons": "5.0.0"
+        "autolinker": "^3.14.1",
+        "firebase": "^8.0.0",
+        "next": "10.0.0",
+        "next-auth": "^3.1.0",
+        "next-themes": "^0.0.6",
+        "react": "17.0.1",
+        "react-dom": "17.0.1",
+        "react-feather": "^2.0.8",
+        "react-use": "^15.3.4",
+        "twit": "^2.2.11"
     },
     "devDependencies": {
-        "@babel/plugin-proposal-nullish-coalescing-operator": "7.7.4",
-        "@babel/plugin-proposal-optional-chaining": "7.7.5",
-        "@babel/runtime-corejs3": "7.7.7",
-        "@commitlint/cli": "^9.0.1",
-        "@commitlint/config-conventional": "^9.0.1",
-        "@nuxtjs/eslint-config": "2.0.0",
-        "@nuxtjs/eslint-module": "1.1.0",
-        "@nuxtjs/tailwindcss": "1.2.0",
-        "babel-eslint": "10.0.3",
-        "commitizen": "^4.1.2",
-        "core-js": "3",
-        "cz-conventional-changelog": "^3.2.0",
-        "eslint": "6.7.2",
-        "eslint-config-prettier": "6.7.0",
-        "eslint-plugin-nuxt": "0.5.0",
-        "eslint-plugin-prettier": "3.1.2",
-        "husky": "3.1.0",
-        "lint-staged": "9.5.0",
-        "nodemon": "2.0.2",
-        "prettier": "1.19.1"
-    },
-    "engines": {
-        "node": ">=12 <13"
+        "@commitlint/cli": "^11.0.0",
+        "@commitlint/config-conventional": "^11.0.0",
+        "@types/next-auth": "^3.1.14",
+        "@types/node": "^14.14.6",
+        "@types/react": "^16.9.55",
+        "@types/react-dom": "^16.9.9",
+        "@typescript-eslint/eslint-plugin": "^4.6.0",
+        "@typescript-eslint/parser": "^4.6.0",
+        "commitizen": "^4.2.2",
+        "cz-conventional-changelog": "^3.3.0",
+        "eslint": "^7.12.1",
+        "eslint-config-prettier": "^6.15.0",
+        "eslint-import-resolver-typescript": "^2.3.0",
+        "eslint-plugin-import": "^2.22.1",
+        "eslint-plugin-jsx-a11y": "^6.4.1",
+        "eslint-plugin-prettier": "^3.1.4",
+        "eslint-plugin-react": "^7.21.5",
+        "eslint-plugin-react-hooks": "^4.2.0",
+        "husky": "^4.3.0",
+        "lint-staged": "^10.5.0",
+        "postcss-preset-env": "^6.7.0",
+        "prettier": "^2.1.2",
+        "tailwindcss": "^1.9.6",
+        "typescript": "^4.0.5"
     },
     "commitlint": {
         "extends": [
             "@commitlint/config-conventional"
-        ]
-    },
-    "lint-staged": {
-        "*.{js,vue}": [
-            "prettier --write",
-            "eslint --cache --fix --ext .js,.vue",
-            "git add"
         ]
     },
     "husky": {
@@ -67,6 +57,12 @@
             "pre-commit": "lint-staged",
             "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
         }
+    },
+    "lint-staged": {
+        "*.{js,jsx,ts,tsx}": [
+            "prettier --write",
+            "eslint --max-warnings 0 --cache --ignore-pattern '!.eslintrc.js'"
+        ]
     },
     "prettier": {
         "tabWidth": 4,
@@ -80,29 +76,6 @@
     "config": {
         "commitizen": {
             "path": "./node_modules/cz-conventional-changelog"
-        }
-    },
-    "eslintConfig": {
-        "root": true,
-        "env": {
-            "browser": true,
-            "node": true
-        },
-        "parserOptions": {
-            "parser": "babel-eslint"
-        },
-        "extends": [
-            "@nuxtjs",
-            "prettier",
-            "prettier/vue",
-            "plugin:prettier/recommended",
-            "plugin:nuxt/recommended"
-        ],
-        "plugins": [
-            "prettier"
-        ],
-        "rules": {
-            "nuxt/no-cjs-in-config": "off"
         }
     }
 }
