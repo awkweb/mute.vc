@@ -1,3 +1,4 @@
+import Twit from 'twit'
 import firebase from 'firebase'
 import { NextApiRequest } from 'next'
 import { SessionBase as AuthSession, User as AuthUser } from 'next-auth'
@@ -14,6 +15,14 @@ interface ApiRequest extends NextApiRequest {
     token?: Token
     twitter?: Twitter
     db?: firebase.firestore.Firestore
+}
+
+interface ApiError {
+    message: string
+}
+
+interface PromiseResponse<T> extends Twit.Twitter.PromiseResponse {
+    data: T
 }
 
 interface User {

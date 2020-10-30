@@ -11,7 +11,13 @@ const App = (props: AppProps) => {
     return (
         <ThemeProvider defaultTheme="dark">
             <AuthProvider session={pageProps.session}>
-                <SWRConfig value={{ fetcher }}>
+                <SWRConfig
+                    value={{
+                        fetcher,
+                        revalidateOnFocus: false,
+                        errorRetryCount: 1,
+                    }}
+                >
                     <Component {...pageProps} />
                 </SWRConfig>
             </AuthProvider>

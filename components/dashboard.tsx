@@ -1,18 +1,19 @@
 import { signOut } from 'next-auth/client'
 
-import { User } from '@/declarations'
+import { useStore } from '@/store'
 
 import Layout from './layout'
 
-type Props = {
-    user: User
-    users: User[]
-}
+type Props = {}
 
-const Dashboard: React.FC<Props> = (props) => {
+const Dashboard: React.FC<Props> = () => {
+    const { user, users, mutes } = useStore()
+    console.log('user', user)
+    console.log('users', users)
+    console.log('mutes', mutes)
     return (
         <Layout>
-            <div>{props.user && props.user.screenName}</div>
+            <div>{user.screenName}</div>
             <button onClick={() => signOut()}>Sign Out</button>
         </Layout>
     )
