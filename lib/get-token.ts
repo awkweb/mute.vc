@@ -3,10 +3,13 @@ import jwt from 'next-auth/jwt'
 
 import { Token } from '@/declarations'
 
-async function getToken(req: NextApiRequest) {
-    return <Promise<Token>>(
-        jwt.getToken({ req, secret: <string>process.env.SECRET })
-    )
+import { IncomingMessage } from 'http'
+
+async function getToken(req: NextApiRequest | IncomingMessage) {
+    return <Promise<Token>>jwt.getToken({
+        req: <NextApiRequest>req,
+        secret: <string>process.env.SECRET,
+    })
 }
 
 export default getToken

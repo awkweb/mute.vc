@@ -1,31 +1,26 @@
-import { NextApiRequest, NextApiResponse } from 'next'
-import { Twitter } from 'twit'
+import { NextApiResponse } from 'next'
 
-import getTwit from '@/lib/get-twit'
-import getToken from '@/lib/get-token'
-import { User } from '@/declarations'
-import cleanTwitterUser from '@/lib/clean-twitter-user'
+import { ApiRequest, User } from '@/declarations'
+import withToken from '@/lib/with-token'
+import withTwitter from '@/lib/with-twitter'
+import withDatabase from '@/lib/with-database'
 
-import { IncomingMessage } from 'http'
-
-export const getUser = async (req: NextApiRequest | IncomingMessage) => {
-    const token = await getToken(<NextApiRequest>req)
-    if (!token) return
-
-    const twit = getTwit(token.accessToken, token.accessTokenSecret)
-    const { data } = await twit.get('account/verify_credentials', {
-        include_entities: false,
-        include_email: true,
-        skip_status: true,
-    })
-    return cleanTwitterUser(<Twitter.User>data)
+const handler = async (req: ApiRequest, res: NextApiResponse<User>) => {
+    if (req.method === 'GET') {
+        if (req.twitter) {
+            const user = await req.twitter.me()
+            await req.db
+                ?.collection('users')
+                .doc(user.screenName)
+                .set(user, { merge: true })
+            res.status(200).json({ ...user })
+        } else {
+            res.status(401)
+        }
+        res.end()
+    } else {
+        throw new Error(`${req.method} method is not supported`)
+    }
 }
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<User>) => {
-    const user = await getUser(req)
-    if (user) res.status(200).json({ ...user })
-    else res.status(401)
-    res.end()
-}
-
-export default handler
+export default withToken(withTwitter(withDatabase(handler)))

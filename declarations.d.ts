@@ -1,11 +1,19 @@
+import firebase from 'firebase'
+import { NextApiRequest } from 'next'
 import { SessionBase as AuthSession, User as AuthUser } from 'next-auth'
+
+import Twitter from './lib/twitter'
 
 type Session = AuthSession | { user: User }
 interface Token extends AuthUser {
     accessToken: string
     accessTokenSecret: string
-    userId: string
-    username: string
+}
+
+interface ApiRequest extends NextApiRequest {
+    token?: Token
+    twitter?: Twitter
+    db?: firebase.firestore.Firestore
 }
 
 interface User {
