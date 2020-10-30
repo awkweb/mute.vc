@@ -1,26 +1,38 @@
-import { NextPage } from 'next'
-import { signOut, useSession } from 'next-auth/client'
+import { GetServerSideProps, NextPage } from 'next'
+import { getSession, useSession } from 'next-auth/client'
+import useSWR from 'swr'
 
-import { Layout, LoginButton } from '@/components'
+import { Dashboard, Home } from '@/components'
+import { User } from '@/declarations'
 
-type Props = {}
+import { getUser } from './api/users/credentials'
 
-const Page: NextPage<Props> = (_props) => {
+type Props = {
+    initialData?: {
+        user?: User
+    }
+}
+
+const Page: NextPage<Props> = (props) => {
     const [session, loading] = useSession()
+    const { data: user } = useSWR<User>(
+        () => (session ? '/api/users/credentials' : null),
+        {
+            initialData: props.initialData?.user,
+        },
+    )
 
     if (loading) return <div />
-    return (
-        <Layout>
-            {!session ? (
-                <LoginButton />
-            ) : (
-                <>
-                    <div>{session.user.username}</div>
-                    <button onClick={() => signOut()}>Sign Out</button>
-                </>
-            )}
-        </Layout>
-    )
+    if (!session || !user) return <Home />
+    return <Dashboard user={user} />
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const session = await getSession(context)
+    if (!session) return { props: {} }
+
+    const user = await getUser(context.req)
+    return { props: { initialData: { user } } }
 }
 
 export default Page

@@ -1,8 +1,10 @@
-import NextAuth from 'next-auth'
+import NextAuth, { InitOptions } from 'next-auth'
 import Providers from 'next-auth/providers'
-import { NextApiRequest, NextApiResponse } from 'next-auth/_utils'
+import { NextApiHandler } from 'next'
 
-const options = {
+import { Session, Token } from '@/declarations'
+
+const options = <InitOptions>{
     providers: [
         Providers.Twitter({
             clientId: <string>process.env.NEXTAUTH_TWITTER_ID,
@@ -10,25 +12,28 @@ const options = {
         }),
     ],
     callbacks: {
-        jwt: async (token, user, account, profile, isNewUser) => {
+        jwt: async (token, user, account, profile, _isNewUser) => {
             if (user) {
                 token.accessToken = account.accessToken
+                token.accessTokenSecret = account.refreshToken
                 token.userId = account.id
                 token.username = profile.screen_name
             }
             return Promise.resolve(token)
         },
-        session: async (session, token) => {
-            session.accessToken = token.accessToken
+        session: async (session: Session, token: Token) => {
             session.user.id = token.userId
             session.user.username = token.username
             return Promise.resolve(session)
         },
     },
     session: {
+        jwt: true,
         maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
     },
+    secret: process.env.SECRET,
 }
 
-export default (req: NextApiRequest, res: NextApiResponse<any>) =>
-    NextAuth(req, res, options)
+const handler: NextApiHandler = (req, res) => NextAuth(req, res, options)
+
+export default handler
