@@ -7,10 +7,9 @@ import Layout from './layout'
 type Props = {}
 
 const Dashboard: React.FC<Props> = () => {
-    const { user, users, mutes } = useStore()
+    const { user, investors } = useStore()
     console.log('user', user)
-    console.log('users', users)
-    console.log('mutes', mutes)
+    console.log('investors', investors)
     return (
         <Layout>
             <div>{user.screenName}</div>

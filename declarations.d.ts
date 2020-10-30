@@ -17,10 +17,6 @@ interface ApiRequest extends NextApiRequest {
     db?: firebase.firestore.Firestore
 }
 
-interface ApiError {
-    message: string
-}
-
 interface PromiseResponse<T> extends Twit.Twitter.PromiseResponse {
     data: T
 }
@@ -69,4 +65,9 @@ interface User {
     verified: boolean
     withheldInCountries: string
     withheldScope: string
+}
+
+interface Investor extends User {
+    muted: boolean
+    on: boolean
 }

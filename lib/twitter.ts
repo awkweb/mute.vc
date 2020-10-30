@@ -1,8 +1,12 @@
 import Twit from 'twit'
+import { camelize } from '@ridi/object-case-converter'
 
 import { PromiseResponse, Token, User } from '@/declarations'
 
-import cleanTwitterUser from './clean-twitter-user'
+const camelizeUser = (data: Twit.Twitter.User): User =>
+    camelize(data, {
+        recursive: true,
+    })
 
 class Twitter {
     client: Twit
@@ -16,7 +20,7 @@ class Twitter {
         })
     }
 
-    async me(): Promise<User> {
+    async me() {
         const { data } = <PromiseResponse<Twit.Twitter.User>>(
             await this.client.get('account/verify_credentials', {
                 include_entities: false,
@@ -24,10 +28,10 @@ class Twitter {
                 skip_status: true,
             })
         )
-        return cleanTwitterUser(data)
+        return camelizeUser(data)
     }
 
-    async getUsers(): Promise<User[]> {
+    async getUsers() {
         const { data } = <PromiseResponse<{ users: Twit.Twitter.User[] }>>(
             await this.client.get('lists/members', {
                 slug: process.env.TWITTER_LIST_SLUG,
@@ -37,17 +41,32 @@ class Twitter {
                 skip_status: true,
             })
         )
-        return data.users.map((x) => cleanTwitterUser(x))
+        return data.users.map((x) => camelizeUser(x))
     }
 
-    async getMutes(): Promise<User[]> {
-        const { data } = <PromiseResponse<{ users: Twit.Twitter.User[] }>>(
-            await this.client.get('mutes/users/list', {
-                include_entities: false,
-                skip_status: true,
-            })
+    async getMutedIds() {
+        const { data } = <PromiseResponse<{ ids: number[] }>>(
+            await this.client.get('mutes/users/ids')
         )
-        return data.users.map((x) => cleanTwitterUser(x))
+        return data.ids
+    }
+
+    async createMutes(screenNames: string[]) {
+        const promises = screenNames.map((x) =>
+            this.client.get('mutes/users/create', {
+                screen_name: x,
+            }),
+        )
+        return await Promise.all(promises)
+    }
+
+    async destroyMutes(screenNames: string[]) {
+        const promises = screenNames.map((x) =>
+            this.client.get('mutes/users/destroy', {
+                screen_name: x,
+            }),
+        )
+        return await Promise.all(promises)
     }
 }
 

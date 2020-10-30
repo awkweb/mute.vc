@@ -1,36 +1,23 @@
 import { createContext, useContext } from 'react'
-import useSWR from 'swr'
 
-import { ApiError, User } from '@/declarations'
+import { User } from '@/declarations'
 
 type State = {
     user: User
-    users: User[]
-    mutes: User[] | ApiError
+    investors: User[]
 }
 
 type Props = {
     children: React.ReactNode
-    initialData: State
+    user: User
+    investors: User[]
 }
 const Context = createContext<Partial<State>>({})
 
 const Provider = (props: Props) => {
-    const { initialData } = props
-    const { data: user } = useSWR<User>('/api/users/credentials', {
-        initialData: initialData.user,
-    })
-    const { data: users } = useSWR<User[]>('/api/users', {
-        initialData: initialData.users,
-    })
-    const { data: mutes } = useSWR<User[] | ApiError>('/api/mutes', {
-        initialData: (initialData.mutes as User[]).length
-            ? initialData.mutes
-            : undefined,
-    })
-
+    const { user, investors } = props
     return (
-        <Context.Provider value={{ user, users, mutes }}>
+        <Context.Provider value={{ user, investors }}>
             {props.children}
         </Context.Provider>
     )
