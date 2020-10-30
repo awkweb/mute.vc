@@ -6,6 +6,7 @@ import Layout from './layout'
 
 type Props = {
     user: User
+    users: User[]
 }
 
 const Dashboard: React.FC<Props> = (props) => {

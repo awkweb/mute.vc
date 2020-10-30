@@ -4,12 +4,13 @@ import useSWR from 'swr'
 
 import { Dashboard, Home } from '@/components'
 import { User } from '@/declarations'
-
-import { getUser } from './api/users/credentials'
+import getToken from '@/lib/get-token'
+import Twitter from '@/lib/twitter'
 
 type Props = {
     initialData?: {
         user?: User
+        users?: User[]
     }
 }
 
@@ -21,18 +22,27 @@ const Page: NextPage<Props> = (props) => {
             initialData: props.initialData?.user,
         },
     )
+    const { data: users } = useSWR<User[]>(
+        () => (session ? '/api/users' : null),
+        {
+            initialData: props.initialData?.users,
+        },
+    )
 
     if (loading) return <div />
     if (!session || !user) return <Home />
-    return <Dashboard user={user} />
+    return <Dashboard user={user} users={users} />
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await getSession(context)
     if (!session) return { props: {} }
 
-    const user = await getUser(context.req)
-    return { props: { initialData: { user } } }
+    const token = await getToken(context.req)
+    const twitter = new Twitter(token)
+    const user = await twitter.me()
+    const users = await twitter.getUsers()
+    return { props: { initialData: { user, users } } }
 }
 
 export default Page

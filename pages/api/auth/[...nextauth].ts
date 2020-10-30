@@ -2,8 +2,6 @@ import NextAuth, { InitOptions } from 'next-auth'
 import Providers from 'next-auth/providers'
 import { NextApiHandler } from 'next'
 
-import { Session, Token } from '@/declarations'
-
 const options = <InitOptions>{
     providers: [
         Providers.Twitter({
@@ -12,19 +10,12 @@ const options = <InitOptions>{
         }),
     ],
     callbacks: {
-        jwt: async (token, user, account, profile, _isNewUser) => {
+        jwt: async (token, user, account, _profile, _isNewUser) => {
             if (user) {
                 token.accessToken = account.accessToken
                 token.accessTokenSecret = account.refreshToken
-                token.userId = account.id
-                token.username = profile.screen_name
             }
             return Promise.resolve(token)
-        },
-        session: async (session: Session, token: Token) => {
-            session.user.id = token.userId
-            session.user.username = token.username
-            return Promise.resolve(session)
         },
     },
     session: {
