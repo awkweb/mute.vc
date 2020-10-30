@@ -1,37 +1,29 @@
 import { GetServerSideProps, NextPage } from 'next'
 import { getSession, useSession } from 'next-auth/client'
-import useSWR from 'swr'
 
+import { Provider } from '@/store'
 import { Dashboard, Home } from '@/components'
-import { User } from '@/declarations'
+import { ApiError, User } from '@/declarations'
 import getToken from '@/lib/get-token'
 import Twitter from '@/lib/twitter'
 
 type Props = {
-    initialData?: {
-        user?: User
-        users?: User[]
+    initialData: {
+        user: User
+        users: User[]
+        mutes: User[] | ApiError
     }
 }
 
 const Page: NextPage<Props> = (props) => {
     const [session, loading] = useSession()
-    const { data: user } = useSWR<User>(
-        () => (session ? '/api/users/credentials' : null),
-        {
-            initialData: props.initialData?.user,
-        },
-    )
-    const { data: users } = useSWR<User[]>(
-        () => (session ? '/api/users' : null),
-        {
-            initialData: props.initialData?.users,
-        },
-    )
-
     if (loading) return <div />
-    if (!session || !user) return <Home />
-    return <Dashboard user={user} users={users} />
+    if (!session) return <Home />
+    return (
+        <Provider initialData={props.initialData}>
+            <Dashboard />
+        </Provider>
+    )
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -42,7 +34,21 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const twitter = new Twitter(token)
     const user = await twitter.me()
     const users = await twitter.getUsers()
-    return { props: { initialData: { user, users } } }
+
+    let mutes: User[] | ApiError
+    try {
+        mutes = await twitter.getMutes()
+    } catch (err) {
+        const message =
+            err.statusCode === 429
+                ? 'Twitter rate limit exceeded'
+                : 'Something went wrong'
+        mutes = {
+            message,
+        }
+    }
+
+    return { props: { initialData: { user, users, mutes } } }
 }
 
 export default Page
