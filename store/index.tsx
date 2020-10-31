@@ -9,12 +9,13 @@ type State = {
 
 type Props = {
     children: React.ReactNode
-    user: User
+    error?: Error
     investors: User[]
+    user: User
 }
 const Context = createContext<Partial<State>>({})
 
-const Provider = (props: Props) => {
+const Provider: React.FC<Props> = (props) => {
     const { user, investors } = props
     return (
         <Context.Provider value={{ user, investors }}>
