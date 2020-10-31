@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
 
-import { Layout } from '@/components'
+import { Layout, Link } from '@/components'
 
 type Props = {}
 
@@ -9,6 +9,7 @@ const Page: NextPage<Props> = () => {
     return (
         <Layout title={title}>
             <h1>{title}</h1>
+            <Link href="/">Back to home</Link>
         </Layout>
     )
 }

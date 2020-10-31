@@ -4,12 +4,8 @@ import { useStore } from '@/store'
 
 import Layout from './layout'
 
-type Props = {}
-
-const Dashboard: React.FC<Props> = () => {
-    const { user, investors } = useStore()
-    console.log('user', user)
-    console.log('investors', investors)
+const Dashboard: React.FC = () => {
+    const { user } = useStore()
     return (
         <Layout>
             <div>{user.screenName}</div>

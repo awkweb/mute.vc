@@ -1,8 +1,6 @@
 import { signin } from 'next-auth/client'
 
-type Props = {}
-
-const LoginButton: React.FC<Props> = () => {
+const LoginButton: React.FC = () => {
     return (
         <button onClick={() => signin('twitter')}>Continue with Twitter</button>
     )

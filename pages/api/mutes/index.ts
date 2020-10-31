@@ -35,7 +35,8 @@ const handler = async (req: ApiRequest, res: NextApiResponse<User[]>) => {
             break
 
         default:
-            throw new Error(`${req.method} method is not supported`)
+            res.setHeader('Allow', 'POST, DELETE')
+            res.status(405).end('Method Not Allowed')
     }
 }
 
