@@ -16,10 +16,7 @@ function getInvestors(
         if (investor.screenName !== screenName) {
             investors.push({
                 ...investor,
-                muted: Object.prototype.hasOwnProperty.call(
-                    mutedIdsMap,
-                    investor.id,
-                ),
+                muted: mutedIdsMap.hasOwnProperty(investor.id),
                 on: true,
             })
         }

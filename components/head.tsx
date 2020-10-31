@@ -1,5 +1,4 @@
 import NextHead from 'next/head'
-import { useTheme } from 'next-themes'
 
 type Props = {
     title?: string
@@ -7,12 +6,13 @@ type Props = {
 }
 
 const Head: React.FC<Props> = (props) => {
-    const { title, description } = props
-    const { theme } = useTheme()
+    const {
+        title = 'Mute investors on Twitter',
+        description = 'Remove VC thought leadership and platitudes from your feed.',
+    } = props
 
-    const ogUrl = `https://mute.vc`
-    const ogImage = `${ogUrl}/og.png`
-    const iconTheme = theme === 'light' ? 'light' : 'dark'
+    const url = 'https://mute.vc'
+    const ogImage = `${url}/og.png`
 
     return (
         <NextHead>
@@ -27,21 +27,21 @@ const Head: React.FC<Props> = (props) => {
 
             <meta content={title} name="og:title" />
             <meta content={description} name="og:description" />
-            <meta content={ogUrl} name="og:url" />
+            <meta content={url} name="og:url" />
             <meta content={ogImage} name="og:image" />
+            <meta content="website" name="og:type" />
 
             <meta content={ogImage} name="twitter:image" />
             <meta content="summary_large_image" name="twitter:card" />
+            <meta content="@awkweb" name="twitter:creator" />
 
             <link
-                href={`/favicons/${iconTheme}.png?v=1.0`}
-                key="dynamic-favicon-alternate"
+                href="/favicons/favicon.png?v=1.0"
                 rel="alternate icon"
                 type="image/png"
             />
             <link
-                href={`/favicons/${iconTheme}.svg?v=1.0`}
-                key="dynamic-favicon"
+                href="/favicons/favicon.svg?v=1.0"
                 rel="icon"
                 type="image/svg+xml"
             />
