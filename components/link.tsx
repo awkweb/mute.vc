@@ -4,6 +4,7 @@ import NextLink from 'next/link'
 
 type Props = {
     external?: boolean
+    disabled?: boolean
     href: string
     as?: string
     passHref?: boolean
@@ -12,7 +13,11 @@ type Props = {
 }
 
 const Link: React.FC<Props> = (props) => {
-    const { external, href, as, passHref, children } = props
+    const { disabled, external, href, as, passHref, children } = props
+    if (disabled) {
+        return <span className={props.className}>{children}</span>
+    }
+
     if (external) {
         return (
             <a
