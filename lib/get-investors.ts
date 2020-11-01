@@ -22,7 +22,7 @@ function getInvestors(
         }
     }
 
-    return investors
+    return investors.sort((x, y) => y.followersCount - x.followersCount)
 }
 
 export default getInvestors

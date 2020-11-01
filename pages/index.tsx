@@ -17,7 +17,7 @@ type Props = {
 
 const Page: NextPage<Props> = (props) => {
     const [session, loading] = useSession()
-    if (!session && loading) return <div />
+    if ((!session && loading) || session === null) return <div />
     if (!session) return <Home />
 
     return (
