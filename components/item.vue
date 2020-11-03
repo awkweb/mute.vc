@@ -155,7 +155,6 @@ export default {
                     (!this.on && this.isMutedTab)
                         ? 'create'
                         : 'destroy'
-                window.sa(`click_${type}`)
                 const data = {
                     type,
                     usernames: [this.username],

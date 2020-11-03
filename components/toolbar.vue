@@ -156,7 +156,6 @@ export default {
             try {
                 this.loading = true
                 const type = this.isMutedTab ? 'destroy' : 'create'
-                window.sa(`click_${type}_all`)
                 const usernames = this.tabInvestors
                     .filter((t) => t.on)
                     .map((t) => t.username)
@@ -170,14 +169,12 @@ export default {
             }
         },
         logOut() {
-            window.sa('click_logout')
             this.$store.dispatch('logOut')
             this.$router.push({ path: '/' })
         },
         async undo() {
             try {
                 this.undoing = true
-                window.sa('click_undo')
                 const data = {
                     type: this.undoAction.type,
                     usernames: this.undoAction.usernames,

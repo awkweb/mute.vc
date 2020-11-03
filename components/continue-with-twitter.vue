@@ -28,8 +28,7 @@
 <script>
 export default {
     methods: {
-        async click() {
-            await window.sa('click_login')
+        click() {
             window.location = '/auth'
         },
     },

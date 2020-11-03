@@ -88,8 +88,6 @@ export default {
         this.mql = mql
         this.mql.addListener(this.colorSchemeListener)
         if (!this.appearance) {
-            const appearance = mql.matches ? 'dark' : 'light'
-            window.sa(`has_appearance_${appearance}`)
             this.colorSchemeListener(mql)
         }
     },
@@ -109,17 +107,6 @@ export default {
     head() {
         return {
             style: [{ cssText: this.cssText, type: 'text/css' }],
-            script: [
-                {
-                    innerHTML:
-                        'window.sa=window.sa||function(){a=[].slice.call(arguments);sa.q?sa.q.push(a):sa.q=[a]};',
-                },
-                {
-                    src: 'https://sa.mute.vc/e.js',
-                    async: true,
-                    defer: true,
-                },
-            ],
         }
     },
 }
