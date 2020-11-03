@@ -1,28 +1,24 @@
 const express = require('express')
+const parser = require('cookie-parser')
+const jwt = require('jsonwebtoken')
 const Twit = require('twit')
-const db = require('../lib/db')
-const cleanTwitterUser = require('../lib/clean-twitter-user')
+const { camelize } = require('@ridi/object-case-converter')
+const firebase = require('firebase')
+require('firebase/firestore')
 
-const router = express.Router()
-
-function genTwit(token, secret) {
-    return new Twit({
-        consumer_key: process.env.TWITTER_KEY,
-        consumer_secret: process.env.TWITTER_SECRET,
-        access_token: token,
-        access_token_secret: secret,
-    })
-}
-
-let twit
-
-router.use('/api', (req, res, next) => {
+const app = express()
+app.use(parser())
+app.use(express.json())
+app.use('/', (req, res, next) => {
     res.setHeader('Content-Type', 'application/json')
-    if (!req.session.username) {
+    const user = jwt.verify(req.cookies.user, process.env.SECRET)
+    if (!user) {
         res.sendStatus(403)
         return
     }
-    twit = genTwit(req.session.token, req.session.secret)
+    req.user = user
+    req.db = getDb()
+    req.twit = getTwit(user.token, user.secret)
     next()
 })
 
@@ -32,21 +28,52 @@ function softFail(promise) {
     })
 }
 
-router.get('/api/bootstrap', async (req, res) => {
+function camelizeUser(data) {
+    return camelize(
+        { ...data, username: data.screen_name },
+        {
+            recursive: true,
+        },
+    )
+}
+
+function getTwit(token, secret) {
+    return new Twit({
+        consumer_key: process.env.TWITTER_KEY,
+        consumer_secret: process.env.TWITTER_SECRET,
+        access_token: token,
+        access_token_secret: secret,
+    })
+}
+
+function getDb() {
+    return !firebase.apps.length
+        ? firebase
+              .initializeApp({
+                  apiKey: process.env.FIREBASE_API_KEY,
+                  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+                  projectId: process.env.FIREBASE_PROJECT_ID,
+              })
+              .firestore()
+        : firebase.app().firestore()
+}
+
+app.get('/bootstrap', async (req, res) => {
     try {
         const promises = [
-            twit.get('account/verify_credentials', {
+            req.twit.get('account/verify_credentials', {
+                include_entities: false,
                 include_email: true,
                 skip_status: true,
             }),
-            twit.get('lists/members', {
+            req.twit.get('lists/members', {
                 slug: process.env.TWITTER_LIST_SLUG,
                 owner_screen_name: process.env.TWITTER_LIST_OWNER,
                 count: 5000,
                 include_entities: false,
                 skip_status: true,
             }),
-            twit.get('mutes/users/ids'),
+            req.twit.get('mutes/users/ids'),
         ]
         const [
             { data: profileData },
@@ -77,8 +104,8 @@ router.get('/api/bootstrap', async (req, res) => {
         const users = listData ? listData.users : []
         for (let i = 0, n = users.length; i < n; ++i) {
             const user = users[i]
-            const investor = cleanTwitterUser(user)
-            if (investor.username !== req.session.username) {
+            const investor = camelizeUser(user)
+            if (investor.username !== req.user.username) {
                 investors.push({
                     ...investor,
                     muted: Object.prototype.hasOwnProperty.call(
@@ -90,8 +117,11 @@ router.get('/api/bootstrap', async (req, res) => {
             }
         }
 
-        const profile = cleanTwitterUser(profileData)
-        await db.users.upsert(req.session.username, profile)
+        const profile = camelizeUser(profileData)
+        await req.db
+            .collection('users')
+            .doc(req.user.username)
+            .set(profile, { merge: true })
 
         res.send({
             status: 200,
@@ -106,12 +136,12 @@ router.get('/api/bootstrap', async (req, res) => {
     }
 })
 
-router.post('/api/mutes/create', async (req, res) => {
+app.post('/mutes', async (req, res) => {
     try {
         const { usernames } = req.body
-        const promises = usernames.map((u) =>
-            twit.post('mutes/users/create', {
-                screen_name: u,
+        const promises = usernames.map((x) =>
+            req.twit.post('mutes/users/create', {
+                screen_name: x,
             }),
         )
         await Promise.all(promises)
@@ -128,17 +158,18 @@ router.post('/api/mutes/create', async (req, res) => {
     }
 })
 
-router.post('/api/mutes/destroy', async (req, res) => {
+app.delete('/mutes', async (req, res) => {
     try {
         const { usernames } = req.body
-        const promises = usernames.map((u) =>
-            twit.post('mutes/users/destroy', {
-                screen_name: u,
+        const promises = usernames.map((x) =>
+            req.twit.post('mutes/users/destroy', {
+                screen_name: x,
             }),
         )
         await Promise.all(promises)
         res.send({ status: 200 })
     } catch (err) {
+        console.log(err)
         let error = err
         if (err.statusCode === 429) {
             error = {
@@ -150,4 +181,7 @@ router.post('/api/mutes/destroy', async (req, res) => {
     }
 })
 
-module.exports = router
+module.exports = {
+    path: '/api',
+    handler: app,
+}

@@ -1,10 +1,7 @@
 const dev = process.env.NODE_ENV !== 'production'
 const devModules = []
 const prodModules = []
-if (dev) {
-    require('dotenv').config()
-    devModules.push('@nuxtjs/dotenv')
-} else {
+if (!dev) {
     prodModules.push('nuxt-purgecss')
 }
 
@@ -14,7 +11,6 @@ const ogTitle = `mute.vc – ${title}`
 const ogImage = 'https://mute.vc/card.png'
 
 module.exports = {
-    mode: 'universal',
     head: {
         meta: [
             { charset: 'utf-8' },
@@ -61,6 +57,7 @@ module.exports = {
         '@nuxtjs/axios',
         'cookie-universal-nuxt',
     ],
+    serverMiddleware: ['~/server/auth', '~/server/api'],
     axios: {
         https: !dev,
     },
@@ -72,23 +69,6 @@ module.exports = {
                     ? 'source-map'
                     : 'inline-source-map'
             }
-        },
-        babel: {
-            plugins: [
-                '@babel/plugin-proposal-optional-chaining',
-                '@babel/plugin-proposal-nullish-coalescing-operator',
-            ],
-            presets({ isServer }) {
-                return [
-                    [
-                        require.resolve('@nuxt/babel-preset-app'),
-                        {
-                            buildTarget: isServer ? 'server' : 'client',
-                            corejs: { version: 3 },
-                        },
-                    ],
-                ]
-            },
         },
     },
 }

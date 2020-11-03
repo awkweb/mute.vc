@@ -30,7 +30,7 @@ export default {
     methods: {
         async click() {
             await window.sa('click_login')
-            window.location = '/auth/twitter'
+            window.location = '/auth'
         },
     },
 }
