@@ -1,18 +1,23 @@
 ## Dev
 
-Create a `.env` file in project root:
+```
+yarn global add vercel
+vercel env pull
+```
+## Prod
+
+Set [Environment Variables](https://zeit.co/zoo/mute-vc/settings/environment-variables):
 
 ```
-FIREBASE_API_KEY=xxxxxx
+FIREBASE_API_KEY=xxx
 FIREBASE_AUTH_DOMAIN=mutevc.firebaseapp.com
 FIREBASE_PROJECT_ID=mutevc
-NUXT_HOST=localhost
-NUXT_PORT=3000
-SECRET=supersecret
-TWITTER_KEY=xxxxxx
-TWITTER_LIST_OWNER=tomfme
+SECRET=xxx
+TWITTER_KEY=xxx
+TWITTER_LIST_OWNER=awkweb
 TWITTER_LIST_SLUG=investors
-TWITTER_SECRET=xxxxxx
+TWITTER_SECRET=xxx
+URL=https://mute.vc
 ```
 
 <details>
@@ -24,9 +29,10 @@ TWITTER_SECRET=xxxxxx
 Create a [new Twitter app](https://developer.twitter.com) and add the following callback urls:
 
 ```
-http://localhost:3000/auth/twitter/callback
-https://mute-vc.onrender.com/auth/twitter/callback
-https://mute.vc/auth/twitter/callback
+http://localhost:3000/api/auth/callback
+https://mute-vc.now.sh/api/auth/callback
+https://mute-vc.vercel.app/api/auth/callback
+https://mute.vc/api/auth/callback
 ```
 
 Add your consumer `API key` to `TWITTER_KEY` and `API secret key` to `TWITTER_SECRET`. Turn on `Read and write` permissions.
@@ -39,9 +45,3 @@ Finally, create a new Twitter list and fill out `TWITTER_LIST_OWNER` and `TWITTE
 
 </p>
 </details>
-
-## Prod
-
-Deploy on [Render](https://render.com) ([`render.yaml`](render.yaml) does the heavy lifting).
-
-View [screenshots](.github/screenshots)

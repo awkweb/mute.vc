@@ -79,7 +79,6 @@ export default {
     methods: {
         click() {
             const appearance = this.isDark ? 'light' : 'dark'
-            window.sa(`click_appearance_${appearance}`)
             this.$store.commit('SET_APPEARANCE', appearance)
             this.$cookies.set('appearance', appearance, {
                 path: '/',

@@ -4,30 +4,30 @@
     "description": "Remove VC thought leadership and platitudes from your feed.",
     "scripts": {
         "commit": "git-cz",
-        "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
+        "dev": "nuxt",
         "build": "nuxt build",
-        "start": "cross-env NODE_ENV=production node server/index.js"
+        "start": "nuxt start"
     },
     "dependencies": {
-        "@nuxtjs/axios": "5.9.0",
-        "@nuxtjs/dotenv": "1.4.1",
+        "@nuxtjs/axios": "^5.12.2",
+        "@nuxtjs/dotenv": "^1.4.1",
         "@ridi/object-case-converter": "2.0.4",
-        "autolinker": "3.11.1",
-        "cookie-session": "1.3.3",
-        "cookie-universal-nuxt": "2.1.0",
-        "cross-env": "6.0.3",
+        "autolinker": "3.14.2",
+        "cookie-parser": "^1.4.5",
+        "cookie-session": "1.4.0",
+        "cookie-universal-nuxt": "2.1.4",
         "express": "4.17.1",
-        "firebase": "7.6.1",
-        "inter-ui": "3.11.0",
-        "login-with-twitter": "1.2.2",
-        "nuxt": "2.11.0",
-        "nuxt-purgecss": "0.2.1",
-        "twit": "2.2.11",
-        "vue-feather-icons": "5.0.0"
+        "firebase": "8.0.0",
+        "inter-ui": "3.15.0",
+        "jsonwebtoken": "^8.5.1",
+        "nuxt": "2.14.7",
+        "nuxt-purgecss": "1.0.0",
+        "passport": "^0.4.1",
+        "passport-twitter": "^1.0.4",
+        "twit": "^2.2.11",
+        "vue-feather-icons": "5.1.0"
     },
     "devDependencies": {
-        "@babel/plugin-proposal-nullish-coalescing-operator": "7.7.4",
-        "@babel/plugin-proposal-optional-chaining": "7.7.5",
         "@babel/runtime-corejs3": "7.7.7",
         "@commitlint/cli": "^9.0.1",
         "@commitlint/config-conventional": "^9.0.1",
@@ -36,7 +36,6 @@
         "@nuxtjs/tailwindcss": "1.2.0",
         "babel-eslint": "10.0.3",
         "commitizen": "^4.1.2",
-        "core-js": "3",
         "cz-conventional-changelog": "^3.2.0",
         "eslint": "6.7.2",
         "eslint-config-prettier": "6.7.0",
@@ -44,7 +43,6 @@
         "eslint-plugin-prettier": "3.1.2",
         "husky": "3.1.0",
         "lint-staged": "9.5.0",
-        "nodemon": "2.0.2",
         "prettier": "1.19.1"
     },
     "engines": {

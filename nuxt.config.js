@@ -14,7 +14,6 @@ const ogTitle = `mute.vc – ${title}`
 const ogImage = 'https://mute.vc/card.png'
 
 module.exports = {
-    mode: 'universal',
     head: {
         meta: [
             { charset: 'utf-8' },
@@ -61,8 +60,12 @@ module.exports = {
         '@nuxtjs/axios',
         'cookie-universal-nuxt',
     ],
+    serverMiddleware: {
+        '/api': '~/api',
+    },
     axios: {
         https: !dev,
+        baseURL: process.env.URL,
     },
     build: {
         extractCSS: true,
@@ -72,23 +75,6 @@ module.exports = {
                     ? 'source-map'
                     : 'inline-source-map'
             }
-        },
-        babel: {
-            plugins: [
-                '@babel/plugin-proposal-optional-chaining',
-                '@babel/plugin-proposal-nullish-coalescing-operator',
-            ],
-            presets({ isServer }) {
-                return [
-                    [
-                        require.resolve('@nuxt/babel-preset-app'),
-                        {
-                            buildTarget: isServer ? 'server' : 'client',
-                            corejs: { version: 3 },
-                        },
-                    ],
-                ]
-            },
         },
     },
 }

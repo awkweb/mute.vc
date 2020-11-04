@@ -46,7 +46,6 @@
                         class="underline lg:no-underline text-description lg:text-sm"
                         :href="link.href"
                         target="_blank"
-                        @click="click(link.text.toLowerCase())"
                     >
                         {{ link.text }}
                     </a>
@@ -65,10 +64,5 @@ export default {
             { text: 'GitHub', href: 'https://github.com/tmm/mute.vc' },
         ],
     }),
-    methods: {
-        click(link) {
-            window.sa(`click_footer_${link}`)
-        },
-    },
 }
 </script>

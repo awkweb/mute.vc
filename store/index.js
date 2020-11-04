@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken'
+
 const SET_APPEARANCE = 'SET_APPEARANCE'
 const SET_ERROR = 'SET_ERROR'
 const SET_INITIAL_DATA = 'SET_INITIAL_DATA'
@@ -18,7 +20,7 @@ export const state = () => ({
 })
 
 export const getters = {
-    anyOn: (state, getters) => getters.tabInvestors.some((t) => t.on),
+    anyOn: (_state, getters) => getters.tabInvestors.some((t) => t.on),
     isDark: (state) => state.appearance === 'dark',
     isLoggedIn: (state) => !!state.authUser,
     isMutedTab: (state) => state.tab === 'muted',
@@ -26,7 +28,7 @@ export const getters = {
         state.investors.filter((i) =>
             getters.isMutedTab ? i.muted : !i.muted,
         ),
-    tabCount: (state, getters) => getters.tabInvestors.length,
+    tabCount: (_state, getters) => getters.tabInvestors.length,
 }
 
 export const mutations = {
@@ -79,9 +81,11 @@ const flipInvestors = (investors, usernames, on) => {
 }
 
 export const actions = {
-    nuxtServerInit({ commit }, { app, req, route }) {
-        if (req.session?.username) {
-            commit(SET_USER, req.session)
+    nuxtServerInit({ commit }, { app, route }) {
+        const user = app.$cookies.get('user')
+        if (user) {
+            const decoded = jwt.verify(user, process.env.SECRET)
+            commit(SET_USER, decoded)
             const tab = route.query?.tab
             if (tab) {
                 commit(SET_TAB, tab)
@@ -94,7 +98,7 @@ export const actions = {
         const {
             data,
             data: { profile },
-        } = await this.$axios.$get('/api/bootstrap')
+        } = await this.$axios.$get('/api/users')
         const investors = data.investors.sort(followerSorter)
         commit(SET_INITIAL_DATA, {
             profile,
@@ -108,7 +112,15 @@ export const actions = {
 
             const { type, usernames, undo } = data
 
-            await this.$axios.$post(`/api/mutes/${type}`, { usernames })
+            if (type === 'destroy') {
+                await this.$axios.$request({
+                    url: '/api/mutes',
+                    data: { usernames },
+                    method: 'delete',
+                })
+            } else {
+                await this.$axios.$post('/api/mutes', { usernames })
+            }
             const investors = flipInvestors(
                 state.investors,
                 usernames,
@@ -129,7 +141,7 @@ export const actions = {
     },
     async logOut({ commit }) {
         if (state.error) commit(SET_ERROR, null)
-        await this.$axios.$post('/logout')
+        await this.$axios.$post('/api/auth/logout')
         commit(SET_USER, null)
     },
 }
