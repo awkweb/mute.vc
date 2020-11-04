@@ -25,6 +25,7 @@ const users = require('./routes/users')
 app.use(auth)
 app.use(mutes)
 app.use(users)
+app.get('/healthz', (_req, res) => res.sendStatus(200))
 
 // Export express app
 module.exports = app

@@ -65,6 +65,7 @@ module.exports = {
     },
     axios: {
         https: !dev,
+        baseURL: process.env.URL,
     },
     build: {
         extractCSS: true,

@@ -20,7 +20,7 @@ export const state = () => ({
 })
 
 export const getters = {
-    anyOn: (state, getters) => getters.tabInvestors.some((t) => t.on),
+    anyOn: (_state, getters) => getters.tabInvestors.some((t) => t.on),
     isDark: (state) => state.appearance === 'dark',
     isLoggedIn: (state) => !!state.authUser,
     isMutedTab: (state) => state.tab === 'muted',
@@ -28,7 +28,7 @@ export const getters = {
         state.investors.filter((i) =>
             getters.isMutedTab ? i.muted : !i.muted,
         ),
-    tabCount: (state, getters) => getters.tabInvestors.length,
+    tabCount: (_state, getters) => getters.tabInvestors.length,
 }
 
 export const mutations = {
