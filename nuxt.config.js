@@ -9,7 +9,8 @@ if (dev) {
 }
 
 const title = 'Mute investors on Twitter'
-const description = process.env.npm_package_description
+const description =
+    'Remove VC thought leadership and platitudes from your feed.'
 const ogTitle = `mute.vc – ${title}`
 const ogImage = 'https://mute.vc/card.png'
 
