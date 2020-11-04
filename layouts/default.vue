@@ -107,6 +107,17 @@ export default {
     head() {
         return {
             style: [{ cssText: this.cssText, type: 'text/css' }],
+            script: [
+                {
+                    innerHTML:
+                        'window.sa=window.sa||function(){a=[].slice.call(arguments);sa.q?sa.q.push(a):sa.q=[a]};',
+                },
+                {
+                    src: 'https://sa.mute.vc/e.js',
+                    async: true,
+                    defer: true,
+                },
+            ],
         }
     },
 }
