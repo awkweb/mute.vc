@@ -88,6 +88,8 @@ export default {
         this.mql = mql
         this.mql.addListener(this.colorSchemeListener)
         if (!this.appearance) {
+            const appearance = mql.matches ? 'dark' : 'light'
+            window.sa(`has_appearance_${appearance}`)
             this.colorSchemeListener(mql)
         }
     },

@@ -28,7 +28,8 @@
 <script>
 export default {
     methods: {
-        click() {
+        async click() {
+            await window.sa('click_login')
             window.location = '/api/auth'
         },
     },
