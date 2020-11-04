@@ -98,7 +98,7 @@ export const actions = {
         const {
             data,
             data: { profile },
-        } = await this.$axios.$get('/api/bootstrap')
+        } = await this.$axios.$get('/api/users')
         const investors = data.investors.sort(followerSorter)
         commit(SET_INITIAL_DATA, {
             profile,
@@ -141,7 +141,7 @@ export const actions = {
     },
     async logOut({ commit }) {
         if (state.error) commit(SET_ERROR, null)
-        await this.$axios.$post('/auth/logout')
+        await this.$axios.$post('/api/auth/logout')
         commit(SET_USER, null)
     },
 }

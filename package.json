@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "@nuxtjs/axios": "^5.12.2",
+        "@nuxtjs/dotenv": "^1.4.1",
         "@ridi/object-case-converter": "2.0.4",
         "autolinker": "3.14.2",
         "cookie-parser": "^1.4.5",

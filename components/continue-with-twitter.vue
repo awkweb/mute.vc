@@ -29,7 +29,7 @@
 export default {
     methods: {
         click() {
-            window.location = '/auth'
+            window.location = '/api/auth'
         },
     },
 }

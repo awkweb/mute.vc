@@ -1,7 +1,10 @@
 const dev = process.env.NODE_ENV !== 'production'
 const devModules = []
 const prodModules = []
-if (!dev) {
+if (dev) {
+    require('dotenv').config()
+    devModules.push('@nuxtjs/dotenv')
+} else {
     prodModules.push('nuxt-purgecss')
 }
 
@@ -57,7 +60,9 @@ module.exports = {
         '@nuxtjs/axios',
         'cookie-universal-nuxt',
     ],
-    serverMiddleware: ['~/server/auth', '~/server/api'],
+    serverMiddleware: {
+        '/api': '~/api',
+    },
     axios: {
         https: !dev,
     },
